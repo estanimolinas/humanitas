@@ -56,12 +56,53 @@ Fuentes del sistema (`system-ui, -apple-system, "Segoe UI", Roboto, sans-serif`)
 - **Botón principal** (uno por pantalla: Contactar por WhatsApp, Seguir, Publicar): **relleno** `dorado-oscuro`, texto blanco, 52 px de alto, radio 10 px, ancho completo.
 - **Botón secundario** (Corregir, Ver más): borde `dorado`, texto `dorado-oscuro`, 48 px.
 - **Acción discreta** (Denunciar): texto `texto-2` subrayado, área táctil de 44 px.
-- **Campos:** 48 px de alto, borde `borde-campo`, radio 9 px. Foco: contorno de 2 px `dorado-oscuro`. Etiqueta arriba, en 16 px, en tono normal (no en mayúsculas chicas).
+- **Campos:** 48 px de alto, borde `borde-campo`, radio 9 px. Foco: contorno de 2 px `dorado-oscuro`. Etiqueta arriba, en mayúsculas con leve espaciado (como en el mockup de Publicar), 14 px, color `texto-2`. La ayuda debajo de la etiqueta va en 16 px, en tono normal.
 - **Error:** texto `error` de 14 px debajo del campo; en alertas, borde `error`.
 - **Aviso:** fondo `dorado-claro`, borde `dorado-borde` con borde izquierdo de 3 px `dorado`, texto `texto`.
 - **Botón "Ver más"** al final del listado (sin scroll infinito).
 - **Estado vacío:** "Todavía no hay publicaciones de [rubro]. Sé la primera persona en publicar." + botón principal a Publicar.
 - **Sin conexión:** aviso fijo arriba: "Sin conexión. Estás viendo lo último que cargaste."
+
+## 3 bis. Referencias del mockup que gustaron (15/09/2026)
+
+Al usuario le gustaron mucho tres pantallas del mockup. Hay que **replicar su look** al desarrollar, respetando las reglas de contenido y de usabilidad de esta guía.
+
+**Valores.**
+- **Qué replicar:**
+  - Arriba, una línea chica en mayúsculas y en dorado ("MAGNIFICA HUMANITAS · LEÓN XIV").
+  - Debajo, la cita grande en negrita como título, entre «», y la referencia en gris ("Magnifica Humanitas, n. 149").
+  - Una introducción corta.
+  - Una lista de valores separados por líneas finas: número en dorado y mayúsculas ("N. 68"), nombre del valor en negrita y texto debajo.
+- **Qué cambia:** el texto de cada valor es la **cita textual** de la sección 7. Nada de paráfrasis, y los números tienen que coincidir con el texto oficial. En el mockup "Dignidad de la persona" figura como n. 149, pero la cita es del 152.
+
+**Publicar.**
+- **Qué replicar:**
+  - Control segmentado grande **Ofrezco / Necesito**, con la opción activa en dorado claro.
+  - Etiquetas de sección en mayúsculas chicas (TÍTULO, RUBRO, BARRIO, DETALLE).
+  - Campos con borde suave y radio amplio.
+  - Rubros y barrios como chips grandes que se tocan.
+- **Qué cambia:**
+  - Se reparte en los 3 pasos de 7.3.
+  - Suma Servicio / Producto, precio, alias y foto.
+  - Suma el chip **"Mi zona no está"**.
+  - Rubros y barrios salen de la base.
+  - Las etiquetas en mayúsculas van en 14 px y color `texto-2`, no más chicas ni más claras.
+  - El borde de los campos es `borde-campo`.
+- **Barrio en Publicar:** elegir el barrio de la publicación con chips está bien. Es un dato de la publicación, no un filtro del listado.
+
+**Listado.**
+- **Qué replicar:**
+  - Filas sin tarjeta, separadas por líneas finas.
+  - Etiqueta con borde: **NECESITO** en gris y **OFREZCO** en dorado.
+  - Título en negrita, una línea de descripción en gris y nombre de pila abajo.
+  - "✓ Verificado en…" en dorado.
+  - Flecha › a la derecha.
+  - Al pie, la frase propia sin comillas: *Humanitas no cobra comisión ni intermedia el dinero. El acuerdo es entre vecinos.*
+  - Barra inferior con íconos de línea finos.
+- **Qué cambia:**
+  - No se muestra "Sin verificar aún" (decisión I).
+  - Se agregan rubro · barrio · antigüedad, precio y miniatura si hay (7.1).
+  - La barra inferior queda en Inicio / Publicar / Mis publicaciones (decisión B).
 
 ## 4. Decisiones sobre el mockup (15/09/2026)
 
