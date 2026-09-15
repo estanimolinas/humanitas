@@ -53,8 +53,10 @@ Para volver la base a cero, con migraciones y seed aplicados de nuevo: `supabase
 
 ```bash
 supabase db reset    # aplica migraciones y seed desde cero
-npm test             # tests contra Supabase local (no dejan datos)
+npm test             # tests contra Supabase local
 ```
+
+Los tests leen `.env.local`, así que primero tiene que estar creado. Los tests de esquema no dejan datos. Los de alta crean personas de prueba con números `549342999…`, y `supabase db reset` las limpia.
 
 ## Qué usamos de Supabase
 
