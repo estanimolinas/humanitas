@@ -1,0 +1,28 @@
+# dependencias
+/node_modules
+
+# tests
+/coverage
+
+# next.js
+/.next/
+/out/
+/build
+next-env.d.ts
+*.tsbuildinfo
+
+# varios
+.DS_Store
+*.pem
+npm-debug.log*
+
+# variables de entorno: nunca se versionan valores, solo el ejemplo
+.env*
+!.env.example
+
+# vercel
+.vercel
+
+# supabase local
+supabase/.branches
+supabase/.temp
