@@ -81,6 +81,9 @@ eventos_mensuales mes, tipo, rubro_id?, zona_id?, cantidad
 - `archivado_en` (timestamp nullable) en toda tabla que admite baja: personas, publicaciones, contactos, denuncias, referentes, rubros, zonas. No en `eventos`.
 - Token de sesión: en claro **solo** en la cookie httpOnly; en la base **solo** `token_hash`.
 - Operador = persona con `es_operador = true`. No hay tabla de admin separada.
+- **La base hace cumplir las reglas:** los triggers `*_sin_delete` y `*_sin_truncate` rechazan DELETE/TRUNCATE en todas las tablas salvo `eventos`. RLS está activo sin políticas, y anon/authenticated no tienen permisos.
+- Los rubros están en una migración (también van a producción). Las zonas de ejemplo están en `supabase/seed.sql` (solo local).
+- Tests: `npm test` (Vitest contra Supabase local; los tests de base usan transacciones que siempre se deshacen).
 - Motivos de denuncia (10.5): estafa, contenido inapropiado, posible menor (prioridad máxima, R16), otro.
 
 ## Decisiones de producto cerradas (14/09/2026)

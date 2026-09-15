@@ -46,6 +46,16 @@ supabase stop        # detiene los contenedores y conserva los datos
 
 Para volver la base a cero, con migraciones y seed aplicados de nuevo: `supabase db reset`.
 
+## Base de datos y tests
+
+- Migraciones: [supabase/migrations](supabase/migrations). Son las mismas en local y en la nube.
+- Seed local (zonas de ejemplo): [supabase/seed.sql](supabase/seed.sql). Los rubros van en una migración porque producción también los necesita.
+
+```bash
+supabase db reset    # aplica migraciones y seed desde cero
+npm test             # tests contra Supabase local (no dejan datos)
+```
+
 ## Qué usamos de Supabase
 
 Solo **Postgres** y **Storage**. Auth, Realtime, Edge Functions, Analytics, SMTP y el resto están apagados en [supabase/config.toml](supabase/config.toml). Todo acceso a la base es desde el servidor de Next.js; el navegador nunca habla con Supabase.
