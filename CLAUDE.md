@@ -100,7 +100,7 @@ eventos_mensuales mes, tipo, rubro_id?, zona_id?, cantidad
 - **Términos y consentimiento:** texto borrador marcado "BORRADOR" hasta tener el definitivo.
 - **Teléfono en el alta (15/09/2026):** **no se asume** característica. Se pide con característica, con ejemplo `342 512 3456` y ayuda clara. El número armado se muestra antes de guardar para que la persona confirme.
 - **Tipografía (15/09/2026):** fuentes del sistema (al usuario le gustaron). Cero bytes de fuentes.
-- **Guía visual:** la trae el usuario como HTML hecho con Claude Design. Se adapta a Tailwind respetando el presupuesto de 300 KB: sin CDNs ni fuentes externas.
+- **Guía visual:** [docs/guia-visual.md](docs/guia-visual.md) (paleta, tamaños, componentes, textos, citas verificadas). Sale del mockup de Claude Design, pero **mandan el requerimiento y la usabilidad** (decisión 15/09/2026). Se aplica con Tailwind: sin CDNs ni fuentes externas.
 - **Usabilidad primero (15/09/2026):** la web app tiene que ser lo más usable posible para el perfil de 4.2. Ante la duda, gana la opción más simple de entender y de tocar.
 - **Encíclica (regla estricta, 15/09/2026):**
   - Comillas («» o “”) **solo** para citas textuales copiadas de la traducción oficial (vatican.va), siempre con "Magnifica Humanitas, N".
