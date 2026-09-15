@@ -99,6 +99,8 @@ eventos_mensuales mes, tipo, rubro_id?, zona_id?, cantidad
 - **Peso:** 300 KB medidos **comprimidos** (bytes transferidos en la primera carga de `/`). Si se supera, **parar y avisar** antes de optimizar.
 - **Términos y consentimiento:** texto borrador marcado "BORRADOR" hasta tener el definitivo.
 - **Teléfono en el alta (15/09/2026):** **no se asume** característica. Se pide con característica, con ejemplo `342 512 3456` y ayuda clara. El número armado se muestra antes de guardar para que la persona confirme.
+- **Tipografía (15/09/2026):** fuentes del sistema (al usuario le gustaron). Cero bytes de fuentes.
+- **Guía visual:** la trae el usuario como HTML hecho con Claude Design. Se adapta a Tailwind respetando el presupuesto de 300 KB: sin CDNs ni fuentes externas.
 - **Usabilidad primero (15/09/2026):** la web app tiene que ser lo más usable posible para el perfil de 4.2. Ante la duda, gana la opción más simple de entender y de tocar.
 - **Encíclica:** toda cita es **textual** de la traducción oficial (vatican.va), con "León XIV, Magnifica Humanitas, N". Nunca parafrasear.
 - **Node:** 22 LTS fijado en `.nvmrc` (`nvm use`). No tocar el Node global ni el alias default de nvm.
