@@ -102,7 +102,11 @@ eventos_mensuales mes, tipo, rubro_id?, zona_id?, cantidad
 - **Tipografía (15/09/2026):** fuentes del sistema (al usuario le gustaron). Cero bytes de fuentes.
 - **Guía visual:** la trae el usuario como HTML hecho con Claude Design. Se adapta a Tailwind respetando el presupuesto de 300 KB: sin CDNs ni fuentes externas.
 - **Usabilidad primero (15/09/2026):** la web app tiene que ser lo más usable posible para el perfil de 4.2. Ante la duda, gana la opción más simple de entender y de tocar.
-- **Encíclica:** toda cita es **textual** de la traducción oficial (vatican.va), con "León XIV, Magnifica Humanitas, N". Nunca parafrasear.
+- **Encíclica (regla estricta, 15/09/2026):**
+  - Comillas («» o “”) **solo** para citas textuales copiadas de la traducción oficial (vatican.va), siempre con "Magnifica Humanitas, N".
+  - Una idea resumida con palabras propias va **sin comillas** y dice que es un resumen, por ejemplo "Inspirado en Magnifica Humanitas, 68".
+  - **Nunca** atribuirle a la encíclica una frase que no está en el texto.
+  - Antes de publicar una cita, verificarla contra el texto oficial.
 - **Node:** 22 LTS fijado en `.nvmrc` (`nvm use`). No tocar el Node global ni el alias default de nvm.
 - **Tests:** Vitest (lógica y funciones SQL contra Supabase local). Sin Playwright.
 
