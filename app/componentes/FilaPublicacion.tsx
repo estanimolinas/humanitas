@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { PublicacionListada } from "@/lib/publicaciones-tipos";
 import { antiguedad } from "@/lib/tiempo";
 
@@ -7,7 +8,7 @@ export function FilaPublicacion({ p }: { p: PublicacionListada }) {
   const meta = [p.rubro, p.zona, antiguedad(p.creada_en)].filter(Boolean).join(" · ");
 
   return (
-    <article className="flex gap-3 border-b divisor py-4">
+    <Link href={`/p/${p.id}`} className="flex gap-3 border-b divisor py-4">
       <div className="min-w-0 flex-1">
         <span
           className={`inline-block rounded border px-1.5 py-0.5 text-xs font-semibold tracking-wide uppercase ${
@@ -56,6 +57,9 @@ export function FilaPublicacion({ p }: { p: PublicacionListada }) {
           className="size-14 shrink-0 rounded object-cover"
         />
       )}
-    </article>
+      <span aria-hidden className="self-center text-xl text-texto-2">
+        ›
+      </span>
+    </Link>
   );
 }
