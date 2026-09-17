@@ -116,6 +116,10 @@ eventos_mensuales mes, tipo, rubro_id?, zona_id?, cantidad
 ## Alcance del MVP (17/09/2026)
 El objetivo de esta etapa es **un MVP funcional para validar la idea con un [interno] de vecinos y presentarlo al [interno]**. Nada más. Ante la duda: **la app más simple posible**. Lo que se pueda hacer con un script del equipo, no se hace como pantalla.
 
+## Prioridades que pidió el usuario (17/09/2026, al cerrar el día)
+1. **Más seguridad** antes de exponerla: adelantar el endurecimiento (cabeceras, cerrar sesión, chequeo de secretos) y revisar el resto de la lista de 11.5.
+2. **Mucho más fiel al mockup de Claude Design** (`docs/diseno/mockup-claude-design.html`): repasar pantalla por pantalla contra las capturas y acercar la composición, no solo la paleta. Siguen valiendo las reglas de contenido y de contraste de `docs/guia-visual.md` (decisiones A–I). **Preguntarle qué pantallas ve menos fieles antes de tocar.**
+
 ## Paso 11.5 — Endurecimiento antes del deploy (acordado 17/09/2026)
 Va entre la PWA (paso 11) y el checklist de producción (paso 12):
 1. Cabeceras de seguridad (CSP, Referrer-Policy, Permissions-Policy, anti-iframe).
