@@ -1,19 +1,130 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+/* Tokens de docs/guia-visual.md. Los contrastes están medidos contra el fondo #f3f2f2. */
+@theme {
+  --color-fondo: #f3f2f2;
+  --color-superficie: #eae9e9;
+  --color-texto: #201f1d;
+  --color-texto-2: #605d5d;
+  --color-borde-campo: #7d7979;
+  --color-dorado: #b68235;
+  --color-dorado-oscuro: #7d5411;
+  --color-dorado-profundo: #5a3b0a;
+  --color-dorado-claro: #fff3e4;
+  --color-dorado-borde: #facb8d;
+  --color-error: #a4262c;
   /* Fuentes del sistema: cero bytes de descarga (presupuesto R13). */
   --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
+:root {
+  --divisor: color-mix(in srgb, #201f1d 16%, transparent);
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--color-fondo);
+  color: var(--color-texto);
   font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* ── Componentes de la guía visual ─────────────────────────────────────────── */
+
+/* Línea fina entre filas y secciones */
+.divisor {
+  border-color: var(--divisor);
+}
+
+/* Kicker: línea chica en mayúsculas y dorado */
+.kicker {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--color-dorado-oscuro);
+}
+
+/* Etiqueta de campo o de sección, como en el mockup de Publicar */
+.etiqueta {
+  display: block;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-texto-2);
+}
+
+.campo {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 13px;
+  border: 1px solid var(--color-borde-campo);
+  border-radius: 9px;
+  background: #fff;
+  font: inherit;
+  font-size: 16px; /* 16px evita que el celular haga zoom al tocar el campo */
+  color: var(--color-texto);
+}
+
+.campo::placeholder {
+  color: var(--color-texto-2);
+}
+
+.campo:focus-visible {
+  outline: 2px solid var(--color-dorado-oscuro);
+  outline-offset: 0;
+}
+
+/* Un solo botón principal por pantalla, relleno (blanco sobre dorado: 6,7:1) */
+.boton-principal {
+  display: flex;
+  width: 100%;
+  min-height: 52px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 10px;
+  background: var(--color-dorado-oscuro);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.boton-principal:disabled {
+  opacity: 0.6;
+}
+
+.boton-secundario {
+  display: flex;
+  width: 100%;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-dorado);
+  border-radius: 10px;
+  color: var(--color-dorado-oscuro);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* Aviso: fondo dorado claro con borde izquierdo dorado */
+.aviso {
+  padding: 13px 14px;
+  border: 1px solid var(--color-dorado-borde);
+  border-left: 3px solid var(--color-dorado);
+  border-radius: 8px;
+  background: var(--color-dorado-claro);
+  font-size: 16px;
+}
+
+.aviso-error {
+  padding: 13px 14px;
+  border: 1px solid var(--color-error);
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.texto-error {
+  color: var(--color-error);
+  font-size: 14px;
 }

@@ -101,6 +101,7 @@ eventos_mensuales mes, tipo, rubro_id?, zona_id?, cantidad
 - **Teléfono en el alta (15/09/2026):** **no se asume** característica. Se pide con característica, con ejemplo `342 512 3456` y ayuda clara. El número armado se muestra antes de guardar para que la persona confirme.
 - **Tipografía (15/09/2026):** fuentes del sistema (al usuario le gustaron). Cero bytes de fuentes.
 - **Guía visual:** [docs/guia-visual.md](docs/guia-visual.md) (paleta, tamaños, componentes, textos, citas verificadas). Sale del mockup de Claude Design, pero **mandan el requerimiento y la usabilidad** (decisión 15/09/2026). Se aplica con Tailwind: sin CDNs ni fuentes externas.
+- **Cómo se nombra el producto (17/09/2026, pedido del usuario):** **no usar la palabra "tablón"** en ningún texto, ni en la UI ni en los documentos del repo. Humanitas es **una app para los vecinos y las vecinas**: para quien ofrece oportunidades de trabajo y para quien quiere trabajar. (El requerimiento usa "tablón"; en los textos que ve la gente, manda este encuadre.)
 - **Usabilidad primero (15/09/2026):** la web app tiene que ser lo más usable posible para el perfil de 4.2. Ante la duda, gana la opción más simple de entender y de tocar.
 - **Encíclica (regla estricta, 15/09/2026):**
   - Comillas («» o “”) **solo** para citas textuales copiadas de la traducción oficial (vatican.va), siempre con "Magnifica Humanitas, N".

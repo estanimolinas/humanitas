@@ -133,7 +133,7 @@ Al usuario le gustaron mucho tres pantallas del mockup. Hay que **replicar su lo
 | Guarda lo mínimo: tu nombre, tu barrio y lo que publicás. | Guardamos lo mínimo: tu nombre, tu celular, tu barrio si lo elegís y lo que publicás. |
 | Acercate con tu DNI a la Vecinal… (horarios inventados) | Podés verificarte en persona en tu punto de alta. (Los lugares salen de la tabla `referentes`, no del código.) |
 | Estado "Pausada" | Estados reales: Activa, Cerrada, En revisión |
-| Entra en la rotación de mañana a las 6:00. | Tu publicación ya está en el tablón. |
+| Entra en la rotación de mañana a las 6:00. | Tu publicación ya se ve en el barrio. |
 | Se comprime a menos de 60 kB. | Se achica en tu celular para no gastarte datos. |
 
 ## 7. Citas de *Magnifica Humanitas*

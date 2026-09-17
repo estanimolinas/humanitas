@@ -14,9 +14,11 @@ export default async function PaginaAlta({ searchParams }: PageProps<"/alta">) {
 
   if (persona) {
     return (
-      <main className="mx-auto flex w-full max-w-md flex-col gap-4 p-5">
-        <h1 className="text-2xl font-bold">Ya tenés tu cuenta, {persona.nombre}.</h1>
-        <Link href={volver} className="rounded-lg bg-zinc-900 px-4 py-4 text-center text-lg font-semibold text-white">
+      <main className="mx-auto flex w-full max-w-md flex-1 flex-col gap-4 p-5">
+        <h1 className="text-[22px] font-semibold leading-snug">
+          Ya tenés tu cuenta, {persona.nombre}.
+        </h1>
+        <Link href={volver} className="boton-principal">
           Seguir
         </Link>
       </main>
@@ -24,10 +26,10 @@ export default async function PaginaAlta({ searchParams }: PageProps<"/alta">) {
   }
 
   return (
-    <main className="mx-auto flex w-full max-w-md flex-col gap-5 p-5">
+    <main className="mx-auto flex w-full max-w-md flex-1 flex-col gap-5 p-5">
       <div className="flex flex-col gap-1">
-        <h1 className="text-2xl font-bold">Creá tu cuenta</h1>
-        <p className="text-lg">Es un minuto. No hace falta contraseña.</p>
+        <h1 className="text-[22px] font-semibold leading-snug">Creá tu cuenta</h1>
+        <p className="text-texto-2">Es un minuto. No hace falta contraseña.</p>
       </div>
       <FormularioAlta zonas={await zonasParaElegir()} volver={volver} />
     </main>

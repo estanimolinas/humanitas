@@ -3,7 +3,7 @@ import { COOKIE_SESION } from "@/lib/sesion/constantes";
 
 // Chequeo optimista: solo mira si hay cookie, sin ir a la base. La validación real del token la
 // hace cada página y cada server action con personaActual().
-// Corre solo en las rutas privadas: mirar el tablón nunca pasa por acá (R01).
+// Corre solo en las rutas privadas: mirar la lista nunca pasa por acá (R01).
 export function proxy(request: NextRequest) {
   if (request.cookies.has(COOKIE_SESION)) return NextResponse.next();
 

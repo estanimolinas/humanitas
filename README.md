@@ -1,6 +1,6 @@
 # Humanitas
 
-Tablón de trabajo y comercio local para barrios del norte de Santa Fe, Argentina. Es una PWA: se usa desde el navegador del celular y no hace falta instalar nada.
+App para vecinos y vecinas del norte de la ciudad de Santa Fe, Argentina: quien ofrece oportunidades de trabajo y quien quiere trabajar se encuentran. Es una PWA: se usa desde el navegador del celular y no hace falta instalar nada.
 
 - Requerimiento (fuente de verdad): [docs/humanitas_requerimiento_mvp.md](docs/humanitas_requerimiento_mvp.md)
 - Reglas para desarrollar: [CLAUDE.md](CLAUDE.md)
