@@ -1,0 +1,76 @@
+"use server";
+
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { camposDesdeFormData as camposAltaDesdeFormData, validarAlta } from "@/lib/alta";
+import { registrarPersona } from "@/lib/personas";
+import { crearPublicacion, subirFoto } from "@/lib/publicar";
+import { personaActual } from "@/lib/sesion/actual";
+import { COOKIE_SESION } from "@/lib/sesion/constantes";
+import { opcionesCookieSesion } from "@/lib/sesion/token";
+import {
+  camposDesdeFormData,
+  validarPublicacion,
+  type ErroresPublicacion,
+} from "@/lib/validar-publicacion";
+import type { ErroresAlta } from "@/lib/alta";
+
+export type EstadoPublicar = {
+  errores?: ErroresPublicacion;
+  erroresAlta?: ErroresAlta;
+  mensaje?: string;
+};
+
+const MENSAJES = {
+  limite_diario:
+    "Ya publicaste 3 cosas hoy. Mañana podés seguir publicando: es para que el listado no se llene de una sola persona.",
+  limite_activas: "Tenés 20 publicaciones activas. Cerrá alguna en Mis publicaciones y volvé a intentar.",
+  rubro_invalido: "Ese rubro no existe. Elegí otro de la lista.",
+  rubro_no_corresponde: "Ese rubro no corresponde a lo que elegiste. Revisá el rubro.",
+} as const;
+
+/**
+ * Publicar (7.3, R02). Si la persona no tiene cuenta, el mismo envío trae los datos del alta
+ * mínima (7.5) y nada de lo que escribió se pierde (B4).
+ */
+export async function publicar(_previo: EstadoPublicar, formData: FormData): Promise<EstadoPublicar> {
+  const campos = camposDesdeFormData(formData);
+  const rubroEsOtros = formData.get("rubroEsOtros") === "si";
+
+  const validacion = validarPublicacion(campos, rubroEsOtros);
+  if (!validacion.ok) return { errores: validacion.errores };
+
+  let persona = await personaActual();
+
+  // Sin cuenta: se crea acá, con los datos del alta que vienen en el mismo formulario.
+  if (!persona) {
+    const validacionAlta = validarAlta(camposAltaDesdeFormData(formData));
+    if (!validacionAlta.ok) return { erroresAlta: validacionAlta.errores };
+
+    const alta = await registrarPersona(validacionAlta.datos);
+    if (!alta.ok) {
+      return {
+        erroresAlta: { telefono: "Ese número ya tiene una cuenta." },
+        mensaje:
+          "Si cambiaste de celular, pedí que te recuperen el acceso en tu punto de alta: la vecinal, la parroquia o el centro comunitario donde te anotaste.",
+      };
+    }
+    (await cookies()).set(COOKIE_SESION, alta.token, opcionesCookieSesion());
+    persona = alta.persona;
+  }
+
+  const foto = formData.get("foto");
+  let fotoUrl: string | null = null;
+  if (foto instanceof File && foto.size > 0) {
+    try {
+      fotoUrl = await subirFoto(foto);
+    } catch (e) {
+      return { mensaje: e instanceof Error ? e.message : "No pudimos subir la foto." };
+    }
+  }
+
+  const resultado = await crearPublicacion(persona.id, validacion.datos, fotoUrl);
+  if (!resultado.ok) return { mensaje: MENSAJES[resultado.motivo] };
+
+  redirect(`/publicar/listo?id=${resultado.id}`);
+}

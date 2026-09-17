@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { contarPublicaciones, listarPublicaciones } from "@/lib/publicaciones";
 import type { FiltrosListado, Subtipo } from "@/lib/publicaciones-tipos";
 import { rubrosActivos } from "@/lib/rubros";
@@ -39,6 +40,10 @@ export default async function Inicio({ searchParams }: PageProps<"/">) {
 
   return (
     <main className="contenedor flex flex-1 flex-col gap-5">
+      <Link href="/publicar" className="boton-principal boton-suelto">
+        Publicar lo que ofrecés o necesitás
+      </Link>
+
       <Filtros estado={filtros} rubros={rubros} />
 
       {persona?.zonaId ? null : <SelectorZona zonas={zonas} zonaElegida={zonaVisitante} />}
@@ -53,11 +58,16 @@ export default async function Inicio({ searchParams }: PageProps<"/">) {
       {publicaciones.length > 0 ? (
         <ListaPublicaciones inicial={publicaciones} filtros={filtros} />
       ) : (
-        <div className="aviso">
-          {nombreRubro
-            ? `Todavía no hay publicaciones de ${nombreRubro}.`
-            : "Todavía no hay publicaciones acá."}{" "}
-          Sé la primera persona en publicar.
+        <div className="flex flex-col gap-3">
+          <p className="aviso">
+            {nombreRubro
+              ? `Todavía no hay publicaciones de ${nombreRubro}.`
+              : "Todavía no hay publicaciones acá."}{" "}
+            Sé la primera persona en publicar.
+          </p>
+          <Link href="/publicar" className="boton-principal boton-suelto">
+            Publicar
+          </Link>
         </div>
       )}
 
