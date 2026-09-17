@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { BarraInferior } from "./componentes/BarraInferior";
 import { Encabezado } from "./componentes/Encabezado";
+import { SinConexion } from "./componentes/SinConexion";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -18,6 +19,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="es-AR" className="h-full antialiased">
       <body className="flex min-h-full flex-col">
+        <SinConexion />
         <Encabezado />
         {children}
         <BarraInferior />
