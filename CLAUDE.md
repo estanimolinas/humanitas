@@ -118,7 +118,12 @@ El objetivo de esta etapa es **un MVP funcional para validar la idea con un [int
 
 ## Prioridades que pidió el usuario (17/09/2026, al cerrar el día)
 1. **Más seguridad** antes de exponerla: adelantar el endurecimiento (cabeceras, cerrar sesión, chequeo de secretos) y revisar el resto de la lista de 11.5.
-2. **Mucho más fiel al mockup de Claude Design** (`docs/diseno/mockup-claude-design.html`): repasar pantalla por pantalla contra las capturas y acercar la composición, no solo la paleta. Siguen valiendo las reglas de contenido y de contraste de `docs/guia-visual.md` (decisiones A–I). **Preguntarle qué pantallas ve menos fieles antes de tocar.**
+2. **Mucho más fiel al mockup de Claude Design** (`docs/diseno/mockup-claude-design.html`). El motivo es de producto, no de gusto: **tiene que ser lindo justamente porque es para gente de bajos recursos**; la dignidad también está en la estética, y eso es coherente con los principios. Concretamente:
+   - **Tipografía:** usar la del sistema de diseño "classical" (Cormorant Garamond en títulos, Lora en texto), **servida desde nuestro dominio**, nunca desde un CDN. Ambas son SIL OFL, gratis. Esto **revierte** la decisión del 15/09 de usar fuentes del sistema. Cuidar el presupuesto: hoy la primera carga son 185,5 KB de 300.
+   - **Colores:** respetar los tokens del mockup, corrigiendo solo lo que no se lee (ver contrastes en `docs/guia-visual.md`).
+   - **Pantalla de valores:** construirla como en el mockup (kicker dorado, cita grande, lista con el número de párrafo), con las citas textuales verificadas.
+   - Repasar pantalla por pantalla contra las capturas y acercar la composición, no solo la paleta. Siguen valiendo las decisiones A–I de contenido.
+3. **Los barrios del seed están mal:** no son los del norte de la ciudad de Santa Fe. Hay que rehacer la lista con los barrios reales del norte y confirmarla con el usuario antes de cargarla.
 
 ## Paso 11.5 — Endurecimiento antes del deploy (acordado 17/09/2026)
 Va entre la PWA (paso 11) y el checklist de producción (paso 12):
