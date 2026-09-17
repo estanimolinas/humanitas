@@ -134,8 +134,14 @@ describe("R12 / F3: ningún DELETE", () => {
       }
     };
     dirs.forEach(recorrer);
+    // Solo borrados en la base: `delete from …` en SQL y `.from("x").delete()` de supabase-js.
+    // No cuenta borrar una cookie (cookies().delete), que no toca la base.
     const conDelete = archivos.filter(
-      (a) => !permitidos.has(a) && /\bdelete\s+from\b|\.delete\s*\(/i.test(readFileSync(a, "utf8")),
+      (a) =>
+        !permitidos.has(a) &&
+        /\bdelete\s+from\b|\.from\([^)]*\)[\s\S]{0,80}?\.delete\s*\(|\brpc\([^)]*borrar/i.test(
+          readFileSync(a, "utf8"),
+        ),
     );
     expect(conDelete).toEqual([]);
   });
