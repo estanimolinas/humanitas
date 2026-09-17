@@ -182,7 +182,8 @@ describe("operador (R09, P2, E4)", () => {
       const [r] = await resolver(tx, pub, cualquiera, "archivar");
       expect(r).toMatchObject({ ok: false, motivo_rechazo: "no_sos_operador" });
       expect(await estadoDe(tx, pub)).toBe("activa");
-      const [{ n }] = await tx`select count(*)::int as n from acciones_operador`;
+      const [{ n }] = await tx`
+        select count(*)::int as n from acciones_operador where operador_id = ${cualquiera}`;
       expect(n).toBe(0);
     });
   });

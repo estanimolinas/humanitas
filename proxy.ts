@@ -13,5 +13,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/mis-publicaciones/:path*", "/operador/:path*", "/referente/:path*"],
+  matcher: ["/mis-publicaciones/:path*"],
 };

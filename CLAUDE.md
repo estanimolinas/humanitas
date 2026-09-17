@@ -92,9 +92,11 @@ eventos_mensuales mes, tipo, rubro_id?, zona_id?, cantidad
 ## Decisiones de producto cerradas (14/09/2026)
 - **Listado:** 10 por página con botón "Ver más".
 - **Zona del visitante:** selector opcional guardado en una cookie sin identificador. Ordena, nunca filtra (regla 4).
-- **Operador (R09):** página `/operador` solo para `es_operador`, con publicaciones `en_revision` y denuncias ("posible menor" arriba). El script de avisos incluye un mensaje `wa.me` al operador.
-- **Referentes (R14):** página `/referente` para el referente logueado. Carga el teléfono de la persona presente, ve solo el nombre para confirmar y la marca verificada.
-- **Recuperación (10.4):** el operador genera con un script un link de un solo uso que envía a mano por WhatsApp. Al usarlo, la sesión del dispositivo viejo se pierde.
+- **Sin roles en la app (17/09/2026, decisión del usuario que cambia 4.3):** en la app hay **solo vecinos**. No existen las pantallas de operador ni de referente. Las tres funciones sensibles se hacen con **scripts** del equipo del piloto (paso 10):
+  - resolver una denuncia (devolver al listado o archivar);
+  - marcar "Verificado en [lugar]" después de un alta presencial (R14);
+  - devolver el acceso a quien cambió de celular (10.4), con un link de un solo uso; al usarlo, la sesión vieja se pierde.
+  Las funciones SQL (`resolver_revision`, `verificar_persona`), `personas.es_operador` y la tabla `referentes` **siguen en el esquema** y las usan los scripts.
 - **Vencimientos (8.6):** `vence_en` se fija al crear o renovar (necesito +30 días, ofrezco +90). La query oculta lo vencido y un script manual actualiza el estado. Sin cron.
 - **Peso:** 300 KB medidos **comprimidos** (bytes transferidos en la primera carga de `/`). Si se supera, **parar y avisar** antes de optimizar.
 - **Términos y consentimiento:** texto borrador marcado "BORRADOR" hasta tener el definitivo.
@@ -111,10 +113,13 @@ eventos_mensuales mes, tipo, rubro_id?, zona_id?, cantidad
 - **Node:** 22 LTS fijado en `.nvmrc` (`nvm use`). No tocar el Node global ni el alias default de nvm.
 - **Tests:** Vitest (lógica y funciones SQL contra Supabase local). Sin Playwright.
 
+## Alcance del MVP (17/09/2026)
+El objetivo de esta etapa es **un MVP funcional para validar la idea con un [interno] de vecinos y presentarlo al [interno]**. Nada más. Ante la duda: **la app más simple posible**. Lo que se pueda hacer con un script del equipo, no se hace como pantalla.
+
 ## Paso 11.5 — Endurecimiento antes del deploy (acordado 17/09/2026)
 Va entre la PWA (paso 11) y el checklist de producción (paso 12):
 1. Cabeceras de seguridad (CSP, Referrer-Policy, Permissions-Policy, anti-iframe).
-2. Autorización en el servidor para `/operador` y `/referente` (no alcanza con ocultar el botón).
+2. Autorización en el servidor de toda pantalla privada (hoy solo Mis publicaciones).
 3. Límite de altas por IP (los de 8.5 son por persona).
 4. Cerrar sesión y rotación del token.
 5. Chequeo automático de secretos (nada con prefijo público).
