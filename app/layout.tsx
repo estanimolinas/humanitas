@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { BarraInferior } from "./componentes/BarraInferior";
 import { Encabezado } from "./componentes/Encabezado";
 import "./globals.css";
 
@@ -19,6 +20,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="flex min-h-full flex-col">
         <Encabezado />
         {children}
+        <BarraInferior />
       </body>
     </html>
   );
