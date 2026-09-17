@@ -104,6 +104,11 @@ export default async function PaginaDetalle({ params, searchParams }: PageProps<
           ? "Se abre WhatsApp con el mensaje escrito. Humanitas no participa del acuerdo: el precio lo arreglan entre ustedes."
           : "Para contactar hace falta dejar tu celular: así quien te atiende también sabe quién le escribe."}
       </p>
+
+      {/* Acción discreta, como pide 7.2 */}
+      <Link href={`/p/${p.id}/denunciar`} className="mt-2 text-sm text-texto-2 underline">
+        Denunciar esta publicación
+      </Link>
     </main>
   );
 }

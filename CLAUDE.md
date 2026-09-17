@@ -111,6 +111,20 @@ eventos_mensuales mes, tipo, rubro_id?, zona_id?, cantidad
 - **Node:** 22 LTS fijado en `.nvmrc` (`nvm use`). No tocar el Node global ni el alias default de nvm.
 - **Tests:** Vitest (lógica y funciones SQL contra Supabase local). Sin Playwright.
 
+## Paso 11.5 — Endurecimiento antes del deploy (acordado 17/09/2026)
+Va entre la PWA (paso 11) y el checklist de producción (paso 12):
+1. Cabeceras de seguridad (CSP, Referrer-Policy, Permissions-Policy, anti-iframe).
+2. Autorización en el servidor para `/operador` y `/referente` (no alcanza con ocultar el botón).
+3. Límite de altas por IP (los de 8.5 son por persona).
+4. Cerrar sesión y rotación del token.
+5. Chequeo automático de secretos (nada con prefijo público).
+6. Supabase nube: apagar lo mismo que en local; evaluar cerrar la Data API.
+7. `npm audit` y avisos de dependencias.
+8. Backups: confirmar qué da el plan Free y dejar script propio.
+9. Baja y anonimización del teléfono (Ley 25.326, 10.6).
+
+**Pendiente de decisión del usuario:** el listado escribe en la base en cada visita (rotación 8.2), lo que permite que un robot genere escrituras. Mitigaciones posibles: no rotar en pedidos repetidos sin sesión desde la misma IP, o rotar como máximo una vez por minuto por publicación. Toca una regla del requerimiento, así que lo decide el usuario.
+
 ## Forma de trabajo
 - Un paso por vez, en el orden acordado. Al terminar cada paso, mostrar cómo se verifican los criterios de aceptación (secciones 9 y 15) con tests o pasos manuales concretos.
 - Commits chicos con mensajes claros.

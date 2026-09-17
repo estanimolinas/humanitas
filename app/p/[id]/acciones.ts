@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { contactar } from "@/lib/contactos";
+import { denunciar, esMotivoValido } from "@/lib/denuncias";
 import { personaActual } from "@/lib/sesion/actual";
 
 /**
@@ -22,4 +23,19 @@ export async function contactarPorWhatsApp(formData: FormData) {
 
   // El teléfono viaja solo acá, en el link de WhatsApp, nunca en una pantalla.
   redirect(resultado.link);
+}
+
+/** Denunciar (10.5, E3). Se puede sin cuenta; dos denuncias de personas distintas ocultan (R09). */
+export async function denunciarPublicacion(formData: FormData) {
+  const id = String(formData.get("publicacionId") ?? "");
+  const motivo = String(formData.get("motivo") ?? "");
+  if (!id) redirect("/");
+  if (!esMotivoValido(motivo)) redirect(`/p/${id}/denunciar?error=motivo`);
+
+  const detalle = String(formData.get("detalle") ?? "").trim() || null;
+  const persona = await personaActual();
+
+  const r = await denunciar(id, persona?.id ?? null, motivo, detalle);
+  if (!r.ok) redirect(`/p/${id}/denunciar?error=${r.motivo}`);
+  redirect(`/p/${id}/denunciada`);
 }
