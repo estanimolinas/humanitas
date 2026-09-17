@@ -26,3 +26,7 @@ npm-debug.log*
 # supabase local
 supabase/.branches
 supabase/.temp
+
+# Export completo de Claude Design (incluye los PDF de la encíclica: no se redistribuyen).
+# En docs/diseno/ quedan solo el mockup y los estilos como referencia.
+docs/Humanitas_ marketplace laboral local/

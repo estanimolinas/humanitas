@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/classical-27d83b4b-5d5a-437f-8004-01e89360112c/styles.css">
+<script src="_ds/classical-27d83b4b-5d5a-437f-8004-01e89360112c/_ds_bundle.js"></script>
+<style>
+body{margin:0;background:#d7d3d3}
+a{color:#7d5411}a:hover{color:#5a3b0a}
+.hm{font-family:-apple-system,"SF Pro Text","SF Pro Display",BlinkMacSystemFont,"Helvetica Neue",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.hm ::placeholder{color:#9b9797}
+.hm-scroll::-webkit-scrollbar{width:0;height:0}
+</style>
+</helmet>
+<div class="hm" style="min-height:100vh;display:flex;flex-wrap:wrap;gap:22px;justify-content:center;align-items:flex-start;padding:26px 16px;background:var(--color-neutral-300)">
+<x-import component-from-global-scope="AndroidDevice" from="./android-frame.jsx" hint-size="412px,892px">
+<div style="height:100%;display:flex;flex-direction:column;background:var(--color-bg);color:var(--color-text);letter-spacing:-0.01em">
+
+<div style="flex:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 18px 11px;border-bottom:1px solid var(--color-divider)">
+<div style="display:flex;align-items:center;gap:11px;min-width:0">
+<div onClick="{{ onBack }}" style="flex:none;width:30px;height:30px;display:{{ backDisplay }};align-items:center;justify-content:center;margin-left:-6px;font-size:22px;color:var(--color-accent-700);cursor:pointer">‹</div>
+<div style="min-width:0">
+<div style="font-size:17px;font-weight:600;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ headerTitle }}</div>
+<div style="margin-top:1px;font-size:11.5px;color:var(--color-neutral-600)">{{ headerSub }}</div>
+</div>
+</div>
+<div style="flex:none;width:28px;height:28px;border:1px solid var(--color-accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--color-accent-700);letter-spacing:0">{{ userInitials }}</div>
+</div>
+
+<div class="hm-scroll" style="flex:1;overflow-y:auto;overflow-x:hidden">
+
+<sc-if value="{{ isFeed }}" hint-placeholder-val="{{ true }}">
+<div style="padding-bottom:20px">
+<div onClick="{{ goBuscar }}" style="margin:14px 16px 0;height:44px;display:flex;align-items:center;gap:9px;padding:0 13px;border:1px solid var(--color-neutral-400);border-radius:10px;background:var(--color-neutral-100);color:var(--color-neutral-600);font-size:15px;cursor:pointer">
+<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="flex:none;opacity:.8"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg><span>Buscar oficio, producto o vecino</span>
+</div>
+
+<div class="hm-scroll" style="display:flex;gap:7px;overflow-x:auto;padding:12px 16px 2px">
+<sc-for list="{{ rubroChips }}" as="c" hint-placeholder-count="5">
+<div onClick="{{ c.onClick }}" style="flex:none;height:32px;display:flex;align-items:center;padding:0 12px;border-radius:999px;font-size:13.5px;white-space:nowrap;cursor:pointer;border:1px solid {{ c.bc }};color:{{ c.fg }};background:{{ c.bg }}">{{ c.label }}</div>
+</sc-for>
+</div>
+
+<div style="margin:14px 16px 0;padding:12px 14px;border:1px solid var(--color-accent-300);border-left:3px solid var(--color-accent);border-radius:8px;background:var(--color-accent-100)">
+<div style="font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--color-accent-700);font-variant-numeric:tabular-nums">Orden de hoy · 15 sep</div>
+<div style="margin-top:5px;font-size:13.5px;line-height:1.45;color:var(--color-neutral-800);text-wrap:pretty">Las publicaciones rotan cada 24 h. Hoy encabezan las que menos visitas tuvieron esta semana.</div>
+<div onClick="{{ goReglas }}" style="margin-top:8px;font-size:13.5px;color:var(--color-accent-700);border-bottom:1px solid var(--color-accent);display:inline-block;cursor:pointer">Ver las reglas</div>
+</div>
+
+<div style="display:flex;align-items:baseline;justify-content:space-between;padding:20px 16px 8px">
+<div style="font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--color-neutral-700)">{{ feedTitle }}</div>
+<div style="font-size:12.5px;color:var(--color-neutral-600);font-variant-numeric:tabular-nums">{{ feedCount }}</div>
+</div>
+
+<div style="border-top:1px solid var(--color-divider)">
+<sc-for list="{{ visibles }}" as="p" hint-placeholder-count="4">
+<div onClick="{{ p.open }}" style="display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-bottom:1px solid var(--color-divider);cursor:pointer">
+<div style="flex:1;min-width:0">
+<div style="display:flex;align-items:center;gap:7px">
+<span style="font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:2px 6px;border-radius:3px;border:1px solid {{ p.tagBc }};color:{{ p.tagFg }}">{{ p.tipo }}</span>
+<span style="font-size:12px;color:var(--color-neutral-600);min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ p.meta }}</span>
+</div>
+<div style="margin-top:7px;font-size:16.5px;font-weight:600;line-height:1.3;text-wrap:pretty">{{ p.titulo }}</div>
+<div style="margin-top:4px;font-size:13.5px;line-height:1.4;color:var(--color-neutral-700)">{{ p.linea }}</div>
+<div style="margin-top:6px;display:flex;align-items:center;gap:10px;font-size:12px;color:var(--color-neutral-600)">
+<span>{{ p.autor }}</span>
+<span style="color:{{ p.vFg }}">{{ p.vLabel }}</span>
+</div>
+</div>
+<div style="flex:none;align-self:center;color:var(--color-neutral-500);font-size:19px">›</div>
+</div>
+</sc-for>
+</div>
+
+<div onClick="{{ goValores }}" style="margin:16px;padding:14px;border:1px solid var(--color-neutral-300);border-radius:8px;cursor:pointer">
+<div style="font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--color-neutral-600)">Fundamento</div>
+<div style="margin-top:6px;font-size:14px;line-height:1.5;color:var(--color-neutral-800);text-wrap:pretty">Humanitas no percibe comisión ni intermedia pagos. Su funcionamiento se apoya en la encíclica <em>Magnifica Humanitas</em> de León XIV (15 de mayo de 2026).</div>
+<div style="margin-top:8px;font-size:13.5px;color:var(--color-accent-700);border-bottom:1px solid var(--color-accent);display:inline-block">Ver los valores</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isBuscar }}" hint-placeholder-val="{{ true }}">
+<div style="padding:14px 16px 24px">
+<div style="display:flex;align-items:center;gap:9px;height:44px;padding:0 13px;border:1px solid var(--color-neutral-500);border-radius:10px;background:var(--color-neutral-100)">
+<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="flex:none;color:var(--color-neutral-600)"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>
+<input value="{{ query }}" onChange="{{ onQuery }}" placeholder="Oficio, producto o vecino" style="flex:1;min-width:0;border:0;outline:none;background:transparent;font:inherit;font-size:15px;color:var(--color-text)">
+</div>
+
+<div style="margin-top:20px;font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--color-neutral-600)">Tipo</div>
+<div style="margin-top:8px;display:flex;border:1px solid var(--color-neutral-400);border-radius:9px;overflow:hidden">
+<sc-for list="{{ tipoOpts }}" as="t" hint-placeholder-count="3">
+<div onClick="{{ t.onClick }}" style="flex:1;height:44px;display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;border-left:1px solid var(--color-neutral-300);color:{{ t.fg }};background:{{ t.bg }}">{{ t.label }}</div>
+</sc-for>
+</div>
+
+<div style="margin-top:20px;font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--color-neutral-600)">Barrio</div>
+<div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:7px">
+<sc-for list="{{ barrioOpts }}" as="b" hint-placeholder-count="6">
+<div onClick="{{ b.onClick }}" style="height:34px;display:flex;align-items:center;padding:0 12px;border-radius:999px;font-size:13.5px;cursor:pointer;border:1px solid {{ b.bc }};color:{{ b.fg }};background:{{ b.bg }}">{{ b.label }}</div>
+</sc-for>
+</div>
+
+<div style="margin-top:20px;font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--color-neutral-600)">Rubro</div>
+<div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:7px">
+<sc-for list="{{ rubroChips }}" as="c" hint-placeholder-count="6">
+<div onClick="{{ c.onClick }}" style="height:34px;display:flex;align-items:center;padding:0 12px;border-radius:999px;font-size:13.5px;cursor:pointer;border:1px solid {{ c.bc }};color:{{ c.fg }};background:{{ c.bg }}">{{ c.label }}</div>
+</sc-for>
+</div>
+
+<div onClick="{{ aplicarFiltros }}" style="margin-top:24px;height:48px;display:flex;align-items:center;justify-content:center;border:1px solid var(--color-accent);border-radius:10px;color:var(--color-accent-700);font-size:15.5px;font-weight:600;cursor:pointer">{{ resultadosLabel }}</div>
+<div onClick="{{ limpiar }}" style="margin-top:10px;height:44px;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--color-neutral-600);cursor:pointer">Limpiar filtros</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isDetalle }}" hint-placeholder-val="{{ true }}">
+<div style="padding:16px 16px 24px">
+<div style="display:flex;align-items:center;gap:7px">
+<span style="font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:2px 6px;border-radius:3px;border:1px solid var(--color-accent);color:var(--color-accent-700)">{{ det.tipo }}</span>
+<span style="font-size:12.5px;color:var(--color-neutral-600)">{{ det.rubro }}</span>
+</div>
+<div style="margin-top:10px;font-size:23px;font-weight:600;line-height:1.22;text-wrap:pretty">{{ det.titulo }}</div>
+<div style="margin-top:14px;padding:13px 0;border-top:1px solid var(--color-divider);border-bottom:1px solid var(--color-divider);display:flex;align-items:center;justify-content:space-between;gap:12px">
+<div style="min-width:0">
+<div style="font-size:15px;font-weight:600">{{ det.autor }}</div>
+<div style="margin-top:3px;font-size:12.5px;color:{{ det.vFg }}">{{ det.vLabel }}</div>
+</div>
+<div style="flex:none;text-align:right;font-size:12.5px;color:var(--color-neutral-600)">{{ det.barrio }}<br>{{ det.desde }}</div>
+</div>
+
+<div style="margin-top:16px;font-size:14.5px;line-height:1.55;color:var(--color-neutral-800);text-wrap:pretty">{{ det.desc }}</div>
+
+<div style="margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--color-divider);border:1px solid var(--color-divider);border-radius:8px;overflow:hidden">
+<sc-for list="{{ det.datos }}" as="d" hint-placeholder-count="4">
+<div style="background:var(--color-bg);padding:11px 13px">
+<div style="font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--color-neutral-600)">{{ d.k }}</div>
+<div style="margin-top:4px;font-size:14.5px;font-variant-numeric:tabular-nums">{{ d.v }}</div>
+</div>
+</sc-for>
+</div>
+
+<div onClick="{{ contactar }}" style="margin-top:20px;height:52px;display:flex;align-items:center;justify-content:center;gap:9px;border:1px solid var(--color-accent);border-radius:10px;color:var(--color-accent-700);font-size:16px;font-weight:600;cursor:pointer">Contactar por WhatsApp</div>
+<div style="margin-top:9px;font-size:12.5px;line-height:1.5;color:var(--color-neutral-600);text-align:center">Se abre tu WhatsApp con el mensaje escrito. Humanitas no participa del acuerdo.</div>
+
+<div onClick="{{ goReglas }}" style="margin-top:22px;padding:12px 14px;border:1px solid var(--color-neutral-300);border-radius:8px;background:var(--color-neutral-100);cursor:pointer">
+<div style="font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--color-neutral-600)">Por qué ves esto acá</div>
+<div style="margin-top:5px;font-size:13.5px;line-height:1.45;color:var(--color-neutral-800)">{{ det.porque }}</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isPublicar }}" hint-placeholder-val="{{ true }}">
+<div style="padding:14px 16px 24px">
+<sc-if value="{{ publicado }}" hint-placeholder-val="{{ false }}">
+<div style="padding:22px 0">
+<div style="width:46px;height:46px;border:1px solid var(--color-accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--color-accent-700)">✓</div>
+<div style="margin-top:14px;font-size:21px;font-weight:600;line-height:1.25">Tu publicación ya está en el barrio</div>
+<div style="margin-top:8px;font-size:14.5px;line-height:1.55;color:var(--color-neutral-700);text-wrap:pretty">Entra en la rotación de mañana a las 6:00. Los vecinos te escriben directo por WhatsApp.</div>
+<div onClick="{{ goFeed }}" style="margin-top:20px;height:48px;display:flex;align-items:center;justify-content:center;border:1px solid var(--color-accent);border-radius:10px;color:var(--color-accent-700);font-size:15.5px;font-weight:600;cursor:pointer">Ver el listado</div>
+<div onClick="{{ otraPub }}" style="margin-top:10px;height:44px;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--color-neutral-600);cursor:pointer">Publicar otra cosa</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ noPublicado }}" hint-placeholder-val="{{ true }}">
+<div>
+<div style="font-size:14.5px;line-height:1.5;color:var(--color-neutral-700);text-wrap:pretty">Publicás lo que ofrecés o lo que necesitás desde el mismo lugar.</div>
+
+<div style="margin-top:18px;display:flex;border:1px solid var(--color-neutral-400);border-radius:9px;overflow:hidden">
+<sc-for list="{{ formTipo }}" as="t" hint-placeholder-count="2">
+<div onClick="{{ t.onClick }}" style="flex:1;height:48px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;cursor:pointer;border-left:1px solid var(--color-neutral-300);color:{{ t.fg }};background:{{ t.bg }}">{{ t.label }}</div>
+</sc-for>
+</div>
+
+<div style="margin-top:20px;font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--color-neutral-600)">Título</div>
+<input value="{{ fTitulo }}" onChange="{{ onTitulo }}" placeholder="{{ tituloPh }}" style="margin-top:7px;width:100%;box-sizing:border-box;height:46px;padding:0 13px;border:1px solid var(--color-neutral-400);border-radius:9px;background:var(--color-neutral-100);font:inherit;font-size:15px;color:var(--color-text);outline:none">
+
+<div style="margin-top:18px;font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--color-neutral-600)">Rubro</div>
+<div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:7px">
+<sc-for list="{{ formRubros }}" as="r" hint-placeholder-count="6">
+<div onClick="{{ r.onClick }}" style="height:36px;display:flex;align-items:center;padding:0 12px;border-radius:999px;font-size:13.5px;cursor:pointer;border:1px solid {{ r.bc }};color:{{ r.fg }};background:{{ r.bg }}">{{ r.label }}</div>
+</sc-for>
+</div>
+
+<div style="margin-top:18px;font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--color-neutral-600)">Barrio</div>
+<div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:7px">
+<sc-for list="{{ formBarrios }}" as="b" hint-placeholder-count="5">
+<div onClick="{{ b.onClick }}" style="height:36px;display:flex;align-items:center;padding:0 12px;border-radius:999px;font-size:13.5px;cursor:pointer;border:1px solid {{ b.bc }};color:{{ b.fg }};background:{{ b.bg }}">{{ b.label }}</div>
+</sc-for>
+</div>
+
+<div style="margin-top:18px;font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--color-neutral-600)">Detalle</div>
+<textarea value="{{ fDesc }}" onChange="{{ onDesc }}" rows="4" placeholder="Contá en dos líneas qué hacés, cómo cobrás y cuándo podés." style="margin-top:7px;width:100%;box-sizing:border-box;padding:11px 13px;border:1px solid var(--color-neutral-400);border-radius:9px;background:var(--color-neutral-100);font:inherit;font-size:15px;line-height:1.45;color:var(--color-text);outline:none;resize:none"></textarea>
+
+<div style="margin-top:18px;display:flex;align-items:center;gap:11px;padding:12px 13px;border:1px dashed var(--color-neutral-400);border-radius:9px">
+<div style="flex:none;width:44px;height:44px;border:1px solid var(--color-neutral-400);border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--color-neutral-600);background:var(--color-neutral-200)"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="9" cy="9" r="1.6"></circle><path d="M21 15l-5-5-11 11"></path></svg></div>
+<div style="min-width:0">
+<div style="font-size:14px;font-weight:600">Foto (opcional)</div>
+<div style="margin-top:2px;font-size:12.5px;line-height:1.4;color:var(--color-neutral-600)">Se comprime a menos de 60 kB para no gastarte datos.</div>
+</div>
+</div>
+
+<div onClick="{{ publicar }}" style="margin-top:22px;height:52px;display:flex;align-items:center;justify-content:center;border:1px solid var(--color-accent);border-radius:10px;color:var(--color-accent-700);font-size:16px;font-weight:600;cursor:pointer">Publicar</div>
+<div style="margin-top:9px;font-size:12.5px;line-height:1.5;color:var(--color-neutral-600);text-wrap:pretty">Sin costo, sin comisión y sin puja por aparecer primero. Tu teléfono sólo se muestra cuando alguien toca contactar.</div>
+</div>
+</sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ isReglas }}" hint-placeholder-val="{{ true }}">
+<div style="padding:16px 16px 26px">
+<div style="font-size:22px;font-weight:600;line-height:1.25;text-wrap:pretty">El orden de las publicaciones es público</div>
+<div style="margin-top:9px;font-size:14.5px;line-height:1.55;color:var(--color-neutral-700);text-wrap:pretty">No hay algoritmo que premie a los de siempre, ni lugares pagos. Estas son las cuatro reglas, en orden de aplicación.</div>
+<div style="margin-top:20px;border-top:1px solid var(--color-divider)">
+<sc-for list="{{ reglas }}" as="r" hint-placeholder-count="4">
+<div style="display:flex;gap:14px;padding:15px 0;border-bottom:1px solid var(--color-divider)">
+<div style="flex:none;width:26px;font-size:15px;color:var(--color-accent-700);font-variant-numeric:tabular-nums">{{ r.n }}</div>
+<div style="min-width:0">
+<div style="font-size:15.5px;font-weight:600;line-height:1.3">{{ r.t }}</div>
+<div style="margin-top:5px;font-size:13.5px;line-height:1.5;color:var(--color-neutral-700);text-wrap:pretty">{{ r.d }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+<div style="margin-top:18px;padding:13px 14px;border:1px solid var(--color-accent-300);border-left:3px solid var(--color-accent);border-radius:8px;background:var(--color-accent-100);font-size:13.5px;line-height:1.5;color:var(--color-neutral-800);text-wrap:pretty">La rotación se recalcula a las 6:00. Podés ver el registro de los últimos siete días desde cualquier publicación.</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isValores }}" hint-placeholder-val="{{ false }}">
+<div style="padding:16px 16px 26px">
+<div style="font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--color-accent-700)">Magnifica Humanitas · León XIV</div>
+<div style="margin-top:8px;font-size:22px;font-weight:600;line-height:1.25;text-wrap:pretty">«El objetivo es ofrecer a cada persona las condiciones para vivir dignamente a través de su propio trabajo»</div>
+<div style="margin-top:7px;font-size:12.5px;color:var(--color-neutral-600);font-variant-numeric:tabular-nums">Magnifica Humanitas, n. 149</div>
+<div style="margin-top:12px;font-size:14.5px;line-height:1.55;color:var(--color-neutral-700);text-wrap:pretty">Humanitas adhiere a los siguientes valores de la doctrina social, con la referencia del número de la encíclica en que se enuncian.</div>
+
+<div style="margin-top:20px;border-top:1px solid var(--color-divider)">
+<sc-for list="{{ principios }}" as="v" hint-placeholder-count="5">
+<div style="padding:16px 0;border-bottom:1px solid var(--color-divider)">
+<div style="font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--color-accent-700);font-variant-numeric:tabular-nums">{{ v.ref }}</div>
+<div style="margin-top:5px;font-size:16px;font-weight:600;line-height:1.3">{{ v.t }}</div>
+<div style="margin-top:5px;font-size:13.5px;line-height:1.55;color:var(--color-neutral-700);text-wrap:pretty">{{ v.d }}</div>
+</div>
+</sc-for>
+</div>
+
+<div style="margin-top:18px;padding:14px;border-left:3px solid var(--color-accent);background:var(--color-accent-100);border:1px solid var(--color-accent-300);border-radius:8px;font-size:13.5px;line-height:1.55;color:var(--color-neutral-800);text-wrap:pretty">«La persona humana es un fin y no un medio» (n. 152). En consecuencia, en Humanitas no se vende posición en el listado ni se percibe comisión por el trabajo ajeno.</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isPerfil }}" hint-placeholder-val="{{ true }}">
+<div style="padding:16px 16px 26px">
+<div style="display:flex;align-items:center;gap:13px">
+<div style="flex:none;width:52px;height:52px;border:1px solid var(--color-accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--color-accent-700)">MB</div>
+<div style="min-width:0">
+<div style="font-size:19px;font-weight:600">Marisa Bravo</div>
+<div style="margin-top:3px;font-size:13px;color:var(--color-neutral-600)">Barranquitas Sur · desde marzo 2026</div>
+</div>
+</div>
+
+<div style="margin-top:18px;padding:13px 14px;border:1px solid var(--color-accent-300);border-radius:8px;background:var(--color-accent-100)">
+<div style="font-size:13.5px;font-weight:600;color:var(--color-accent-800)">Verificación presencial pendiente</div>
+<div style="margin-top:5px;font-size:13.5px;line-height:1.5;color:var(--color-neutral-800);text-wrap:pretty">Acercate con tu DNI a la Vecinal Barranquitas, lunes a viernes de 9 a 13, o a la Parroquia San Roque los sábados. No hay puntajes ni estrellas: el sello lo pone un vecino que te vio la cara.</div>
+<div onClick="{{ goReglas }}" style="margin-top:9px;font-size:13.5px;color:var(--color-accent-700);border-bottom:1px solid var(--color-accent);display:inline-block;cursor:pointer">Ver puntos y horarios</div>
+</div>
+
+<div style="margin-top:22px;font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--color-neutral-600)">Mis publicaciones</div>
+<div style="margin-top:8px;border-top:1px solid var(--color-divider)">
+<sc-for list="{{ mias }}" as="m" hint-placeholder-count="2">
+<div style="padding:13px 0;border-bottom:1px solid var(--color-divider);display:flex;align-items:center;justify-content:space-between;gap:12px">
+<div style="min-width:0">
+<div style="font-size:15px;font-weight:600;line-height:1.3">{{ m.titulo }}</div>
+<div style="margin-top:4px;font-size:12.5px;color:var(--color-neutral-600);font-variant-numeric:tabular-nums">{{ m.meta }}</div>
+</div>
+<div style="flex:none;font-size:12.5px;color:var(--color-accent-700);border:1px solid var(--color-accent);border-radius:999px;padding:5px 11px">{{ m.estado }}</div>
+</div>
+</sc-for>
+</div>
+
+<div style="margin-top:22px;font-size:12.5px;line-height:1.55;color:var(--color-neutral-600);text-wrap:pretty">Humanitas funciona sin instalar nada y guarda lo mínimo: tu nombre, tu barrio y lo que publicás. Nada de datos de navegación.</div>
+</div>
+</sc-if>
+
+</div>
+
+<div style="flex:none;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--color-divider);background:var(--color-bg)">
+<sc-for list="{{ tabs }}" as="t" hint-placeholder-count="4">
+<div onClick="{{ t.onClick }}" style="height:60px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;color:{{ t.fg }}">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="{{ t.d1 }}"></path><path d="{{ t.d2 }}"></path></svg>
+<div style="font-size:11px;letter-spacing:0">{{ t.label }}</div>
+</div>
+</sc-for>
+</div>
+
+</div>
+</x-import>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:460,&quot;height&quot;:960}}">
+const RUBROS = ['Albañilería','Peluquería','Pintura','Panadería','Comida','Costura','Jardinería','Electricidad','Flete','Cuidados'];
+const BARRIOS = ['Barranquitas','Yapeyú','Santa Rosa de Lima','Alto Verde','Villa del Parque','Guadalupe Norte'];
+
+const POSTS = [
+  {id:1,tipo:'Ofrezco',rubro:'Albañilería',titulo:'Revoque, contrapiso y arreglos de humedad',autor:'Rubén Ojeda',barrio:'Barranquitas',linea:'Trabajo por día o por metro. Llevo mis herramientas.',verificada:true,desde:'Publicado hace 2 días',
+   desc:'Hago revoque fino y grueso, contrapisos, carpetas y arreglos de humedad en paredes y techos. Trabajo solo o con un ayudante según el tamaño. Presupuesto sin cargo en el barrio.',
+   datos:[{k:'Cobra',v:'Por día o por m²'},{k:'Disponible',v:'Lun a sáb'},{k:'Zona',v:'Norte y Oeste'},{k:'Experiencia',v:'14 años'}],
+   porque:'Está primera hoy porque tuvo pocas visitas esta semana y es de tu barrio. Mañana baja y sube otra.'},
+  {id:2,tipo:'Necesito',rubro:'Costura',titulo:'Alguien que arregle cortinas y haga dobladillos',autor:'Lucía Arce',barrio:'Yapeyú',linea:'Son cuatro cortinas grandes. Pago al terminar.',verificada:false,desde:'Publicado hace 5 horas',
+   desc:'Necesito acortar cuatro cortinas de living y hacer dobladillos en dos pantalones. Puedo llevar las cosas a domicilio si es en el norte.',
+   datos:[{k:'Paga',v:'A convenir'},{k:'Cuándo',v:'Esta semana'},{k:'Zona',v:'Yapeyú'},{k:'Cantidad',v:'6 prendas'}],
+   porque:'Aparece acá porque es del rubro que miraste y todavía no recibió ningún contacto.'},
+  {id:3,tipo:'Ofrezco',rubro:'Panadería',titulo:'Pan casero y facturas por encargo',autor:'Doña Nélida',barrio:'Santa Rosa de Lima',linea:'Encargos hasta las 20 h del día anterior.',verificada:true,desde:'Publicado hace 1 día',
+   desc:'Amaso pan común, pan dulce y facturas. Se encarga el día anterior y se retira por casa a partir de las 7 de la mañana. Docena de facturas y pan por kilo.',
+   datos:[{k:'Precio',v:'Por kilo'},{k:'Retiro',v:'Desde 7:00'},{k:'Encargos',v:'Hasta 20:00'},{k:'Entrega',v:'A convenir'}],
+   porque:'Es de tu barrio vecino y está en la mitad de la rotación de hoy.'},
+  {id:4,tipo:'Ofrezco',rubro:'Peluquería',titulo:'Corte y color a domicilio',autor:'Vanesa Ruiz',barrio:'Barranquitas',linea:'Voy con mis cosas. Turnos de mañana y de tarde.',verificada:true,desde:'Publicado hace 3 días',
+   desc:'Corte de dama, caballero y niños, color y alisado. Atiendo a domicilio en el norte de la ciudad. Turnos por WhatsApp con 24 horas de aviso.',
+   datos:[{k:'Precio',v:'Desde $6.000'},{k:'Turnos',v:'9 a 19'},{k:'Zona',v:'Norte'},{k:'A domicilio',v:'Sí'}],
+   porque:'Rota hoy en cuarto lugar. Ayer estaba primera.'},
+  {id:5,tipo:'Necesito',rubro:'Pintura',titulo:'Pintor para dos ambientes y frente',autor:'Carlos Medina',barrio:'Villa del Parque',linea:'Material lo pongo yo. Presupuesto por mano de obra.',verificada:true,desde:'Publicado hace 6 días',
+   desc:'Busco pintor para dos ambientes interiores y el frente de la casa. La pintura y los rodillos los compro yo. Necesito presupuesto de mano de obra y una fecha.',
+   datos:[{k:'Paga',v:'Mano de obra'},{k:'Cuándo',v:'Fin de mes'},{k:'Zona',v:'Villa del Parque'},{k:'Superficie',v:'Aprox. 60 m²'}],
+   porque:'Se muestra porque cumple el filtro de barrio y lleva días sin respuesta.'},
+  {id:6,tipo:'Ofrezco',rubro:'Flete',titulo:'Flete chico con ayudante',autor:'Miguel Sosa',barrio:'Alto Verde',linea:'Mudanzas chicas y traslado de materiales.',verificada:false,desde:'Publicado hace 12 horas',
+   desc:'Camioneta con caja para mudanzas chicas, escombro y materiales. Voy con un ayudante. Cobro por viaje según distancia.',
+   datos:[{k:'Precio',v:'Por viaje'},{k:'Horario',v:'8 a 20'},{k:'Zona',v:'Toda la ciudad'},{k:'Ayudante',v:'Incluido'}],
+   porque:'Nueva publicación: entra en la rotación de mañana con prioridad de estreno.'}
+];
+
+const REGLAS = [
+  {n:'01',t:'Primero, tu barrio',d:'Se muestran las publicaciones del barrio que elegiste y de los barrios que lo tocan. Después, el resto del norte.'},
+  {n:'02',t:'Rota cada 24 horas',d:'Todos los días a las 6:00 se rearma el orden. Nadie se queda arriba dos días seguidos.'},
+  {n:'03',t:'Prioridad a quien menos se vio',d:'Entre publicaciones parecidas, encabeza la que tuvo menos visitas y menos contactos en los últimos siete días.'},
+  {n:'04',t:'Nada se compra ni se puntúa',d:'No existe lugar pago ni puntaje de estrellas. El sello de verificación no mejora tu posición: sólo dice que un vecino te conoció en persona.'}
+];
+
+const PRINCIPIOS = [
+  {ref:'n. 152', t:'Dignidad de la persona', d:'La persona humana es un fin y no un medio. Su valor no depende de su rendimiento ni de su capacidad de competir.'},
+  {ref:'n. 148', t:'Valor del trabajo', d:'El trabajo es «la clave esencial» de la cuestión social: a través de él la persona desarrolla sus capacidades, sostiene a su familia y contribuye al progreso común.'},
+  {ref:'n. 68', t:'Subsidiariedad', d:'Lo que pueden realizar las personas, las familias y las comunidades locales no debe ser absorbido por instancias superiores.'},
+  {ref:'n. 73', t:'Solidaridad', d:'Cada persona está inserta en una red de relaciones que la vincula a los demás y compromete su responsabilidad hacia ellos.'},
+  {ref:'n. 63', t:'Bien común', d:'La libertad y la iniciativa de cada uno se ordenan al desarrollo integral de todos, y no al beneficio de unos pocos.'},
+  {ref:'n. 174', t:'Libertad frente a la mercantilización', d:'Toda forma de mercantilización de la persona queda excluida: la dignidad inalienable de cada ser humano es criterio de toda decisión social y económica.'}
+];
+
+const MIAS = [
+  {titulo:'Empanadas por docena, viernes y sábados',meta:'Ofrezco · 9 contactos · hace 4 días',estado:'Activa'},
+  {titulo:'Necesito quien corte el pasto del fondo',meta:'Necesito · 2 contactos · hace 11 días',estado:'Pausada'}
+];
+
+class Component extends DCLogic {
+  state = {screen:'feed', prev:'feed', detId:null, query:'', tipo:'Todo', barrio:null, rubro:null,
+    fTipo:'Ofrezco', fTitulo:'', fDesc:'', fRubro:null, fBarrio:'Barranquitas', publicado:false};
+
+  go(screen){ this.setState(s => ({screen, prev: s.screen})); }
+
+  pill(active){
+    return active
+      ? {bg:'var(--color-accent-100)', bc:'var(--color-accent)', fg:'var(--color-accent-800)'}
+      : {bg:'transparent', bc:'var(--color-neutral-400)', fg:'var(--color-neutral-700)'};
+  }
+
+  filtered(){
+    const {query, tipo, barrio, rubro} = this.state;
+    const q = query.trim().toLowerCase();
+    return POSTS.filter(p =>
+      (tipo === 'Todo' || p.tipo === tipo) &&
+      (!barrio || p.barrio === barrio) &&
+      (!rubro || p.rubro === rubro) &&
+      (!q || (p.titulo + ' ' + p.rubro + ' ' + p.autor + ' ' + p.linea).toLowerCase().includes(q))
+    );
+  }
+
+  renderVals(){
+    const s = this.state;
+    const list = this.filtered();
+    const det = POSTS.find(p => p.id === s.detId) || POSTS[0];
+
+    const titles = {
+      feed:['Humanitas','Norte de Santa Fe'],
+      buscar:['Buscar','Filtrá por barrio y rubro'],
+      detalle:['Publicación', det.rubro + ' · ' + det.barrio],
+      publicar:['Publicar','Ofrezco o necesito'],
+      reglas:['Reglas de orden','Públicas y revisables'],
+      valores:['Nuestros valores','Magnifica Humanitas'],
+      perfil:['Mi perfil','Marisa Bravo']
+    };
+    const t = titles[s.screen] || titles.feed;
+
+    const tabDefs = [
+      {id:'feed', label:'Inicio', d1:'M3 10.2 12 3l9 7.2V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z', d2:'M9.5 21v-6h5v6'},
+      {id:'buscar', label:'Buscar', d1:'M11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14z', d2:'M21 21l-4.3-4.3'},
+      {id:'publicar', label:'Publicar', d1:'M12 5v14', d2:'M5 12h14'},
+      {id:'perfil', label:'Mi perfil', d1:'M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z', d2:'M4.5 21a7.5 7.5 0 0 1 15 0'}
+    ];
+
+    const filtroActivo = s.rubro || s.barrio || s.tipo !== 'Todo' || s.query.trim();
+
+    return {
+      headerTitle: t[0], headerSub: t[1], userInitials: 'MB',
+      backDisplay: (s.screen === 'detalle' || s.screen === 'reglas' || s.screen === 'valores') ? 'flex' : 'none',
+      onBack: () => this.go(s.prev === s.screen ? 'feed' : s.prev),
+
+      isFeed: s.screen === 'feed', isBuscar: s.screen === 'buscar', isDetalle: s.screen === 'detalle',
+      isPublicar: s.screen === 'publicar', isReglas: s.screen === 'reglas', isPerfil: s.screen === 'perfil',
+      isValores: s.screen === 'valores',
+
+      goFeed: () => this.go('feed'), goBuscar: () => this.go('buscar'), goReglas: () => this.go('reglas'),
+      goValores: () => this.go('valores'),
+
+      tabs: tabDefs.map(d => ({...d,
+        fg: s.screen === d.id ? 'var(--color-accent-700)' : 'var(--color-neutral-600)',
+        onClick: () => this.go(d.id)})),
+
+      feedTitle: filtroActivo ? 'Resultados' : 'Rotación de hoy',
+      feedCount: list.length === 1 ? '1 publicación' : list.length + ' publicaciones',
+      visibles: list.map(p => ({
+        ...p,
+        meta: p.rubro + ' · ' + p.barrio,
+        tagFg: p.tipo === 'Ofrezco' ? 'var(--color-accent-800)' : 'var(--color-neutral-700)',
+        tagBc: p.tipo === 'Ofrezco' ? 'var(--color-accent)' : 'var(--color-neutral-500)',
+        vLabel: p.verificada ? '✓ Verificado en vecinal' : 'Sin verificar aún',
+        vFg: p.verificada ? 'var(--color-accent-700)' : 'var(--color-neutral-500)',
+        open: () => this.setState({screen:'detalle', prev:s.screen, detId:p.id})
+      })),
+
+      query: s.query,
+      onQuery: e => this.setState({query: e.target.value}),
+      tipoOpts: ['Todo','Ofrezco','Necesito'].map(v => ({label: v,
+        bg: s.tipo === v ? 'var(--color-accent-100)' : 'transparent',
+        fg: s.tipo === v ? 'var(--color-accent-800)' : 'var(--color-neutral-700)',
+        onClick: () => this.setState({tipo: v})})),
+      barrioOpts: BARRIOS.map(b => ({label: b, ...this.pill(s.barrio === b),
+        onClick: () => this.setState({barrio: s.barrio === b ? null : b})})),
+      rubroChips: RUBROS.map(r => ({label: r, ...this.pill(s.rubro === r),
+        onClick: () => this.setState({rubro: s.rubro === r ? null : r, screen: 'feed'})})),
+      resultadosLabel: list.length === 1 ? 'Ver 1 publicación' : 'Ver ' + list.length + ' publicaciones',
+      aplicarFiltros: () => this.go('feed'),
+      limpiar: () => this.setState({query:'', tipo:'Todo', barrio:null, rubro:null}),
+
+      det: {...det,
+        vLabel: det.verificada ? '✓ Verificado en la Vecinal Barranquitas' : 'Sin verificación presencial todavía',
+        vFg: det.verificada ? 'var(--color-accent-700)' : 'var(--color-neutral-600)'},
+      contactar: () => {},
+
+      publicado: s.publicado, noPublicado: !s.publicado,
+      formTipo: ['Ofrezco','Necesito'].map(v => ({label: v,
+        bg: s.fTipo === v ? 'var(--color-accent-100)' : 'transparent',
+        fg: s.fTipo === v ? 'var(--color-accent-800)' : 'var(--color-neutral-700)',
+        onClick: () => this.setState({fTipo: v})})),
+      tituloPh: s.fTipo === 'Ofrezco' ? 'Ej. Arreglo de humedad y revoque' : 'Ej. Necesito pintor para dos ambientes',
+      fTitulo: s.fTitulo, onTitulo: e => this.setState({fTitulo: e.target.value}),
+      fDesc: s.fDesc, onDesc: e => this.setState({fDesc: e.target.value}),
+      formRubros: RUBROS.map(r => ({label: r, ...this.pill(s.fRubro === r),
+        onClick: () => this.setState({fRubro: r})})),
+      formBarrios: BARRIOS.map(b => ({label: b, ...this.pill(s.fBarrio === b),
+        onClick: () => this.setState({fBarrio: b})})),
+      publicar: () => this.setState({publicado: true}),
+      otraPub: () => this.setState({publicado:false, fTitulo:'', fDesc:'', fRubro:null}),
+
+      reglas: REGLAS, mias: MIAS, principios: PRINCIPIOS
+    };
+  }
+}
+
+</script>
+</body>
+</html>
