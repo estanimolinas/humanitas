@@ -41,6 +41,16 @@ Fuentes del sistema (`system-ui, -apple-system, "Segoe UI", Roboto, sans-serif`)
 | Botones | 16 px | 600 |
 | Campos de formulario | 16 px (evita el zoom automático del celular) | 400 |
 
+## 2 bis. Layout: celular y escritorio (17/09/2026)
+
+- **Un solo ancho de página** (`--ancho-pagina: 40rem`) para el encabezado y para todas las pantallas, centrado. Así nada queda desalineado entre la marca y el contenido.
+- **Celular:** una columna al ancho de la pantalla, con 16 px de margen a los costados.
+- **Escritorio (≥ 640 px):** cuerpo de texto en 17 px, títulos en 28 px, más aire arriba y abajo, y los campos y botones de formulario topados en 26 rem para que no se estiren.
+- **Botón suelto** (fuera de un formulario, como "Crear mi cuenta"): en escritorio no cruza toda la columna; queda a la izquierda con un ancho mínimo de 16 rem.
+- **Encabezado fijo** arriba al hacer scroll, con el color del fondo.
+- **Sin scroll horizontal** en ningún ancho: verificado a 390 px y a 1280 px.
+- **Color de la barra del navegador** en el celular: el fondo de la app.
+
 ## 3. Componentes
 
 - **Encabezado:** "Humanitas" + subtítulo corto ("Norte de Santa Fe"); flecha de volver en pantallas internas.

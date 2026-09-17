@@ -6,10 +6,10 @@ export const metadata: Metadata = { title: "Términos · Humanitas" };
 // definitivo, idealmente validado con alguien de derecho (requerimiento 10.6 y 18).
 export default function PaginaTerminos() {
   return (
-    <main className="mx-auto flex w-full max-w-md flex-1 flex-col gap-4 p-5">
+    <main className="contenedor flex flex-1 flex-col gap-4">
       <p className="aviso text-center font-semibold">BORRADOR · texto provisorio</p>
 
-      <h1 className="text-[22px] font-semibold leading-snug">Términos de uso</h1>
+      <h1 className="titulo">Términos de uso</h1>
 
       <section className="flex flex-col gap-2 border-t divisor pt-4">
         <h2 className="kicker">Qué es Humanitas</h2>

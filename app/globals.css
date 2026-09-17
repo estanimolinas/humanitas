@@ -29,6 +29,58 @@ body {
   line-height: 1.5;
 }
 
+/* ── Layout: celular primero, cómodo también en pantalla grande ────────────── */
+
+/* Un solo ancho de página para el encabezado y para todas las pantallas, así nada
+   queda desalineado. En el celular ocupa todo el ancho con margen de 16 px. */
+:root {
+  --ancho-pagina: 40rem;
+}
+
+.contenedor {
+  width: 100%;
+  max-width: var(--ancho-pagina);
+  margin-inline: auto;
+  padding: 20px 16px 40px;
+}
+
+@media (min-width: 640px) {
+  .contenedor {
+    padding: 32px 24px 56px;
+  }
+  /* En escritorio los campos no se estiran a lo ancho de la columna. */
+  .campo,
+  form .boton-principal,
+  form .boton-secundario {
+    max-width: 26rem;
+  }
+}
+
+.titulo {
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.25;
+  text-wrap: pretty;
+}
+
+@media (min-width: 640px) {
+  .titulo {
+    font-size: 28px;
+  }
+  body {
+    font-size: 17px;
+  }
+}
+
+/* Encabezado fijo: en el celular queda siempre a mano; en desktop no molesta. */
+.encabezado {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--color-fondo);
+  border-bottom: 1px solid var(--divisor);
+}
+
 /* ── Componentes de la guía visual ─────────────────────────────────────────── */
 
 /* Línea fina entre filas y secciones */
@@ -94,6 +146,17 @@ body {
   opacity: 0.6;
 }
 
+/* Llamado a la acción suelto (no dentro de un formulario): en desktop no cruza
+   toda la columna. */
+@media (min-width: 640px) {
+  .boton-suelto {
+    width: auto;
+    min-width: 16rem;
+    align-self: flex-start;
+    padding-inline: 28px;
+  }
+}
+
 .boton-secundario {
   display: flex;
   width: 100%;
@@ -127,4 +190,13 @@ body {
 .texto-error {
   color: var(--color-error);
   font-size: 14px;
+}
+
+/* Casilla de tildar grande y con el color de la marca */
+.check {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  margin-top: 2px;
+  accent-color: var(--color-dorado-oscuro);
 }

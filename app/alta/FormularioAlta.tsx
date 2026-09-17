@@ -47,7 +47,7 @@ export function FormularioAlta({ zonas, volver }: { zonas: GrupoZonas[]; volver:
           <input type="hidden" name="terminos" value="si" />
           <input type="hidden" name="mayorDeEdad" value="si" />
 
-          <h2 className="text-[22px] font-semibold leading-snug">¿Está bien tu WhatsApp?</h2>
+          <h2 className="titulo">¿Está bien tu WhatsApp?</h2>
           <p>Te van a escribir a este número:</p>
           <p className="text-3xl font-semibold tracking-wide">{validacion.datos.telefonoLegible}</p>
           <p>A nombre de {validacion.datos.nombre}.</p>
@@ -159,7 +159,7 @@ export function FormularioAlta({ zonas, volver }: { zonas: GrupoZonas[]; volver:
                 type="checkbox"
                 name="terminos"
                 value="si"
-                className="mt-1 size-6 shrink-0 accent-[var(--color-dorado-oscuro)]"
+                className="check"
                 checked={terminos}
                 onChange={(e) => setTerminos(e.target.checked)}
               />
@@ -178,7 +178,7 @@ export function FormularioAlta({ zonas, volver }: { zonas: GrupoZonas[]; volver:
                 type="checkbox"
                 name="mayorDeEdad"
                 value="si"
-                className="mt-1 size-6 shrink-0 accent-[var(--color-dorado-oscuro)]"
+                className="check"
                 checked={mayorDeEdad}
                 onChange={(e) => setMayorDeEdad(e.target.checked)}
               />
