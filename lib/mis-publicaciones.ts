@@ -182,15 +182,17 @@ export async function editarPublicacion(
   return (data ?? []).length > 0;
 }
 
-/** Datos de la persona (7.4): nombre, teléfono y barrio. */
+/** Datos de la persona (7.4): nombre, barrio y, si se cambia, el teléfono. */
 export async function actualizarPersona(
   personaId: string,
-  datos: { nombre: string; telefono: string; zonaId: number | null },
+  datos: { nombre: string; telefono: string | null; zonaId: number | null },
 ): Promise<{ ok: true } | { ok: false; motivo: "telefono_existente" }> {
-  const { error } = await supabaseServidor()
-    .from("personas")
-    .update({ nombre: datos.nombre, telefono: datos.telefono, zona_id: datos.zonaId })
-    .eq("id", personaId);
+  const cambios = {
+    nombre: datos.nombre,
+    zona_id: datos.zonaId,
+    ...(datos.telefono ? { telefono: datos.telefono } : {}),
+  };
+  const { error } = await supabaseServidor().from("personas").update(cambios).eq("id", personaId);
   if (error) {
     if (error.code === "23505") return { ok: false, motivo: "telefono_existente" };
     throw error;

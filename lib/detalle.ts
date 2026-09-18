@@ -1,4 +1,5 @@
 import "server-only";
+import { esUuid } from "@/lib/ids";
 import { supabaseServidor } from "@/lib/supabase/servidor";
 import type { Subtipo, Tipo } from "@/lib/publicaciones-tipos";
 
@@ -42,6 +43,7 @@ type Fila = {
 
 /** Devuelve null si no existe o no está activa (una en revisión queda oculta, 8.5). */
 export async function obtenerDetalle(id: string): Promise<PublicacionDetalle | null> {
+  if (!esUuid(id)) return null;
   const supabase = supabaseServidor();
 
   const { data, error } = await supabase

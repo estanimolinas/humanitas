@@ -71,3 +71,15 @@ export async function buscarPersonaPorToken(token: string): Promise<PersonaSesio
   if (error) throw error;
   return data ? aPersonaSesion(data) : null;
 }
+
+/**
+ * Cerrar sesión (paso 11.5, punto 4): el token_hash se reemplaza por el de un token nuevo que no
+ * se entrega a nadie. Así la cookie vieja deja de valer aunque alguien la haya copiado.
+ */
+export async function invalidarSesion(personaId: string): Promise<void> {
+  const { error } = await supabaseServidor()
+    .from("personas")
+    .update({ token_hash: hashToken(generarToken()) })
+    .eq("id", personaId);
+  if (error) throw error;
+}

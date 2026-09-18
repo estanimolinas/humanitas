@@ -1,6 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { esUuid } from "@/lib/ids";
 import { contactar } from "@/lib/contactos";
 import { denunciar, esMotivoValido } from "@/lib/denuncias";
 import { personaActual } from "@/lib/sesion/actual";
@@ -13,7 +14,7 @@ import { personaActual } from "@/lib/sesion/actual";
  */
 export async function contactarPorWhatsApp(formData: FormData) {
   const id = String(formData.get("publicacionId") ?? "");
-  if (!id) redirect("/");
+  if (!esUuid(id)) redirect("/");
 
   const persona = await personaActual();
   if (!persona) redirect(`/alta?volver=${encodeURIComponent(`/p/${id}?contactar=1`)}`);
@@ -29,7 +30,7 @@ export async function contactarPorWhatsApp(formData: FormData) {
 export async function denunciarPublicacion(formData: FormData) {
   const id = String(formData.get("publicacionId") ?? "");
   const motivo = String(formData.get("motivo") ?? "");
-  if (!id) redirect("/");
+  if (!esUuid(id)) redirect("/");
   if (!esMotivoValido(motivo)) redirect(`/p/${id}/denunciar?error=motivo`);
 
   const detalle = String(formData.get("detalle") ?? "").trim() || null;

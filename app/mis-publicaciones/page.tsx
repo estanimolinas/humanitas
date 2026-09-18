@@ -5,7 +5,7 @@ import { perfilPropio, publicacionesPropias, type PublicacionPropia } from "@/li
 import { personaActual } from "@/lib/sesion/actual";
 import { antiguedad } from "@/lib/tiempo";
 import { Iniciales } from "../componentes/Iniciales";
-import { cerrar, reactivar } from "./acciones";
+import { cerrar, cerrarSesion, reactivar } from "./acciones";
 
 export const metadata: Metadata = { title: "Mis publicaciones · Humanitas" };
 
@@ -14,6 +14,18 @@ const AVISOS: Record<string, string> = {
   reactivada: "La publicación volvió al listado.",
   editada: "Los cambios se guardaron.",
   datos: "Tus datos se guardaron.",
+};
+
+// Los errores llegan como código en la URL y el texto sale de acá: nadie puede hacerle decir a la
+// app un mensaje armado en un link.
+const ERRORES: Record<string, string> = {
+  no_es_tuya: "Esta publicación es de otra persona.",
+  no_esta_activa: "Esta publicación ya estaba cerrada.",
+  no_esta_cerrada: "Esta publicación ya está activa.",
+  no_te_contacto: "Esa persona no te contactó por esta publicación.",
+  motivo_invalido: "Todavía falta elegir una de las opciones.",
+  limite_activas: "Ya tenés 20 publicaciones activas, que es el tope. Si cerrás alguna, podés reactivar esta.",
+  no_se_pudo_editar: "No pudimos guardar los cambios. ¿Probamos de nuevo?",
 };
 
 const ESTADOS: Record<PublicacionPropia["estado"], string> = {
@@ -88,7 +100,7 @@ export default async function PaginaMisPublicaciones({ searchParams }: PageProps
 
   const q = await searchParams;
   const listo = typeof q.listo === "string" ? AVISOS[q.listo] : null;
-  const error = typeof q.error === "string" ? q.error : null;
+  const error = typeof q.error === "string" ? (ERRORES[q.error] ?? null) : null;
   const [publicaciones, perfil] = await Promise.all([
     publicacionesPropias(persona.id),
     perfilPropio(persona.id),
@@ -148,6 +160,12 @@ export default async function PaginaMisPublicaciones({ searchParams }: PageProps
       <p className="text-sm text-texto-2">
         Guardamos lo mínimo: tu nombre, tu celular y lo que publicás.
       </p>
+
+      <form action={cerrarSesion} className="border-t divisor pt-4">
+        <button type="submit" className="min-h-11 text-texto-2 underline">
+          Cerrar sesión en este celular
+        </button>
+      </form>
     </main>
   );
 }
