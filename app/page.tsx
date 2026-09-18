@@ -5,6 +5,8 @@ import { rubrosActivos } from "@/lib/rubros";
 import { personaActual } from "@/lib/sesion/actual";
 import { zonaDelVisitante } from "@/lib/sesion/zona-visitante";
 import { zonasParaElegir } from "@/lib/zonas";
+import { AvisoConfianza } from "./componentes/AvisoConfianza";
+import { Cita } from "./componentes/Cita";
 import { Filtros } from "./componentes/Filtros";
 import { ListaPublicaciones } from "./componentes/ListaPublicaciones";
 import { SelectorZona } from "./componentes/SelectorZona";
@@ -63,7 +65,7 @@ export default async function Inicio({ searchParams }: PageProps<"/">) {
             {nombreRubro
               ? `Todavía no hay publicaciones de ${nombreRubro}.`
               : "Todavía no hay publicaciones acá."}{" "}
-            Sé la primera persona en publicar.
+            Podés ser la primera persona en publicar.
           </p>
           <Link href="/publicar" className="boton-principal boton-suelto">
             Publicar
@@ -71,16 +73,12 @@ export default async function Inicio({ searchParams }: PageProps<"/">) {
         </div>
       )}
 
-      <footer className="mt-2 flex flex-col gap-2 border-t divisor pt-4">
-        <p className="kicker">Fundamento</p>
-        <p className="text-texto-2">
-          Humanitas no cobra comisión ni intermedia el dinero. El acuerdo es entre vecinos.
-        </p>
-        {/* Cita textual de la traducción oficial (vatican.va). */}
-        <blockquote className="text-texto-2">
-          «El trabajo no es un simple instrumento, sino que expresa y acrecienta la dignidad de
-          nuestra vida.» <span className="whitespace-nowrap">Magnifica Humanitas, 149</span>
-        </blockquote>
+      <footer className="mt-2 flex flex-col gap-4">
+        <AvisoConfianza />
+        <Cita
+          numero={149}
+          texto="El trabajo no es un simple instrumento, sino que expresa y acrecienta la dignidad de nuestra vida."
+        />
       </footer>
     </main>
   );

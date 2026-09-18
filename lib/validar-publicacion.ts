@@ -52,9 +52,9 @@ const limpio = (t: string) => t.trim().replace(/\s+/g, " ");
 /** Paso 1: qué querés hacer. */
 export function validarPaso1(c: CamposPublicacion): ErroresPublicacion {
   const errores: ErroresPublicacion = {};
-  if (c.tipo !== "ofrezco" && c.tipo !== "necesito") errores.tipo = "Elegí una de las dos opciones.";
+  if (c.tipo !== "ofrezco" && c.tipo !== "necesito") errores.tipo = "Falta elegir una de las dos opciones.";
   else if (c.tipo === "ofrezco" && c.subtipo !== "servicio" && c.subtipo !== "producto") {
-    errores.subtipo = "Elegí si es un servicio o un producto.";
+    errores.subtipo = "Falta indicar si es un servicio o un producto.";
   }
   return errores;
 }
@@ -63,22 +63,22 @@ export function validarPaso1(c: CamposPublicacion): ErroresPublicacion {
 export function validarPaso2(c: CamposPublicacion, rubroEsOtros = false): ErroresPublicacion {
   const errores: ErroresPublicacion = {};
   const rubro = Number(c.rubroId);
-  if (!Number.isInteger(rubro) || rubro <= 0) errores.rubroId = "Elegí un rubro.";
+  if (!Number.isInteger(rubro) || rubro <= 0) errores.rubroId = "Falta elegir un rubro.";
   if (rubroEsOtros && limpio(c.rubroOtroTexto).length === 0) {
-    errores.rubroOtroTexto = "Contanos de qué se trata.";
+    errores.rubroOtroTexto = "Falta indicar de qué se trata.";
   } else if (limpio(c.rubroOtroTexto).length > 80) {
-    errores.rubroOtroTexto = "Es muy largo.";
+    errores.rubroOtroTexto = "El texto supera el largo permitido.";
   }
 
   const titulo = limpio(c.titulo);
-  if (titulo.length === 0) errores.titulo = "Escribí un título corto.";
+  if (titulo.length === 0) errores.titulo = "Falta un título corto.";
   else if (titulo.length > MAX_TITULO) errores.titulo = `Máximo ${MAX_TITULO} caracteres.`;
 
   if (c.descripcion.length > MAX_DESCRIPCION) {
     errores.descripcion = `Máximo ${MAX_DESCRIPCION} caracteres.`;
   }
-  if (limpio(c.precioTexto).length > 80) errores.precioTexto = "Es muy largo.";
-  if (limpio(c.aliasPago).length > 80) errores.aliasPago = "Es muy largo.";
+  if (limpio(c.precioTexto).length > 80) errores.precioTexto = "El texto supera el largo permitido.";
+  if (limpio(c.aliasPago).length > 80) errores.aliasPago = "El texto supera el largo permitido.";
   return errores;
 }
 
@@ -86,9 +86,9 @@ export function validarPaso2(c: CamposPublicacion, rubroEsOtros = false): Errore
 export function validarPaso3(c: CamposPublicacion): ErroresPublicacion {
   const errores: ErroresPublicacion = {};
   if (c.zonaId && c.zonaOtroTexto) {
-    errores.zonaOtroTexto = "Elegí un barrio de la lista o escribilo, no las dos cosas.";
+    errores.zonaOtroTexto = "Se puede elegir un barrio de la lista o escribir otro, pero no las dos cosas.";
   }
-  if (limpio(c.zonaOtroTexto).length > 80) errores.zonaOtroTexto = "Es muy largo.";
+  if (limpio(c.zonaOtroTexto).length > 80) errores.zonaOtroTexto = "El texto supera el largo permitido.";
   return errores;
 }
 

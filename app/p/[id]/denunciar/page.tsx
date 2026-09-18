@@ -38,11 +38,11 @@ export default async function PaginaDenunciar({ params, searchParams }: PageProp
             </label>
           ))}
         </fieldset>
-        {error === "motivo" && <p className="texto-error">Elegí un motivo.</p>}
+        {error === "motivo" && <p className="texto-error">Falta elegir un motivo.</p>}
 
         <div className="flex flex-col gap-2">
           <label htmlFor="detalle" className="etiqueta">
-            Contanos qué pasó (si querés)
+            Qué pasó (si querés contarlo)
           </label>
           <textarea id="detalle" name="detalle" className="campo min-h-24 py-3" maxLength={500} rows={3} />
         </div>
@@ -52,7 +52,7 @@ export default async function PaginaDenunciar({ params, searchParams }: PageProp
         </button>
         <p className="text-sm text-texto-2">
           La revisa una persona en menos de 24 horas. Si alguien está en peligro o creés que es un
-          menor de edad, avisá también en tu punto de alta.
+          menor de edad, también conviene avisar en tu punto de alta.
         </p>
       </form>
     </main>

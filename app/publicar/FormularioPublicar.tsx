@@ -16,6 +16,7 @@ import {
   type CamposPublicacion,
   type ErroresPublicacion,
 } from "@/lib/validar-publicacion";
+import { AvisoConfianza } from "../componentes/AvisoConfianza";
 import { publicar, type EstadoPublicar } from "./acciones";
 
 const BORRADOR = "humanitas_borrador_publicar";
@@ -176,9 +177,9 @@ export function FormularioPublicar({
 
       {hayBorrador && (
         <div className="aviso flex flex-col gap-3">
-          <p>Tenés algo escrito de antes. ¿Seguimos con eso?</p>
+          <p>Hay una publicación sin terminar. ¿Querés seguir con ella?</p>
           <button type="button" className="boton-secundario" onClick={seguirBorrador}>
-            Seguir con lo que tenía
+            Continuar la publicación
           </button>
         </div>
       )}
@@ -231,7 +232,7 @@ export function FormularioPublicar({
 
       {paso === 2 && (
         <section className="flex flex-col gap-5">
-          <h2 className="titulo">Contanos</h2>
+          <h2 className="titulo">Los detalles</h2>
 
           <div className="flex flex-col gap-2">
             <span className="etiqueta">Rubro</span>
@@ -293,7 +294,7 @@ export function FormularioPublicar({
               onChange={(e) => pone("descripcion")(e.target.value)}
               maxLength={MAX_DESCRIPCION}
               rows={4}
-              placeholder="Contá en dos líneas qué hacés, cómo cobrás y cuándo podés."
+              placeholder="Por ejemplo: qué hacés, cómo cobrás y qué días podés."
             />
             {error("descripcion")}
           </div>
@@ -330,7 +331,7 @@ export function FormularioPublicar({
           <div className="flex flex-col gap-2">
             <span className="etiqueta">Foto (si querés)</span>
             <p className="text-texto-2">
-              Se achica en tu celular antes de subirse, para no gastarte datos.
+              Se reduce en tu celular antes de subirla, para cuidar tus datos.
             </p>
             <input
               type="file"
@@ -498,6 +499,8 @@ export function FormularioPublicar({
           </div>
         </section>
       )}
+
+      {paso === (tieneCuenta ? 3 : 4) && <AvisoConfianza />}
 
       {estado.mensaje && !estado.erroresAlta && (
         <p className="aviso-error text-error" role="alert">

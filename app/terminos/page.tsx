@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { TEXTO_CONFIANZA } from "../componentes/AvisoConfianza";
+import { Cita } from "../componentes/Cita";
 
 export const metadata: Metadata = { title: "Términos · Humanitas" };
 
@@ -16,7 +18,7 @@ export default function PaginaTerminos() {
         <p>
           Una app para los vecinos y las vecinas del barrio. Quien quiere trabajar publica el oficio
           que sabe hacer o lo que vende. Quien tiene un trabajo para dar publica lo que necesita.
-          Después se contactan directo por WhatsApp y arreglan entre ellos.
+          Después se contactan directamente por WhatsApp y acuerdan entre ellos.
         </p>
       </section>
 
@@ -27,9 +29,8 @@ export default function PaginaTerminos() {
           contrata a nadie y no es empleadora.
         </p>
         <p>
-          Tampoco es parte del acuerdo entre las personas. No cobra, no cobra comisión y no
-          interviene en los pagos. No garantiza los trabajos ni los productos publicados. El precio
-          y la forma de pago los arreglan las dos partes entre ellas.
+          Tampoco es parte del acuerdo entre las personas. {TEXTO_CONFIANZA} No garantiza los
+          trabajos ni los productos publicados.
         </p>
       </section>
 
@@ -59,6 +60,12 @@ export default function PaginaTerminos() {
         <h2 className="kicker">Mayores de 18</h2>
         <p>Humanitas es solo para personas de 18 años o más.</p>
       </section>
+
+      <Cita
+        numero={68}
+        tema="Por qué empieza en el barrio"
+        texto="aquello que pueden hacer las personas, las familias, las comunidades locales y los cuerpos intermedios no debe ser absorbido por instancias superiores"
+      />
     </main>
   );
 }

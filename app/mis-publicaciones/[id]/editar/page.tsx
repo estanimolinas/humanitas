@@ -40,7 +40,7 @@ export default async function PaginaEditar({ params, searchParams }: PageProps<"
             defaultValue={p.titulo}
             maxLength={MAX_TITULO}
           />
-          {error === "titulo" && <p className="texto-error">Escribí un título de hasta 60 caracteres.</p>}
+          {error === "titulo" && <p className="texto-error">Falta un título de hasta 60 caracteres.</p>}
         </div>
 
         <div className="flex flex-col gap-2">

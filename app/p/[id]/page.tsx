@@ -5,6 +5,7 @@ import { obtenerDetalle } from "@/lib/detalle";
 import { personaActual } from "@/lib/sesion/actual";
 import { antiguedad } from "@/lib/tiempo";
 import { LIMITE_CONTACTOS_POR_DIA } from "@/lib/whatsapp";
+import { AvisoConfianza } from "../../componentes/AvisoConfianza";
 import { contactarPorWhatsApp } from "./acciones";
 
 export async function generateMetadata({ params }: PageProps<"/p/[id]">): Promise<Metadata> {
@@ -84,12 +85,12 @@ export default async function PaginaDetalle({ params, searchParams }: PageProps<
 
       {q.limite && (
         <p className="aviso-error text-error" role="alert">
-          Llegaste al límite de {LIMITE_CONTACTOS_POR_DIA} contactos por día. Probá de nuevo mañana.
+          Llegaste al máximo de {LIMITE_CONTACTOS_POR_DIA} contactos por día. Mañana vas a poder contactar de nuevo.
         </p>
       )}
 
       {q.contactar && persona && (
-        <p className="aviso">Listo, {persona.nombre}. Ya podés contactar.</p>
+        <p className="aviso">Gracias, {persona.nombre}. Tu cuenta ya está lista para contactar.</p>
       )}
 
       <form action={contactarPorWhatsApp}>
@@ -101,9 +102,11 @@ export default async function PaginaDetalle({ params, searchParams }: PageProps<
 
       <p className="text-sm text-texto-2">
         {persona
-          ? "Se abre WhatsApp con el mensaje escrito. Humanitas no participa del acuerdo: el precio lo arreglan entre ustedes."
-          : "Para contactar hace falta dejar tu celular: así quien te atiende también sabe quién le escribe."}
+          ? "Se abre WhatsApp con un mensaje ya escrito."
+          : "Para contactar se pide tu nombre y tu celular, así quien publicó sabe quién le escribe."}
       </p>
+
+      <AvisoConfianza />
 
       {/* Acción discreta, como pide 7.2 */}
       <Link href={`/p/${p.id}/denunciar`} className="mt-2 text-sm text-texto-2 underline">

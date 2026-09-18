@@ -26,8 +26,8 @@ export default async function PaginaAlta({ searchParams }: PageProps<"/alta">) {
   return (
     <main className="contenedor flex flex-1 flex-col gap-5">
       <div className="flex flex-col gap-1">
-        <h1 className="titulo">Creá tu cuenta</h1>
-        <p className="text-texto-2">Es un minuto. No hace falta contraseña.</p>
+        <h1 className="titulo">Crear tu cuenta</h1>
+        <p className="text-texto-2">Lleva un minuto y no necesita contraseña.</p>
       </div>
       <FormularioAlta zonas={await zonasParaElegir()} volver={volver} />
     </main>

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { personaActual } from "@/lib/sesion/actual";
 import { zonasParaElegir } from "@/lib/zonas";
+import { Cita } from "../../componentes/Cita";
 import { FormularioDatos } from "./FormularioDatos";
 
 export const metadata: Metadata = { title: "Mis datos · Humanitas" };
@@ -25,6 +26,11 @@ export default async function PaginaDatos({ searchParams }: PageProps<"/mis-publ
         zonaInicial={persona.zonaId}
         zonas={zonas}
         error={typeof error === "string" ? error : null}
+      />
+      <Cita
+        numero={152}
+        tema="Sobre la dignidad de la persona"
+        texto="la persona humana es un fin y no un medio, y el orden económico debe permanecer subordinado a su dignidad y al bien común"
       />
     </main>
   );

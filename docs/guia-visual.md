@@ -155,10 +155,10 @@ Citas verificadas el 15/09/2026:
 | § | Tema | Cita textual |
 |---|---|---|
 | 149 | Trabajo y dignidad (inicio) | «El trabajo no es un simple instrumento, sino que expresa y acrecienta la dignidad de nuestra vida.» |
-| 149 | Trabajo digno (valores) | «el objetivo es ofrecer a cada persona las condiciones para vivir dignamente a través de su propio trabajo» |
-| 152 | Dignidad de la persona | «la persona humana es un fin y no un medio, y el orden económico debe permanecer subordinado a su dignidad y al bien común» |
-| 148 | Valor del trabajo | «a través de él la persona desarrolla muchas dimensiones de su propia existencia» |
-| 68 | Subsidiariedad | «aquello que pueden hacer las personas, las familias, las comunidades locales y los cuerpos intermedios no debe ser absorbido por instancias superiores» |
+| 149 | Trabajo digno (publicación lista) | «el objetivo es ofrecer a cada persona las condiciones para vivir dignamente a través de su propio trabajo» |
+| 152 | Dignidad de la persona (mis datos) | «la persona humana es un fin y no un medio, y el orden económico debe permanecer subordinado a su dignidad y al bien común» |
+| 148 | Valor del trabajo (cerrar un pedido) | «a través de él la persona desarrolla muchas dimensiones de su propia existencia» |
+| 68 | Subsidiariedad (términos) | «aquello que pueden hacer las personas, las familias, las comunidades locales y los cuerpos intermedios no debe ser absorbido por instancias superiores» |
 | 73 | Solidaridad | «todo ser humano es creado a imagen de Dios e incorporado a una red de relaciones que lo vinculan a los demás, a los pueblos y a la creación» |
 | 174 | Contra la mercantilización | «la dignidad inalienable de todo ser humano y el bien común, como fines de la sociedad y como criterios de toda decisión personal, social y política» |
 

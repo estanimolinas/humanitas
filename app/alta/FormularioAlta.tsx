@@ -4,6 +4,7 @@ import { useActionState, useState } from "react";
 import { validarAlta, type ErroresAlta } from "@/lib/alta";
 import { EJEMPLO_TELEFONO } from "@/lib/telefono";
 import type { GrupoZonas } from "@/lib/zonas";
+import { AvisoConfianza } from "../componentes/AvisoConfianza";
 import { darDeAlta, type EstadoAlta } from "./acciones";
 
 export function FormularioAlta({ zonas, volver }: { zonas: GrupoZonas[]; volver: string }) {
@@ -47,8 +48,8 @@ export function FormularioAlta({ zonas, volver }: { zonas: GrupoZonas[]; volver:
           <input type="hidden" name="terminos" value="si" />
           <input type="hidden" name="mayorDeEdad" value="si" />
 
-          <h2 className="titulo">¿Está bien tu WhatsApp?</h2>
-          <p>Te van a escribir a este número:</p>
+          <h2 className="titulo">¿Es correcto tu número de WhatsApp?</h2>
+          <p>Los mensajes van a llegar a este número:</p>
           <p className="text-3xl font-semibold tracking-wide">{validacion.datos.telefonoLegible}</p>
           <p>A nombre de {validacion.datos.nombre}.</p>
 
@@ -186,6 +187,8 @@ export function FormularioAlta({ zonas, volver }: { zonas: GrupoZonas[]; volver:
             </label>
             {errores.mayorDeEdad && <p className="texto-error">{errores.mayorDeEdad}</p>}
           </div>
+
+          <AvisoConfianza />
 
           <button type="submit" className="boton-principal">
             Seguir

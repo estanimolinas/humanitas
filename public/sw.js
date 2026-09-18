@@ -59,7 +59,7 @@ self.addEventListener("fetch", (evento) => {
           if (guardada) return guardada;
           return new Response(
             "<!doctype html><meta charset='utf-8'><p style='font:16px system-ui;padding:20px'>" +
-              "Sin conexión. Abrí la app cuando tengas señal.</p>",
+              "Sin conexión. La app va a cargar cuando vuelva la señal.</p>",
             { status: 503, headers: { "Content-Type": "text/html; charset=utf-8" } },
           );
         }

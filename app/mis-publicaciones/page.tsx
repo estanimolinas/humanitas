@@ -9,10 +9,10 @@ import { cerrar, reactivar } from "./acciones";
 export const metadata: Metadata = { title: "Mis publicaciones · Humanitas" };
 
 const AVISOS: Record<string, string> = {
-  cerrada: "Listo, la cerramos. Ya no aparece en el listado.",
-  reactivada: "Listo, volvió al listado.",
-  editada: "Guardamos los cambios.",
-  datos: "Guardamos tus datos.",
+  cerrada: "La publicación se cerró y ya no aparece en el listado.",
+  reactivada: "La publicación volvió al listado.",
+  editada: "Los cambios se guardaron.",
+  datos: "Tus datos se guardaron.",
 };
 
 const ESTADOS: Record<PublicacionPropia["estado"], string> = {
@@ -108,7 +108,7 @@ export default async function PaginaMisPublicaciones({ searchParams }: PageProps
 
       {publicaciones.length === 0 ? (
         <div className="flex flex-col gap-3">
-          <p className="aviso">Todavía no publicaste nada.</p>
+          <p className="aviso">Todavía no tenés publicaciones.</p>
           <Link href="/publicar" className="boton-principal boton-suelto">
             Publicar
           </Link>

@@ -47,5 +47,5 @@ export async function comprimirFoto(archivo: File): Promise<File> {
   }
 
   bitmap.close();
-  throw new Error("No pudimos achicar esta foto. Probá con otra.");
+  throw new Error("No se pudo reducir esta foto. Podés probar con otra.");
 }

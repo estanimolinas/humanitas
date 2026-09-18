@@ -4,6 +4,7 @@ import { notFound, redirect } from "next/navigation";
 import { publicacionesPropias, quienesContactaron } from "@/lib/mis-publicaciones";
 import { personaActual } from "@/lib/sesion/actual";
 import { antiguedad } from "@/lib/tiempo";
+import { Cita } from "../../../componentes/Cita";
 import { cerrar } from "../../acciones";
 
 export const metadata: Metadata = { title: "Cerrar publicación · Humanitas" };
@@ -34,7 +35,7 @@ export default async function PaginaCerrar({ params, searchParams }: PageProps<"
 
       {falta && (
         <p className="aviso-error text-error" role="alert">
-          Elegí quién te lo hizo, así le queda el reconocimiento.
+          Falta elegir quién hizo el trabajo, para que quede reconocido.
         </p>
       )}
 
@@ -43,7 +44,7 @@ export default async function PaginaCerrar({ params, searchParams }: PageProps<"
           <input type="hidden" name="publicacionId" value={id} />
           <input type="hidden" name="motivo" value="resuelta_con_alguien_de_aca" />
           <h2 className="etiqueta">Sí, con alguien de acá</h2>
-          <p className="text-texto-2">Elegí quién te lo hizo. Le va a sumar un trabajo concretado.</p>
+          <p className="text-texto-2">A quien elijas se le suma un trabajo concretado.</p>
           {gente.map((g) => (
             <label key={g.id} className="flex min-h-12 items-center gap-3">
               <input type="radio" name="personaQueHizoId" value={g.id} className="check" />
@@ -81,6 +82,12 @@ export default async function PaginaCerrar({ params, searchParams }: PageProps<"
           No, ya no lo necesito
         </button>
       </form>
+
+      <Cita
+        numero={148}
+        tema="Sobre el trabajo"
+        texto="a través de él la persona desarrolla muchas dimensiones de su propia existencia"
+      />
     </main>
   );
 }

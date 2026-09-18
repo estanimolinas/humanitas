@@ -115,7 +115,7 @@ eventos_mensuales mes, tipo, rubro_id?, zona_id?, cantidad
 
 ## Feedback de vecinos (18/09/2026)
 - **Lema de la app:** "Tecnología al servicio de la humanidad". Va debajo del nombre en el encabezado y como descripción de la app instalada. Es una frase propia: sin comillas y sin atribuirla a la encíclica.
-- **Letra mayúscula** en los textos de la app (títulos, botones, etiquetas, avisos, chips): en Argentina se alfabetiza primero con imprenta mayúscula. Se hace con estilo (`text-transform`), no reescribiendo el texto. **Pendiente:** si también aplica a lo que escriben los vecinos.
+- **Letra mayúscula** en los textos de la app (títulos, botones, etiquetas, avisos, chips): en Argentina se alfabetiza primero con imprenta mayúscula. Se hace con estilo (`text-transform`), no reescribiendo el texto. Aplica a **todo**, también a lo que escriben los vecinos (confirmado 18/09): lo guardado en la base no cambia.
 - **Vocabulario:** simple y pertinente, amable y profesional. Nada chocante, nada de órdenes ("hacé", "no pagues"), nada infantil.
 - **Sin pantalla de valores:** las citas de la encíclica aparecen **en contexto**, donde son pertinentes (trabajo en el listado y en publicar, dignidad en el perfil, etc.). Siempre textuales, con su número.
 - **Aviso de confianza** (texto elegido, se usa igual en todos lados): *Humanitas no percibe comisiones ni intermedia pagos. Los acuerdos económicos se establecen directamente entre las partes.* Visible en inicio, junto a Contactar, al publicar y en el alta.

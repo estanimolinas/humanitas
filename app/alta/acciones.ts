@@ -25,7 +25,7 @@ export async function darDeAlta(_previo: EstadoAlta, formData: FormData): Promis
     return {
       errores: { telefono: "Ese número ya tiene una cuenta." },
       mensaje:
-        "Si cambiaste de celular, pedí que te recuperen el acceso en tu punto de alta: la vecinal, la parroquia o el centro comunitario donde te anotaste.",
+        "Si cambiaste de celular, en tu punto de alta (la vecinal, la parroquia o el centro comunitario donde te anotaste) pueden devolverte el acceso.",
     };
   }
 

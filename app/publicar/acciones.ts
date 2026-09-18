@@ -23,10 +23,10 @@ export type EstadoPublicar = {
 
 const MENSAJES = {
   limite_diario:
-    "Ya publicaste 3 cosas hoy. Mañana podés seguir publicando: es para que el listado no se llene de una sola persona.",
-  limite_activas: "Tenés 20 publicaciones activas. Cerrá alguna en Mis publicaciones y volvé a intentar.",
-  rubro_invalido: "Ese rubro no existe. Elegí otro de la lista.",
-  rubro_no_corresponde: "Ese rubro no corresponde a lo que elegiste. Revisá el rubro.",
+    "Hoy ya hiciste 3 publicaciones, que es el máximo por día. Mañana vas a poder publicar de nuevo: así hay lugar para todos.",
+  limite_activas: "Tenés 20 publicaciones activas, que es el máximo. Podés cerrar alguna desde Mis publicaciones.",
+  rubro_invalido: "Ese rubro ya no está disponible. Podés elegir otro de la lista.",
+  rubro_no_corresponde: "Ese rubro no corresponde a lo que elegiste.",
 } as const;
 
 /**
@@ -52,7 +52,7 @@ export async function publicar(_previo: EstadoPublicar, formData: FormData): Pro
       return {
         erroresAlta: { telefono: "Ese número ya tiene una cuenta." },
         mensaje:
-          "Si cambiaste de celular, pedí que te recuperen el acceso en tu punto de alta: la vecinal, la parroquia o el centro comunitario donde te anotaste.",
+          "Si cambiaste de celular, en tu punto de alta (la vecinal, la parroquia o el centro comunitario donde te anotaste) pueden devolverte el acceso.",
       };
     }
     (await cookies()).set(COOKIE_SESION, alta.token, opcionesCookieSesion());
@@ -65,7 +65,7 @@ export async function publicar(_previo: EstadoPublicar, formData: FormData): Pro
     try {
       fotoUrl = await subirFoto(foto);
     } catch (e) {
-      return { mensaje: e instanceof Error ? e.message : "No pudimos subir la foto." };
+      return { mensaje: e instanceof Error ? e.message : "No se pudo subir la foto." };
     }
   }
 

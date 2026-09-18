@@ -12,8 +12,8 @@ export default function PaginaDenunciada() {
         mientras tanto.
       </p>
       <p className="text-texto-2">
-        Si creés que alguien está en peligro o que es un menor de edad, avisá también en tu punto de
-        alta: la vecinal, la parroquia o el centro comunitario.
+        Si creés que alguien está en peligro o que es un menor de edad, también conviene avisar en tu
+        punto de alta: la vecinal, la parroquia o el centro comunitario.
       </p>
       <Link href="/" className="boton-principal boton-suelto">
         Volver al listado

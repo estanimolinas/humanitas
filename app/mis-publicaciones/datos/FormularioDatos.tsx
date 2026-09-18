@@ -38,7 +38,7 @@ export function FormularioDatos({
           onChange={(e) => setNombre(e.target.value)}
           maxLength={80}
         />
-        {error === "nombre" && <p className="texto-error">Escribí tu nombre.</p>}
+        {error === "nombre" && <p className="texto-error">Falta el nombre.</p>}
       </div>
 
       <div className="flex flex-col gap-2">
@@ -46,7 +46,7 @@ export function FormularioDatos({
           Cambiar mi celular
         </label>
         <p className="text-texto-2">
-          Dejalo vacío si no querés cambiarlo. No mostramos tu número en ninguna pantalla.
+          Si no querés cambiarlo, puede quedar vacío. Tu número no se muestra en ninguna pantalla.
         </p>
         <input
           id="telefono"
@@ -60,11 +60,11 @@ export function FormularioDatos({
         />
         {nuevo?.ok && (
           <p className="aviso">
-            Vas a recibir los mensajes en <strong>{nuevo.legible}</strong>. Si está bien, guardá.
+            Los mensajes van a llegar a <strong>{nuevo.legible}</strong>.
           </p>
         )}
         {nuevo && !nuevo.ok && <p className="texto-error">{nuevo.error}</p>}
-        {error === "telefono" && <p className="texto-error">Revisá el número.</p>}
+        {error === "telefono" && <p className="texto-error">El número no parece correcto.</p>}
         {error === "telefono_existente" && (
           <p className="texto-error">Ese número ya está usado por otra cuenta.</p>
         )}
