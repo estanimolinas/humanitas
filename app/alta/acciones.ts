@@ -1,12 +1,11 @@
 "use server";
 
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { camposDesdeFormData, validarAlta, volverSeguro, type ErroresAlta } from "@/lib/alta";
+import { permitirIntento } from "@/lib/limites";
 import { registrarPersona } from "@/lib/personas";
 import { personaActual } from "@/lib/sesion/actual";
-import { COOKIE_SESION } from "@/lib/sesion/constantes";
-import { opcionesCookieSesion } from "@/lib/sesion/token";
+import { guardarSesion } from "@/lib/sesion/guardar";
 
 export type EstadoAlta = { errores?: ErroresAlta; mensaje?: string };
 
@@ -19,6 +18,11 @@ export async function darDeAlta(_previo: EstadoAlta, formData: FormData): Promis
   const validacion = validarAlta(camposDesdeFormData(formData));
   if (!validacion.ok) return { errores: validacion.errores };
 
+  // 11.5: tope de cuentas nuevas por conexión, contra robots.
+  if (!(await permitirIntento("alta"))) {
+    return { mensaje: "Hoy se crearon muchas cuentas desde esta conexión. Mañana vas a poder crear la tuya." };
+  }
+
   const resultado = await registrarPersona(validacion.datos);
   if (!resultado.ok) {
     // 7.5 / F1: el teléfono ya existe → cómo recuperar el acceso (manual en el piloto, 10.4).
@@ -29,6 +33,6 @@ export async function darDeAlta(_previo: EstadoAlta, formData: FormData): Promis
     };
   }
 
-  (await cookies()).set(COOKIE_SESION, resultado.token, opcionesCookieSesion());
+  await guardarSesion(resultado.token);
   redirect(volver);
 }

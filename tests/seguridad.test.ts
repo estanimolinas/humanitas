@@ -4,6 +4,7 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { esUuid } from "@/lib/ids";
 import { CABECERAS_FIJAS, nuevoNonce, origenDe, politicaCsp } from "@/lib/seguridad/cabeceras";
+import { hashIp, ipDe, MAXIMOS_POR_DIA } from "@/lib/seguridad/limites";
 
 // Paso 11.5. Estos tests no usan la base: corren aunque Supabase esté apagado.
 
@@ -131,5 +132,27 @@ describe("ids inventados (11.5, punto 2)", () => {
     for (const malo of ["", "123", "8668e59c", "'; select 1 --", null, undefined, 42]) {
       expect(esUuid(malo)).toBe(false);
     }
+  });
+});
+
+describe("límites por conexión: la IP (11.5, punto 3)", () => {
+  const cabeceras = (h: Record<string, string>) => ({ get: (n: string) => h[n] ?? null });
+
+  it("toma la IP que pone el servidor y, si no está, la primera de x-forwarded-for", () => {
+    expect(ipDe(cabeceras({ "x-real-ip": "190.1.2.3", "x-forwarded-for": "1.1.1.1" }))).toBe("190.1.2.3");
+    expect(ipDe(cabeceras({ "x-forwarded-for": "190.1.2.3, 10.0.0.1" }))).toBe("190.1.2.3");
+    expect(ipDe(cabeceras({}))).toBe("desconocida");
+  });
+
+  it("guarda un SHA-256 con sal: 64 hex, distinto con otra sal, sin la IP adentro", async () => {
+    const a = await hashIp("190.1.2.3", "sal-1");
+    expect(a).toMatch(/^[0-9a-f]{64}$/);
+    expect(a).not.toContain("190");
+    expect(await hashIp("190.1.2.3", "sal-2")).not.toBe(a);
+    expect(await hashIp("190.1.2.3", "sal-1")).toBe(a);
+  });
+
+  it("los máximos no traban un encuentro en un mismo Wi-Fi", () => {
+    expect(MAXIMOS_POR_DIA.alta).toBeGreaterThanOrEqual(20);
   });
 });

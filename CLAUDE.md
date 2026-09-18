@@ -11,7 +11,7 @@ El piloto es en la **ciudad de Santa Fe** (norte), provincia de Santa Fe. **No e
 Todo en free tier. **$0 de infraestructura durante el piloto.** Ningún servicio, librería o plan pago sin preguntar antes (con el costo).
 
 ## Reglas no negociables
-1. **Ningún DELETE** en ninguna tabla. Toda baja es `archivado_en` (R12). **Única excepción:** el script manual de poda borra filas de `eventos` *después* de agregarlas en `eventos_mensuales`. Ningún otro DELETE, en ningún lado.
+1. **Ningún DELETE** en ninguna tabla. Toda baja es `archivado_en` (R12). **Únicas excepciones:** el script manual de poda borra filas de `eventos` *después* de agregarlas en `eventos_mensuales`, y `scripts/podar-limites.mjs` borra intentos de `limites` de más de 2 días (11.5, 18/09/2026). Ningún otro DELETE, en ningún lado.
 2. **El teléfono nunca sale** en una respuesta de API ni en una pantalla. Solo se usa en el servidor para armar el link `wa.me` al tocar "Contactar", y solo para usuarios registrados (R04, R05).
 3. **Orden del listado = sección 8.2, exactamente:** activas primero → `ultima_exposicion` ascendente (y se actualiza al servir la página) → empate: más reciente primero. Nada más: sin reputación, sin destacados, sin intervención manual.
 4. **Zona ordena, NUNCA filtra (8.1).** Ni la zona de la persona registrada ni la cookie de zona del visitante pueden aparecer en un `WHERE`: solo en el `ORDER BY`. Grupos: misma zona → zona madre → resto (las publicaciones sin zona van en "resto").

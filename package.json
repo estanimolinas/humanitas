@@ -16,7 +16,10 @@
     "db:stop": "supabase stop",
     "db:reset": "supabase db reset",
     "chequear:secretos": "node scripts/chequear-secretos.mjs",
-    "chequear:dependencias": "npm audit --audit-level=moderate"
+    "chequear:dependencias": "npm audit --audit-level=moderate",
+    "baja": "node scripts/dar-de-baja.mjs",
+    "respaldar": "./scripts/respaldar.sh",
+    "podar:limites": "node scripts/podar-limites.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.116.0",

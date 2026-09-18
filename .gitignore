@@ -31,3 +31,6 @@ supabase/.temp
 # En docs/diseno/ quedan solo el mockup y los estilos como referencia.
 docs/Humanitas_ marketplace laboral local/
 .gstack/
+
+# Respaldos de la base: tienen datos personales, nunca van a git.
+respaldos/

@@ -54,6 +54,12 @@ export function FormularioAlta({ zonas, volver }: { zonas: GrupoZonas[]; volver:
           <p className="text-3xl font-semibold tracking-wide">{validacion.datos.telefonoLegible}</p>
           <p>A nombre de {validacion.datos.nombre}.</p>
 
+          {estado.mensaje && !estado.errores && (
+            <p role="alert" className="aviso-error text-error">
+              {estado.mensaje}
+            </p>
+          )}
+
           {estado.errores?.telefono && (
             <div role="alert" className="aviso-error">
               <p className="font-semibold text-error">{estado.errores.telefono}</p>

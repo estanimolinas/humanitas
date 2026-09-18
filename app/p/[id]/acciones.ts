@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { esUuid } from "@/lib/ids";
+import { permitirIntento } from "@/lib/limites";
 import { contactar } from "@/lib/contactos";
 import { denunciar, esMotivoValido } from "@/lib/denuncias";
 import { personaActual } from "@/lib/sesion/actual";
@@ -35,6 +36,11 @@ export async function denunciarPublicacion(formData: FormData) {
 
   const detalle = String(formData.get("detalle") ?? "").trim() || null;
   const persona = await personaActual();
+
+  // 11.5: sin cuenta, tope de denuncias por conexión (con cuenta ya hay una por persona).
+  if (!persona && !(await permitirIntento("denuncia_anonima"))) {
+    redirect(`/p/${id}/denunciar?error=limite`);
+  }
 
   const r = await denunciar(id, persona?.id ?? null, motivo, detalle);
   if (!r.ok) redirect(`/p/${id}/denunciar?error=${r.motivo}`);

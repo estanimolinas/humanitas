@@ -1,13 +1,12 @@
 "use server";
 
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { camposDesdeFormData as camposAltaDesdeFormData, validarAlta } from "@/lib/alta";
+import { permitirIntento } from "@/lib/limites";
 import { registrarPersona } from "@/lib/personas";
 import { crearPublicacion, subirFoto } from "@/lib/publicar";
 import { personaActual } from "@/lib/sesion/actual";
-import { COOKIE_SESION } from "@/lib/sesion/constantes";
-import { opcionesCookieSesion } from "@/lib/sesion/token";
+import { guardarSesion } from "@/lib/sesion/guardar";
 import {
   camposDesdeFormData,
   validarPublicacion,
@@ -47,6 +46,11 @@ export async function publicar(_previo: EstadoPublicar, formData: FormData): Pro
     const validacionAlta = validarAlta(camposAltaDesdeFormData(formData));
     if (!validacionAlta.ok) return { erroresAlta: validacionAlta.errores };
 
+    // 11.5: tope de cuentas nuevas por conexión, contra robots.
+    if (!(await permitirIntento("alta"))) {
+      return { mensaje: "Hoy se crearon muchas cuentas desde esta conexión. Mañana vas a poder crear la tuya." };
+    }
+
     const alta = await registrarPersona(validacionAlta.datos);
     if (!alta.ok) {
       return {
@@ -55,7 +59,7 @@ export async function publicar(_previo: EstadoPublicar, formData: FormData): Pro
           "Si cambiaste de celular, el equipo de Humanitas te ayuda a recuperar tu cuenta. Lo encontrás en Ayuda, desde Mis publicaciones.",
       };
     }
-    (await cookies()).set(COOKIE_SESION, alta.token, opcionesCookieSesion());
+    await guardarSesion(alta.token);
     persona = alta.persona;
   }
 

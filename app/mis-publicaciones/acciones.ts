@@ -1,7 +1,6 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import {
   actualizarPersona,
@@ -12,7 +11,7 @@ import {
 import { esUuid } from "@/lib/ids";
 import { invalidarSesion } from "@/lib/personas";
 import { personaActual } from "@/lib/sesion/actual";
-import { COOKIE_SESION } from "@/lib/sesion/constantes";
+import { borrarSesion } from "@/lib/sesion/guardar";
 import { normalizarTelefono } from "@/lib/telefono";
 
 const texto = (formData: FormData, clave: string) => {
@@ -113,6 +112,6 @@ export async function guardarDatos(formData: FormData) {
 export async function cerrarSesion() {
   const p = await personaActual();
   if (p) await invalidarSesion(p.id);
-  (await cookies()).delete(COOKIE_SESION);
+  await borrarSesion();
   redirect("/");
 }

@@ -79,7 +79,7 @@ export async function buscarPersonaPorToken(token: string): Promise<PersonaSesio
 export async function invalidarSesion(personaId: string): Promise<void> {
   const { error } = await supabaseServidor()
     .from("personas")
-    .update({ token_hash: hashToken(generarToken()) })
+    .update({ token_hash: hashToken(generarToken()), token_emitido_en: new Date().toISOString() })
     .eq("id", personaId);
   if (error) throw error;
 }

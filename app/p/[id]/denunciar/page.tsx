@@ -39,6 +39,11 @@ export default async function PaginaDenunciar({ params, searchParams }: PageProp
           ))}
         </fieldset>
         {error === "motivo" && <p className="texto-error">Todavía falta elegir un motivo.</p>}
+        {error === "limite" && (
+          <p className="aviso-error text-error" role="alert">
+            Hoy llegaron muchas denuncias desde esta conexión. Mañana vas a poder enviar otra.
+          </p>
+        )}
 
         <div className="flex flex-col gap-2">
           <label htmlFor="detalle" className="etiqueta">

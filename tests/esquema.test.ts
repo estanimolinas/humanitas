@@ -16,7 +16,9 @@ const CON_ARCHIVADO = [
   "rubros",
   "zonas",
 ];
-const SIN_ARCHIVADO = ["eventos", "concretados", "acciones_operador", "eventos_mensuales"];
+const SIN_ARCHIVADO = ["eventos", "concretados", "acciones_operador", "eventos_mensuales", "limites"];
+// Crecen y se podan con script manual: son las únicas que admiten DELETE (11.5 sumó limites).
+const CON_PODA = ["eventos", "limites"];
 const TODAS = [...CON_ARCHIVADO, ...SIN_ARCHIVADO];
 
 async function crearPersona(tx: postgres.TransactionSql, telefono = "5493425000001") {
@@ -65,6 +67,9 @@ describe("esquema 12.3", () => {
       where table_schema = 'public' and table_name = 'personas'`;
     const c = Object.fromEntries(filas.map((f) => [f.column_name, f]));
     expect(c.token_hash).toMatchObject({ data_type: "text", is_nullable: "NO" });
+    expect(c.token_emitido_en).toMatchObject({ is_nullable: "NO" });
+    // Vacío solo en cuentas dadas de baja (check personas_telefono_si_activa, 11.5).
+    expect(c.telefono).toMatchObject({ is_nullable: "YES" });
     expect(c.terminos_aceptados_en).toMatchObject({ is_nullable: "NO" });
     expect(c.mayoria_edad_declarada).toMatchObject({ data_type: "boolean", is_nullable: "NO" });
     expect(c.es_operador).toMatchObject({ data_type: "boolean", is_nullable: "NO" });
@@ -72,7 +77,7 @@ describe("esquema 12.3", () => {
 });
 
 describe("R12 / F3: ningún DELETE", () => {
-  it("toda tabla salvo eventos tiene los triggers que impiden DELETE y TRUNCATE", async () => {
+  it("toda tabla salvo las de poda tiene los triggers que impiden DELETE y TRUNCATE", async () => {
     const filas = await sql`
       select c.relname as tabla, t.tgname as nombre
       from pg_trigger t
@@ -80,7 +85,7 @@ describe("R12 / F3: ningún DELETE", () => {
       join pg_namespace n on n.oid = c.relnamespace
       join pg_proc p on p.oid = t.tgfoid
       where n.nspname = 'public' and p.proname = 'impedir_borrado' and not t.tgisinternal`;
-    const esperados = TODAS.filter((t) => t !== "eventos").flatMap((t) => [
+    const esperados = TODAS.filter((t) => !CON_PODA.includes(t)).flatMap((t) => [
       `${t}:${t}_sin_delete`,
       `${t}:${t}_sin_truncate`,
     ]);
@@ -97,8 +102,8 @@ describe("R12 / F3: ningún DELETE", () => {
     });
   });
 
-  it("la base rechaza TRUNCATE en toda tabla salvo eventos", async () => {
-    for (const t of TODAS.filter((t) => t !== "eventos")) {
+  it("la base rechaza TRUNCATE en toda tabla salvo las de poda", async () => {
+    for (const t of TODAS.filter((t) => !CON_PODA.includes(t))) {
       await enTransaccion(sql, async (tx) => {
         await expect(tx.unsafe(`truncate public.${t} cascade`), t).rejects.toThrow(
           /no se borran filas/,
@@ -117,8 +122,8 @@ describe("R12 / F3: ningún DELETE", () => {
 
   it("no hay DELETE en el código de la app", () => {
     const dirs = ["app", "lib", "scripts"];
-    // Única excepción permitida (paso 9): el script de poda de eventos.
-    const permitidos = new Set<string>(["scripts/podar-eventos.ts"]);
+    // Únicas excepciones permitidas: las podas de eventos (paso 9) y de limites (11.5).
+    const permitidos = new Set<string>(["scripts/podar-eventos.ts", "scripts/podar-limites.mjs"]);
     const archivos: string[] = [];
     const recorrer = (dir: string) => {
       let entradas: string[];
