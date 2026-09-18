@@ -1,6 +1,6 @@
 import type postgres from "postgres";
 import { afterAll, describe, expect, it } from "vitest";
-import { LIMITE_CONTACTOS_POR_DIA, linkContacto } from "@/lib/whatsapp";
+import { LIMITE_CONTACTOS_POR_DIA, linkContacto, linkEquipo } from "@/lib/whatsapp";
 import { conectar, enTransaccion } from "./db";
 
 const sql = conectar();
@@ -48,6 +48,16 @@ describe("linkContacto (R04)", () => {
     expect(texto).toContain("Revoque y humedad");
     expect(texto).toContain("Rubén");
     expect(texto).toContain("Ana");
+  });
+});
+
+describe("linkEquipo (Ayuda)", () => {
+  it("arma el link con el número normalizado", () => {
+    expect(linkEquipo("342 512 3456")).toMatch(/^https:\/\/wa\.me\/5493425123456\?text=/);
+  });
+
+  it.each([undefined, "", "123"])("sin un número válido devuelve null (%j)", (numero) => {
+    expect(linkEquipo(numero)).toBeNull();
   });
 });
 

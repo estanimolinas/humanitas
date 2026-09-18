@@ -8,12 +8,11 @@ export default function PaginaDenunciada() {
     <main className="contenedor flex flex-1 flex-col gap-4">
       <h1 className="titulo">Gracias por avisar</h1>
       <p>
-        Una persona la revisa en menos de 24 horas. Si hay más denuncias, la publicación se oculta
+        Una persona del equipo de Humanitas la revisa en menos de 24 horas. Si hay más denuncias, la publicación se oculta
         mientras tanto.
       </p>
       <p className="text-texto-2">
-        Si creés que alguien está en peligro o que es un menor de edad, también conviene avisar en tu
-        punto de alta: la vecinal, la parroquia o el centro comunitario.
+        Si creés que alguien está en peligro, también conviene llamar al 911.
       </p>
       <Link href="/" className="boton-principal boton-suelto">
         Volver al listado

@@ -111,21 +111,14 @@ export default async function PaginaMisPublicaciones({ searchParams }: PageProps
         </div>
       </div>
 
-      {perfil.verificadoLugar ? (
-        <p className="text-dorado-oscuro">✓ Verificado en {perfil.verificadoLugar}</p>
-      ) : (
-        <div className="aviso">
-          <p className="font-semibold text-dorado-profundo">Verificación presencial</p>
-          <p className="mt-1">
-            Podés verificarte en persona en tu punto de alta. No hay puntajes ni estrellas: la
-            verificación solo dice dónde te conocieron.
-          </p>
-        </div>
-      )}
-
-      <Link href="/mis-publicaciones/datos" className="text-dorado-oscuro underline">
-        Mis datos
-      </Link>
+      <div className="flex gap-5">
+        <Link href="/mis-publicaciones/datos" className="text-dorado-oscuro underline">
+          Mis datos
+        </Link>
+        <Link href="/ayuda" className="text-dorado-oscuro underline">
+          Ayuda
+        </Link>
+      </div>
 
       {listo && <p className="aviso">{listo}</p>}
       {error && (

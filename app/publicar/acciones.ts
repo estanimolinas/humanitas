@@ -23,8 +23,8 @@ export type EstadoPublicar = {
 
 const MENSAJES = {
   limite_diario:
-    "Hoy ya hiciste 3 publicaciones, que es el máximo por día. Mañana vas a poder publicar de nuevo: así hay lugar para todos.",
-  limite_activas: "Tenés 20 publicaciones activas, que es el máximo. Podés cerrar alguna desde Mis publicaciones.",
+    "Por hoy ya hiciste 3 publicaciones, que es el tope diario. Mañana vas a poder seguir: así hay lugar para todas las personas.",
+  limite_activas: "Ya tenés 20 publicaciones activas, que es el tope. Si cerrás alguna desde Mis publicaciones, podés sumar otra.",
   rubro_invalido: "Ese rubro ya no está disponible. Podés elegir otro de la lista.",
   rubro_no_corresponde: "Ese rubro no corresponde a lo que elegiste.",
 } as const;
@@ -52,7 +52,7 @@ export async function publicar(_previo: EstadoPublicar, formData: FormData): Pro
       return {
         erroresAlta: { telefono: "Ese número ya tiene una cuenta." },
         mensaje:
-          "Si cambiaste de celular, en tu punto de alta (la vecinal, la parroquia o el centro comunitario donde te anotaste) pueden devolverte el acceso.",
+          "Si cambiaste de celular, el equipo de Humanitas te ayuda a recuperar tu cuenta. Lo encontrás en Ayuda, desde Mis publicaciones.",
       };
     }
     (await cookies()).set(COOKIE_SESION, alta.token, opcionesCookieSesion());

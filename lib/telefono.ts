@@ -16,7 +16,7 @@ const error = (mensaje: string): ResultadoTelefono => ({ ok: false, error: mensa
  */
 export function normalizarTelefono(entrada: string): ResultadoTelefono {
   let d = entrada.replace(/\D/g, "");
-  if (d.length === 0) return error("Falta el número de celular.");
+  if (d.length === 0) return error("Nos falta tu número de celular.");
 
   if (d.startsWith("00")) d = d.slice(2);
   if (d.startsWith("54")) {
@@ -29,18 +29,18 @@ export function normalizarTelefono(entrada: string): ResultadoTelefono {
   if (d.length === 12) {
     const posiciones = [2, 3, 4].filter((n) => d.slice(n, n + 2) === "15");
     if (posiciones.length !== 1) {
-      return error(`El número va sin el 15, por ejemplo: ${EJEMPLO_TELEFONO}`);
+      return error(`El número va sin el 15. Por ejemplo: ${EJEMPLO_TELEFONO}`);
     }
     const n = posiciones[0];
     d = d.slice(0, n) + d.slice(n + 2);
   }
 
   if (d.length < 10) {
-    return error(`Falta la característica, por ejemplo: ${EJEMPLO_TELEFONO}`);
+    return error(`Parece que falta la característica. Por ejemplo: ${EJEMPLO_TELEFONO}`);
   }
   // Las características argentinas empiezan con 1, 2 o 3.
   if (d.length !== 10 || !/^[123]/.test(d)) {
-    return error(`El número no parece correcto. Va la característica y el número, por ejemplo: ${EJEMPLO_TELEFONO}`);
+    return error(`Parece que el número tiene un error. Va la característica y el número, por ejemplo: ${EJEMPLO_TELEFONO}`);
   }
 
   return { ok: true, normalizado: `549${d}`, legible: `${d.slice(0, 3)} ${d.slice(3, 6)} ${d.slice(6)}` };

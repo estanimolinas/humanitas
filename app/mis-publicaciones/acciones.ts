@@ -24,12 +24,12 @@ async function persona() {
 }
 
 const MENSAJES: Record<string, string> = {
-  no_es_tuya: "Esa publicación pertenece a otra cuenta.",
-  no_esta_activa: "Esa publicación ya estaba cerrada.",
-  no_esta_cerrada: "Esa publicación ya está activa.",
-  no_te_contacto: "Esa persona no pidió tu contacto por esta publicación.",
-  motivo_invalido: "Falta elegir una de las opciones.",
-  limite_activas: "Tenés 20 publicaciones activas, que es el máximo. Para reactivar esta, primero podés cerrar otra.",
+  no_es_tuya: "Esta publicación es de otra persona.",
+  no_esta_activa: "Esta publicación ya estaba cerrada.",
+  no_esta_cerrada: "Esta publicación ya está activa.",
+  no_te_contacto: "Esa persona no te contactó por esta publicación.",
+  motivo_invalido: "Todavía falta elegir una de las opciones.",
+  limite_activas: "Ya tenés 20 publicaciones activas, que es el tope. Si cerrás alguna, podés reactivar esta.",
 };
 
 /** Cerrar (7.4). En un necesito, "Sí, con alguien de acá" suma el concretado (8.4, D2). */

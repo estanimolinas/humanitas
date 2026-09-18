@@ -75,17 +75,17 @@ export async function publicacionesPropias(personaId: string): Promise<Publicaci
   }));
 }
 
-export type PerfilPropio = { barrio: string | null; verificadoLugar: string | null; desde: string };
+export type PerfilPropio = { barrio: string | null; desde: string };
 
-/** Encabezado del perfil (mockup "Mi perfil"): barrio, verificación y desde cuándo. Sin teléfono (R05). */
+/** Encabezado del perfil (mockup "Mi perfil"): barrio y desde cuándo. Sin teléfono (R05). */
 export async function perfilPropio(personaId: string): Promise<PerfilPropio> {
   const { data, error } = await supabaseServidor()
     .from("personas")
-    .select("creada_en, verificado_lugar, zonas ( nombre )")
+    .select("creada_en, zonas ( nombre )")
     .eq("id", personaId)
-    .single<{ creada_en: string; verificado_lugar: string | null; zonas: { nombre: string } | null }>();
+    .single<{ creada_en: string; zonas: { nombre: string } | null }>();
   if (error) throw error;
-  return { barrio: data.zonas?.nombre ?? null, verificadoLugar: data.verificado_lugar, desde: data.creada_en };
+  return { barrio: data.zonas?.nombre ?? null, desde: data.creada_en };
 }
 
 export type QuienContacto = { id: string; nombre: string; cuando: string };

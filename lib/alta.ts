@@ -21,8 +21,8 @@ export function validarAlta(
   const errores: ErroresAlta = {};
 
   const nombre = campos.nombre.trim().replace(/\s+/g, " ");
-  if (nombre.length === 0) errores.nombre = "Falta el nombre.";
-  else if (nombre.length > 80) errores.nombre = "El nombre supera el largo permitido.";
+  if (nombre.length === 0) errores.nombre = "Nos falta tu nombre.";
+  else if (nombre.length > 80) errores.nombre = "El nombre es un poco largo. ¿Lo acortamos?";
 
   const telefono = normalizarTelefono(campos.telefono);
   if (!telefono.ok) errores.telefono = telefono.error;
@@ -30,11 +30,11 @@ export function validarAlta(
   let zonaId: number | null = null;
   if (campos.zonaId !== "") {
     zonaId = Number(campos.zonaId);
-    if (!Number.isInteger(zonaId) || zonaId <= 0) errores.zonaId = "El barrio elegido no está en la lista.";
+    if (!Number.isInteger(zonaId) || zonaId <= 0) errores.zonaId = "No encontramos ese barrio en la lista.";
   }
 
-  if (!campos.terminos) errores.terminos = "Para continuar, es necesario aceptar los términos.";
-  if (!campos.mayorDeEdad) errores.mayorDeEdad = "Humanitas es solo para personas de 18 años o más.";
+  if (!campos.terminos) errores.terminos = "Para continuar, necesitamos que aceptes los términos.";
+  if (!campos.mayorDeEdad) errores.mayorDeEdad = "Humanitas está pensada para personas de 18 años o más.";
 
   if (Object.keys(errores).length > 0 || !telefono.ok) return { ok: false, errores };
   return { ok: true, datos: { nombre, telefono: telefono.normalizado, telefonoLegible: telefono.legible, zonaId } };

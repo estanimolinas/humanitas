@@ -94,8 +94,7 @@ eventos_mensuales mes, tipo, rubro_id?, zona_id?, cantidad
 - **Zona del visitante:** selector opcional guardado en una cookie sin identificador. Ordena, nunca filtra (regla 4).
 - **Sin roles en la app (17/09/2026, decisión del usuario que cambia 4.3):** en la app hay **solo vecinos**. No existen las pantallas de operador ni de referente. Las tres funciones sensibles se hacen con **scripts** del equipo del piloto (paso 10):
   - resolver una denuncia (devolver al listado o archivar);
-  - marcar "Verificado en [lugar]" después de un alta presencial (R14);
-  - devolver el acceso a quien cambió de celular (10.4), con un link de un solo uso; al usarlo, la sesión vieja se pierde.
+  - devolver el acceso a quien cambió de celular y lo pidió por el WhatsApp del equipo (10.4), con un link de un solo uso; al usarlo, la sesión vieja se pierde.
   Las funciones SQL (`resolver_revision`, `verificar_persona`), `personas.es_operador` y la tabla `referentes` **siguen en el esquema** y las usan los scripts.
 - **Vencimientos (8.6):** `vence_en` se fija al crear o renovar (necesito +30 días, ofrezco +90). La query oculta lo vencido y un script manual actualiza el estado. Sin cron.
 - **Peso:** 300 KB medidos **comprimidos** (bytes transferidos en la primera carga de `/`). Si se supera, **parar y avisar** antes de optimizar.
@@ -103,7 +102,7 @@ eventos_mensuales mes, tipo, rubro_id?, zona_id?, cantidad
 - **Teléfono en el alta (15/09/2026):** **no se asume** característica. Se pide con característica, con ejemplo `342 512 3456` y ayuda clara. El número armado se muestra antes de guardar para que la persona confirme.
 - **Tipografía (18/09/2026, reemplaza las decisiones del 15/09 y del 17/09):** **Lexend**, pensada para leer con fluidez, servida desde nuestro dominio (next/font la descarga en el build; nunca un CDN en uso). Es SIL OFL, gratis. No se usan Cormorant Garamond ni Lora: son difíciles de leer para quien lee poco.
 - **Guía visual:** [docs/guia-visual.md](docs/guia-visual.md) (paleta, tamaños, componentes, textos, citas verificadas). Sale del mockup de Claude Design, pero **mandan el requerimiento y la usabilidad** (decisión 15/09/2026). Se aplica con Tailwind: sin CDNs ni fuentes externas.
-- **Cómo se nombra el producto (17/09/2026, pedido del usuario):** **no usar la palabra "tablón"** en ningún texto, ni en la UI ni en los documentos del repo. Humanitas es **una app para los vecinos y las vecinas**: para quien ofrece oportunidades de trabajo y para quien quiere trabajar. (El requerimiento usa "tablón"; en los textos que ve la gente, manda este encuadre.)
+- **Cómo se nombra el producto (17/09/2026, ajustado el 18/09/2026):** **no usar "tablón" ni "vecinos/vecinas"** en ningún texto que vea la gente. Humanitas es **una app para personas, entre personas**: para quien ofrece oportunidades de trabajo y para quien quiere trabajar. ("Vecinal" solo si se nombra una institución, y hoy no se nombra ninguna.)
 - **Usabilidad primero (15/09/2026):** la web app tiene que ser lo más usable posible para el perfil de 4.2. Ante la duda, gana la opción más simple de entender y de tocar.
 - **Encíclica (regla estricta, 15/09/2026):**
   - Comillas («» o “”) **solo** para citas textuales copiadas de la traducción oficial (vatican.va), siempre con "Magnifica Humanitas, N".
@@ -119,7 +118,11 @@ eventos_mensuales mes, tipo, rubro_id?, zona_id?, cantidad
 - **Vocabulario:** simple y pertinente, amable y profesional. Nada chocante, nada de órdenes ("hacé", "no pagues"), nada infantil.
 - **Sin pantalla de valores:** las citas de la encíclica aparecen **en contexto**, donde son pertinentes (trabajo en el listado y en publicar, dignidad en el perfil, etc.). Siempre textuales, con su número.
 - **Aviso de confianza** (texto elegido, se usa igual en todos lados): *Humanitas no percibe comisiones ni intermedia pagos. Los acuerdos económicos se establecen directamente entre las partes.* Visible en inicio, junto a Contactar, al publicar y en el alta.
-- **Denuncias:** se mantienen como están.
+- **Denuncias:** se mantienen como están. Las revisa una persona del equipo de Humanitas; ante un peligro se sugiere llamar al 911.
+- **Tono (18/09/2026):** amable antes que correcto. Los errores dicen lo que falta con calidez ("Nos falta tu nombre", "Todavía falta elegir un rubro", "¿Lo acortamos?"). Los términos dicen primero lo que Humanitas **es** y después sus límites, sin cadenas de "no".
+- **Sin puntos de alta ni instituciones (18/09/2026, decisión del usuario que cambia R14, 10.4 y 10.6):** es de personas entre personas. Ninguna institución (parroquia, vecinal, Estado) interviene en los acuerdos ni aparece en la app.
+  - **Sin verificación presencial:** no se muestra "✓ Verificado en…" en ningún lado. `personas.verificado_*` y la tabla `referentes` quedan en el esquema sin usarse.
+  - **Ayuda (`/ayuda`):** recuperar el acceso, ver los datos y darse de baja se piden al **WhatsApp del equipo** (`WHATSAPP_EQUIPO` en `.env.local`, solo servidor). El equipo lo resuelve con scripts.
 
 ## Alcance del MVP (17/09/2026)
 El objetivo de esta etapa es **un MVP funcional para validar la idea con un [interno] de vecinos y presentarlo al [interno]**. Nada más. Ante la duda: **la app más simple posible**. Lo que se pueda hacer con un script del equipo, no se hace como pantalla.

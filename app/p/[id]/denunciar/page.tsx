@@ -38,7 +38,7 @@ export default async function PaginaDenunciar({ params, searchParams }: PageProp
             </label>
           ))}
         </fieldset>
-        {error === "motivo" && <p className="texto-error">Falta elegir un motivo.</p>}
+        {error === "motivo" && <p className="texto-error">Todavía falta elegir un motivo.</p>}
 
         <div className="flex flex-col gap-2">
           <label htmlFor="detalle" className="etiqueta">
@@ -51,8 +51,8 @@ export default async function PaginaDenunciar({ params, searchParams }: PageProp
           Enviar la denuncia
         </button>
         <p className="text-sm text-texto-2">
-          La revisa una persona en menos de 24 horas. Si alguien está en peligro o creés que es un
-          menor de edad, también conviene avisar en tu punto de alta.
+          La revisa una persona del equipo de Humanitas en menos de 24 horas. Si alguien está en
+          peligro, también conviene llamar al 911.
         </p>
       </form>
     </main>

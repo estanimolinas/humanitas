@@ -16,21 +16,24 @@ export default function PaginaTerminos() {
       <section className="flex flex-col gap-2 border-t divisor pt-4">
         <h2 className="kicker">Qué es Humanitas</h2>
         <p>
-          Una app para los vecinos y las vecinas del barrio. Quien quiere trabajar publica el oficio
-          que sabe hacer o lo que vende. Quien tiene un trabajo para dar publica lo que necesita.
-          Después se contactan directamente por WhatsApp y acuerdan entre ellos.
+          Una app que acerca a las personas. Quien quiere trabajar publica el oficio que sabe hacer
+          o lo que vende. Quien tiene un trabajo para dar publica lo que necesita. Después se
+          contactan directamente por WhatsApp y acuerdan entre ellas.
         </p>
       </section>
 
       <section className="flex flex-col gap-2 border-t divisor pt-4">
-        <h2 className="kicker">Qué no es</h2>
+        <h2 className="kicker">El papel de Humanitas</h2>
         <p>
-          Humanitas no es una bolsa de trabajo ni una agencia de empleo: no consigue trabajo, no
-          contrata a nadie y no es empleadora.
+          Humanitas es un espacio de encuentro entre personas. Su función es acercar a quien
+          ofrece un trabajo o un producto y a quien lo necesita. No funciona como bolsa de trabajo
+          ni como agencia de empleo, y no es empleadora. Ninguna institución interviene en los
+          acuerdos.
         </p>
+        <p>Cada acuerdo queda en manos de las personas que lo hacen. {TEXTO_CONFIANZA}</p>
         <p>
-          Tampoco es parte del acuerdo entre las personas. {TEXTO_CONFIANZA} No garantiza los
-          trabajos ni los productos publicados.
+          La calidad de cada trabajo o producto depende de quien lo ofrece. Por eso recomendamos
+          conversar con tranquilidad y dejar todo acordado antes de empezar.
         </p>
       </section>
 
@@ -42,7 +45,8 @@ export default function PaginaTerminos() {
         </p>
         <p>
           Tu celular no se muestra en ninguna pantalla: lo recibe, a través del botón de WhatsApp,
-          solo quien también dejó el suyo. Queda registrado quién pidió contactar a quién.
+          solo quien también dejó el suyo. Para cuidar a todas las personas, se registra quién pidió
+          contactar a quién.
         </p>
         <p>No guardamos documento, mail, contraseña, ubicación ni tu historial de navegación.</p>
       </section>
@@ -50,15 +54,18 @@ export default function PaginaTerminos() {
       <section className="flex flex-col gap-2 border-t divisor pt-4">
         <h2 className="kicker">Tus derechos</h2>
         <p>
-          Podés pedir ver tus datos o darte de baja en tu punto de alta. Al darte de baja, tu cuenta
-          se archiva y tu número se borra de la cuenta (Ley 25.326 de Protección de Datos
-          Personales).
+          Podés pedir ver tus datos o darte de baja escribiendo al equipo de Humanitas, desde{" "}
+          <a href="/ayuda" className="text-dorado-oscuro underline">
+            Ayuda
+          </a>
+          . Al darte de baja, tu cuenta se archiva y tu número se borra (Ley 25.326 de Protección de
+          Datos Personales).
         </p>
       </section>
 
       <section className="flex flex-col gap-2 border-t divisor pt-4">
         <h2 className="kicker">Mayores de 18</h2>
-        <p>Humanitas es solo para personas de 18 años o más.</p>
+        <p>Humanitas está pensada para personas de 18 años o más.</p>
       </section>
 
       <Cita

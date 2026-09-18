@@ -27,7 +27,7 @@ describe("normalizarTelefono", () => {
     for (const sinCaracteristica of ["512 3456", "15 512 3456", "4512345"]) {
       const r = normalizarTelefono(sinCaracteristica);
       expect(r.ok, sinCaracteristica).toBe(false);
-      if (!r.ok) expect(r.error).toMatch(/Falta la característica/);
+      if (!r.ok) expect(r.error).toMatch(/falta la característica/i);
     }
   });
 

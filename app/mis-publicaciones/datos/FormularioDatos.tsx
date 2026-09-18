@@ -38,7 +38,7 @@ export function FormularioDatos({
           onChange={(e) => setNombre(e.target.value)}
           maxLength={80}
         />
-        {error === "nombre" && <p className="texto-error">Falta el nombre.</p>}
+        {error === "nombre" && <p className="texto-error">Nos falta tu nombre.</p>}
       </div>
 
       <div className="flex flex-col gap-2">
@@ -64,9 +64,9 @@ export function FormularioDatos({
           </p>
         )}
         {nuevo && !nuevo.ok && <p className="texto-error">{nuevo.error}</p>}
-        {error === "telefono" && <p className="texto-error">El número no parece correcto.</p>}
+        {error === "telefono" && <p className="texto-error">Parece que el número tiene un error. ¿Lo revisamos?</p>}
         {error === "telefono_existente" && (
-          <p className="texto-error">Ese número ya está usado por otra cuenta.</p>
+          <p className="texto-error">Ese número ya tiene una cuenta en Humanitas.</p>
         )}
       </div>
 

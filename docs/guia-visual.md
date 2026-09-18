@@ -60,7 +60,7 @@ Fuentes del sistema (`system-ui, -apple-system, "Segoe UI", Roboto, sans-serif`)
 - **Selector "Tu barrio":** ordena, nunca filtra (8.1). Va en una tarjeta de aviso con el kicker "Cómo se ordena" (como la tarjeta "Orden de hoy" del mockup) y el texto "Primero lo de tu barrio. Lo demás sigue apareciendo."
 - **Fila de publicación:**
   - Contenido: etiqueta Ofrezco/Necesito · rubro · barrio (si tiene) · antigüedad ("hace 2 días"), título, precio (si tiene) y miniatura de 56 px a la derecha (si tiene).
-  - "✓ Verificado en [lugar]" **solo si aplica**. Nunca "Sin verificar".
+  - Sin sellos de verificación (18/09/2026).
   - En Ofrecen: "N trabajos concretados" si es mayor a 0. En productos: "N personas pidieron contacto este mes" (8.4).
   - Filas separadas por `divisor`; toda la fila se puede tocar.
 - **Botón principal** (uno por pantalla: Contactar por WhatsApp, Seguir, Publicar): **relleno** `dorado-oscuro`, texto blanco, 52 px de alto, radio 10 px, ancho completo.
@@ -105,7 +105,6 @@ Al usuario le gustaron mucho tres pantallas del mockup. Hay que **replicar su lo
   - Filas sin tarjeta, separadas por líneas finas.
   - Etiqueta con borde: **NECESITO** en gris y **OFREZCO** en dorado.
   - Título en negrita, una línea de descripción en gris y nombre de pila abajo.
-  - "✓ Verificado en…" en dorado.
   - Flecha › a la derecha.
   - Al pie, la frase propia sin comillas: *Humanitas no cobra comisión ni intermedia el dinero. El acuerdo es entre vecinos.*
   - Barra inferior con íconos de línea finos.
@@ -126,7 +125,7 @@ Al usuario le gustaron mucho tres pantallas del mockup. Hay que **replicar su lo
 | F | Detalle con campos que no existen, sin Denunciar | Precio, barrio, antigüedad, alias de pago, concretados, Contactar y **Denunciar** |
 | G | Publicar en un solo formulario, foto de 60 kB, "entra mañana" | 3 pasos (7.3), foto de menos de 200 KB, queda activa al publicar |
 | H | Textos que no son ciertos | Corregidos (sección 6) |
-| I | "Sin verificar aún" | Solo se muestra "Verificado en…" cuando aplica |
+| I | "Sin verificar aún" | Sin verificación presencial: no se muestra ningún sello (18/09/2026, sin puntos de alta) |
 
 ## 5. Texto de "Cómo se ordena el listado" (8.2)
 
@@ -141,7 +140,7 @@ Al usuario le gustaron mucho tres pantallas del mockup. Hay que **replicar su lo
 |---|---|
 | Tu teléfono sólo se muestra cuando alguien toca contactar. | Tu celular no se muestra en ninguna pantalla. Solo lo recibe por WhatsApp quien te quiere contactar y también dejó el suyo. |
 | Guarda lo mínimo: tu nombre, tu barrio y lo que publicás. | Guardamos lo mínimo: tu nombre, tu celular, tu barrio si lo elegís y lo que publicás. |
-| Acercate con tu DNI a la Vecinal… (horarios inventados) | Podés verificarte en persona en tu punto de alta. (Los lugares salen de la tabla `referentes`, no del código.) |
+| Acercate con tu DNI a la Vecinal… (horarios inventados) | Se quita: no hay verificación presencial ni puntos de alta (18/09/2026). |
 | Estado "Pausada" | Estados reales: Activa, Cerrada, En revisión |
 | Entra en la rotación de mañana a las 6:00. | Tu publicación ya se ve en el barrio. |
 | Se comprime a menos de 60 kB. | Se achica en tu celular para no gastarte datos. |

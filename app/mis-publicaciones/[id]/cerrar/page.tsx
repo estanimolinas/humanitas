@@ -35,7 +35,7 @@ export default async function PaginaCerrar({ params, searchParams }: PageProps<"
 
       {falta && (
         <p className="aviso-error text-error" role="alert">
-          Falta elegir quién hizo el trabajo, para que quede reconocido.
+          Todavía falta elegir quién hizo el trabajo, así queda reconocido.
         </p>
       )}
 

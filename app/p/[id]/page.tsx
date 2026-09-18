@@ -45,10 +45,6 @@ export default async function PaginaDetalle({ params, searchParams }: PageProps<
       <div className="flex justify-between gap-3 border-y divisor py-3">
         <div className="min-w-0">
           <p className="font-semibold">{p.personaNombre}</p>
-          {/* Solo se muestra cuando está verificada (decisión I del 15/09) */}
-          {p.verificadoLugar && (
-            <p className="text-sm text-dorado-oscuro">✓ Verificado en {p.verificadoLugar}</p>
-          )}
           {esOfrezco && p.subtipo === "servicio" && p.concretados > 0 && (
             <p className="text-sm text-texto-2">
               {p.concretados === 1 ? "1 trabajo concretado" : `${p.concretados} trabajos concretados`}
@@ -88,7 +84,7 @@ export default async function PaginaDetalle({ params, searchParams }: PageProps<
 
       {q.limite && (
         <p className="aviso-error text-error" role="alert">
-          Llegaste al máximo de {LIMITE_CONTACTOS_POR_DIA} contactos por día. Mañana vas a poder contactar de nuevo.
+          Por hoy llegaste a los {LIMITE_CONTACTOS_POR_DIA} contactos. Mañana vas a poder seguir.
         </p>
       )}
 

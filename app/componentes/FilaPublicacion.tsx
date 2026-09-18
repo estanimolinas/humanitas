@@ -24,10 +24,6 @@ export function FilaPublicacion({ p }: { p: PublicacionListada }) {
 
         <p className="mt-1.5 flex flex-wrap items-center gap-x-3 text-sm">
           <span className="text-texto-2">{p.persona_nombre}</span>
-          {/* Solo se muestra cuando está verificada (decisión I del 15/09) */}
-          {p.verificado_lugar && (
-            <span className="text-dorado-oscuro">✓ Verificado en {p.verificado_lugar}</span>
-          )}
           {esOfrezco && p.subtipo === "servicio" && p.concretados > 0 && (
             <span className="text-texto-2">
               {p.concretados === 1 ? "1 trabajo concretado" : `${p.concretados} trabajos concretados`}
