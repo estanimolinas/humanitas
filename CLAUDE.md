@@ -101,7 +101,7 @@ eventos_mensuales mes, tipo, rubro_id?, zona_id?, cantidad
 - **Peso:** 300 KB medidos **comprimidos** (bytes transferidos en la primera carga de `/`). Si se supera, **parar y avisar** antes de optimizar.
 - **Términos y consentimiento:** texto borrador marcado "BORRADOR" hasta tener el definitivo.
 - **Teléfono en el alta (15/09/2026):** **no se asume** característica. Se pide con característica, con ejemplo `342 512 3456` y ayuda clara. El número armado se muestra antes de guardar para que la persona confirme.
-- **Tipografía (15/09/2026):** fuentes del sistema (al usuario le gustaron). Cero bytes de fuentes.
+- **Tipografía (18/09/2026, reemplaza las decisiones del 15/09 y del 17/09):** **Lexend**, pensada para leer con fluidez, servida desde nuestro dominio (next/font la descarga en el build; nunca un CDN en uso). Es SIL OFL, gratis. No se usan Cormorant Garamond ni Lora: son difíciles de leer para quien lee poco.
 - **Guía visual:** [docs/guia-visual.md](docs/guia-visual.md) (paleta, tamaños, componentes, textos, citas verificadas). Sale del mockup de Claude Design, pero **mandan el requerimiento y la usabilidad** (decisión 15/09/2026). Se aplica con Tailwind: sin CDNs ni fuentes externas.
 - **Cómo se nombra el producto (17/09/2026, pedido del usuario):** **no usar la palabra "tablón"** en ningún texto, ni en la UI ni en los documentos del repo. Humanitas es **una app para los vecinos y las vecinas**: para quien ofrece oportunidades de trabajo y para quien quiere trabajar. (El requerimiento usa "tablón"; en los textos que ve la gente, manda este encuadre.)
 - **Usabilidad primero (15/09/2026):** la web app tiene que ser lo más usable posible para el perfil de 4.2. Ante la duda, gana la opción más simple de entender y de tocar.
@@ -113,15 +113,23 @@ eventos_mensuales mes, tipo, rubro_id?, zona_id?, cantidad
 - **Node:** 22 LTS fijado en `.nvmrc` (`nvm use`). No tocar el Node global ni el alias default de nvm.
 - **Tests:** Vitest (lógica y funciones SQL contra Supabase local). Sin Playwright.
 
+## Feedback de vecinos (18/09/2026)
+- **Lema de la app:** "Tecnología al servicio de la humanidad". Va debajo del nombre en el encabezado y como descripción de la app instalada. Es una frase propia: sin comillas y sin atribuirla a la encíclica.
+- **Letra mayúscula** en los textos de la app (títulos, botones, etiquetas, avisos, chips): en Argentina se alfabetiza primero con imprenta mayúscula. Se hace con estilo (`text-transform`), no reescribiendo el texto. **Pendiente:** si también aplica a lo que escriben los vecinos.
+- **Vocabulario:** simple y pertinente, amable y profesional. Nada chocante, nada de órdenes ("hacé", "no pagues"), nada infantil.
+- **Sin pantalla de valores:** las citas de la encíclica aparecen **en contexto**, donde son pertinentes (trabajo en el listado y en publicar, dignidad en el perfil, etc.). Siempre textuales, con su número.
+- **Aviso de confianza** (texto elegido, se usa igual en todos lados): *Humanitas no percibe comisiones ni intermedia pagos. Los acuerdos económicos se establecen directamente entre las partes.* Visible en inicio, junto a Contactar, al publicar y en el alta.
+- **Denuncias:** se mantienen como están.
+
 ## Alcance del MVP (17/09/2026)
 El objetivo de esta etapa es **un MVP funcional para validar la idea con un [interno] de vecinos y presentarlo al [interno]**. Nada más. Ante la duda: **la app más simple posible**. Lo que se pueda hacer con un script del equipo, no se hace como pantalla.
 
 ## Prioridades que pidió el usuario (17/09/2026, al cerrar el día)
 1. **Más seguridad** antes de exponerla: adelantar el endurecimiento (cabeceras, cerrar sesión, chequeo de secretos) y revisar el resto de la lista de 11.5.
 2. **Mucho más fiel al mockup de Claude Design** (`docs/diseno/mockup-claude-design.html`). El motivo es de producto: **Humanitas tiene que ser lindo y tener impronta propia**. Que corra en **dispositivos de gama baja** es una restricción técnica (peso, contraste, tamaños), no una excusa para que se vea pobre. Concretamente:
-   - **Tipografía:** usar la del sistema de diseño "classical" (Cormorant Garamond en títulos, Lora en texto), **servida desde nuestro dominio**, nunca desde un CDN. Ambas son SIL OFL, gratis. Esto **revierte** la decisión del 15/09 de usar fuentes del sistema. Cuidar el presupuesto: hoy la primera carga son 185,5 KB de 300.
+   - **Tipografía:** Lexend (ver decisión del 18/09). Cuidar el presupuesto: hoy la primera carga son 185,5 KB de 300.
    - **Colores:** respetar los tokens del mockup, corrigiendo solo lo que no se lee (ver contrastes en `docs/guia-visual.md`).
-   - **Pantalla de valores:** construirla como en el mockup (kicker dorado, cita grande, lista con el número de párrafo), con las citas textuales verificadas.
+   - **Citas de la encíclica:** en contexto, sin pantalla de valores (feedback del 18/09). Del mockup se toma el estilo: kicker dorado, cita destacada y número de párrafo.
    - Repasar pantalla por pantalla contra las capturas y acercar la composición, no solo la paleta. Siguen valiendo las decisiones A–I de contenido.
 3. **Los barrios del seed están mal:** no son los del norte de la ciudad de Santa Fe. Hay que rehacer la lista con los barrios reales del norte y confirmarla con el usuario antes de cargarla.
 
