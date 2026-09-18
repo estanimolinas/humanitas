@@ -254,10 +254,10 @@ describe("seed", () => {
     expect(otros.map((o) => o.familia)).toEqual(["producto", "servicio"]);
   });
 
-  it("zonas: Santa Fe > localidad > 6 barrios del norte", async () => {
+  it("zonas: Santa Fe > localidad > una sola zona, la norte (decisión 18/09)", async () => {
     const [prov] = await sql`select id from zonas where tipo = 'provincia' and nombre = 'Santa Fe'`;
     const [loc] = await sql`select id from zonas where tipo = 'localidad' and parent_id = ${prov.id}`;
     const barrios = await sql`select nombre from zonas where tipo = 'barrio' and parent_id = ${loc.id}`;
-    expect(barrios).toHaveLength(6);
+    expect(barrios.map((b) => b.nombre)).toEqual(["Zona norte"]);
   });
 });

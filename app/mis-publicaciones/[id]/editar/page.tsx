@@ -4,6 +4,7 @@ import { notFound, redirect } from "next/navigation";
 import { publicacionesPropias } from "@/lib/mis-publicaciones";
 import { personaActual } from "@/lib/sesion/actual";
 import { zonasParaElegir } from "@/lib/zonas";
+import { ELEGIR_BARRIO } from "@/lib/zonas-config";
 import { MAX_DESCRIPCION, MAX_TITULO } from "@/lib/validar-publicacion";
 import { editar } from "../../acciones";
 
@@ -83,24 +84,28 @@ export default async function PaginaEditar({ params, searchParams }: PageProps<"
           />
         </div>
 
-        <div className="flex flex-col gap-2">
-          <label htmlFor="zonaId" className="etiqueta">
-            Barrio
-          </label>
-          <select id="zonaId" name="zonaId" className="campo" defaultValue={p.zonaId ? String(p.zonaId) : ""}>
-            <option value="">Sin barrio</option>
-            {zonas.map((g) => (
-              <optgroup key={g.localidad} label={g.localidad}>
-                {g.barrios.map((b) => (
-                  <option key={b.id} value={b.id}>
-                    {b.nombre}
-                  </option>
-                ))}
-              </optgroup>
-            ))}
-          </select>
-          <p className="text-sm text-texto-2">El barrio ordena el listado; tu publicación aparece igual en todos.</p>
-        </div>
+        {!ELEGIR_BARRIO ? (
+          <input type="hidden" name="zonaId" value={p.zonaId ? String(p.zonaId) : ""} />
+        ) : (
+          <div className="flex flex-col gap-2">
+            <label htmlFor="zonaId" className="etiqueta">
+              Barrio
+            </label>
+            <select id="zonaId" name="zonaId" className="campo" defaultValue={p.zonaId ? String(p.zonaId) : ""}>
+              <option value="">Sin barrio</option>
+              {zonas.map((g) => (
+                <optgroup key={g.localidad} label={g.localidad}>
+                  {g.barrios.map((b) => (
+                    <option key={b.id} value={b.id}>
+                      {b.nombre}
+                    </option>
+                  ))}
+                </optgroup>
+              ))}
+            </select>
+            <p className="text-sm text-texto-2">El barrio ordena el listado; tu publicación aparece igual en todos.</p>
+          </div>
+        )}
 
         <button type="submit" className="boton-principal">
           Guardar cambios

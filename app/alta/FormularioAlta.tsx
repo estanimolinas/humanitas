@@ -4,6 +4,7 @@ import { useActionState, useState } from "react";
 import { validarAlta, type ErroresAlta } from "@/lib/alta";
 import { EJEMPLO_TELEFONO } from "@/lib/telefono";
 import type { GrupoZonas } from "@/lib/zonas";
+import { ELEGIR_BARRIO } from "@/lib/zonas-config";
 import { AvisoConfianza } from "../componentes/AvisoConfianza";
 import { darDeAlta, type EstadoAlta } from "./acciones";
 
@@ -125,33 +126,34 @@ export function FormularioAlta({ zonas, volver }: { zonas: GrupoZonas[]; volver:
             )}
           </div>
 
-          <div className="flex flex-col gap-2">
-            <label htmlFor="zonaId" className="etiqueta">
-              Tu barrio (si querés)
-            </label>
-            <select
-              id="zonaId"
-              name="zonaId"
-              className="campo"
-              value={zonaId}
-              onChange={(e) => setZonaId(e.target.value)}
-            >
-              <option value="">Prefiero no decirlo</option>
-              {zonas.map((grupo) => (
-                <optgroup key={grupo.localidad} label={grupo.localidad}>
-                  {grupo.barrios.map((b) => (
-                    <option key={b.id} value={b.id}>
-                      {b.nombre}
-                    </option>
-                  ))}
-                </optgroup>
-              ))}
-            </select>
-          </div>
+          {ELEGIR_BARRIO && (
+            <div className="flex flex-col gap-2">
+              <label htmlFor="zonaId" className="etiqueta">
+                Tu barrio (si querés)
+              </label>
+              <select
+                id="zonaId"
+                name="zonaId"
+                className="campo"
+                value={zonaId}
+                onChange={(e) => setZonaId(e.target.value)}
+              >
+                <option value="">Prefiero no decirlo</option>
+                {zonas.map((grupo) => (
+                  <optgroup key={grupo.localidad} label={grupo.localidad}>
+                    {grupo.barrios.map((b) => (
+                      <option key={b.id} value={b.id}>
+                        {b.nombre}
+                      </option>
+                    ))}
+                  </optgroup>
+                ))}
+              </select>
+            </div>
+          )}
 
           <p className="aviso">
-            Guardamos tu nombre, tu celular y tu barrio si lo elegís. Nada más: ni documento, ni
-            mail, ni ubicación.
+            Guardamos tu nombre y tu celular. Nada más: ni documento, ni mail, ni ubicación.
           </p>
 
           <div className="flex flex-col gap-3 border-t divisor pt-4">

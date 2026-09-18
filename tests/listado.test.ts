@@ -49,9 +49,15 @@ async function rubro(tx: postgres.TransactionSql, familia = "servicio") {
   return r.id as number;
 }
 
+/** Tres barrios propios del test, en la misma localidad: no depende de lo que haya en el seed. */
 async function barrios(tx: postgres.TransactionSql) {
+  const [localidad] = await tx`
+    insert into zonas (nombre, tipo) values ('Localidad de prueba', 'localidad') returning id`;
   const filas = await tx`
-    select z.id, z.nombre, z.parent_id from zonas z where z.tipo = 'barrio' order by z.nombre limit 3`;
+    insert into zonas (nombre, tipo, parent_id)
+    values ('Barrio A', 'barrio', ${localidad.id}), ('Barrio B', 'barrio', ${localidad.id}),
+           ('Barrio C', 'barrio', ${localidad.id})
+    returning id, nombre, parent_id`;
   return filas as unknown as { id: number; nombre: string; parent_id: number }[];
 }
 

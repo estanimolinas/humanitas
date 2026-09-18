@@ -5,6 +5,7 @@ import { rubrosActivos } from "@/lib/rubros";
 import { personaActual } from "@/lib/sesion/actual";
 import { zonaDelVisitante } from "@/lib/sesion/zona-visitante";
 import { zonasParaElegir } from "@/lib/zonas";
+import { ELEGIR_BARRIO } from "@/lib/zonas-config";
 import { AvisoConfianza } from "./componentes/AvisoConfianza";
 import { Cita } from "./componentes/Cita";
 import { Filtros } from "./componentes/Filtros";
@@ -48,7 +49,7 @@ export default async function Inicio({ searchParams }: PageProps<"/">) {
 
       <Filtros estado={filtros} rubros={rubros} />
 
-      {persona?.zonaId ? null : <SelectorZona zonas={zonas} zonaElegida={zonaVisitante} />}
+      {ELEGIR_BARRIO && !persona?.zonaId && <SelectorZona zonas={zonas} zonaElegida={zonaVisitante} />}
 
       <div className="flex items-baseline justify-between gap-3">
         <h1 className="etiqueta">{tipo === "necesito" ? "Lo que necesitan" : "Lo que ofrecen"}</h1>

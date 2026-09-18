@@ -18,7 +18,8 @@ export default function PaginaTerminos() {
         <p>
           Una app que acerca a las personas. Quien quiere trabajar publica el oficio que sabe hacer
           o lo que vende. Quien tiene un trabajo para dar publica lo que necesita. Después se
-          contactan directamente por WhatsApp y acuerdan entre ellas.
+          contactan directamente por WhatsApp y acuerdan entre ellas. Por ahora funciona en la
+          zona norte de la ciudad de Santa Fe.
         </p>
       </section>
 
@@ -40,8 +41,7 @@ export default function PaginaTerminos() {
       <section className="flex flex-col gap-2 border-t divisor pt-4">
         <h2 className="kicker">Qué guardamos y para qué</h2>
         <p>
-          Tu nombre, tu celular y tu barrio si lo elegís. Los usamos solo para que puedan
-          contactarte por WhatsApp.
+          Tu nombre y tu celular. Los usamos solo para que puedan contactarte por WhatsApp.
         </p>
         <p>
           Tu celular no se muestra en ninguna pantalla: lo recibe, a través del botón de WhatsApp,

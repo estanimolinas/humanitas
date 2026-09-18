@@ -6,7 +6,7 @@ import { FormularioPublicar } from "./FormularioPublicar";
 
 export const metadata: Metadata = { title: "Publicar · Humanitas" };
 
-// Publicar (7.3): tres pasos cortos. El alta mínima aparece al final, si hace falta (B4).
+// Publicar (7.3): pasos cortos. El alta mínima aparece al final, si hace falta (B4).
 export default async function PaginaPublicar() {
   const [persona, rubros, zonas] = await Promise.all([
     personaActual(),

@@ -85,7 +85,7 @@ eventos_mensuales mes, tipo, rubro_id?, zona_id?, cantidad
 - Token de sesión: en claro **solo** en la cookie httpOnly; en la base **solo** `token_hash`.
 - Operador = persona con `es_operador = true`. No hay tabla de admin separada.
 - **La base hace cumplir las reglas:** los triggers `*_sin_delete` y `*_sin_truncate` rechazan DELETE/TRUNCATE en todas las tablas salvo `eventos`. RLS está activo sin políticas, y anon/authenticated no tienen permisos.
-- Los rubros están en una migración (también van a producción). Las zonas de ejemplo están en `supabase/seed.sql` (solo local).
+- Los rubros están en una migración (también van a producción). Las zonas están en `supabase/seed.sql` (solo local): por ahora una sola, "Zona norte".
 - Tests: `npm test` (Vitest contra Supabase local; los tests de base usan transacciones que siempre se deshacen).
 - Motivos de denuncia (10.5): estafa, contenido inapropiado, posible menor (prioridad máxima, R16), otro.
 
@@ -134,7 +134,9 @@ El objetivo de esta etapa es **un MVP funcional para validar la idea con un [int
    - **Colores:** respetar los tokens del mockup, corrigiendo solo lo que no se lee (ver contrastes en `docs/guia-visual.md`).
    - **Citas de la encíclica:** en contexto, sin pantalla de valores (feedback del 18/09). Del mockup se toma el estilo: kicker dorado, cita destacada y número de párrafo.
    - Repasar pantalla por pantalla contra las capturas y acercar la composición, no solo la paleta. Siguen valiendo las decisiones A–I de contenido.
-3. **Los barrios del seed están mal:** no son los del norte de la ciudad de Santa Fe. Hay que rehacer la lista con los barrios reales del norte y confirmarla con el usuario antes de cargarla.
+3. **Barrios (resuelto el 18/09/2026):** para el MVP hay **una sola zona, "Zona norte"** de la ciudad de Santa Fe. Los barrios se cargan más adelante.
+   - Mientras tanto la app **no pregunta el barrio** en ningún lado: `ELEGIR_BARRIO = false` en `lib/zonas-config.ts` oculta el selector "Cómo se ordena", el barrio del alta, de Mis datos y de Editar, y el paso "¿Dónde?" de Publicar (queda en 2 pasos + alta si hace falta).
+   - El esquema, la función de orden por zona (8.1) y sus tests siguen igual. Para volver a los barrios: cargar las zonas y poner el interruptor en `true`.
 
 ## Paso 11.5 — Endurecimiento antes del deploy (acordado 17/09/2026)
 Va entre la PWA (paso 11) y el checklist de producción (paso 12):

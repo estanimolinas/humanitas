@@ -5,6 +5,7 @@ import { validarAlta, type ErroresAlta } from "@/lib/alta";
 import { comprimirFoto } from "@/lib/comprimir-foto";
 import { EJEMPLO_TELEFONO } from "@/lib/telefono";
 import type { GrupoZonas } from "@/lib/zonas";
+import { ELEGIR_BARRIO } from "@/lib/zonas-config";
 import type { Rubro } from "@/lib/rubros";
 import {
   camposVacios,
@@ -46,7 +47,16 @@ export function FormularioPublicar({
 }) {
   const [estado, accion, enviando] = useActionState<EstadoPublicar, FormData>(publicar, {});
 
+  // Los pasos que se muestran: "¿Dónde?" solo si se eligen barrios; el alta solo si no tiene cuenta.
+  const pasos = [
+    "que",
+    "detalles",
+    ...(ELEGIR_BARRIO ? ["donde"] : []),
+    ...(tieneCuenta ? [] : ["alta"]),
+  ];
+  const total = pasos.length;
   const [paso, setPaso] = useState(1);
+  const actual = pasos[paso - 1];
   const [c, setC] = useState<CamposPublicacion>(camposVacios);
   const [errores, setErrores] = useState<ErroresPublicacion>({});
   const [erroresAlta, setErroresAlta] = useState<ErroresAlta>({});
@@ -90,7 +100,7 @@ export function FormularioPublicar({
   function seguirBorrador() {
     if (!borrador) return;
     setC({ ...camposVacios, ...borrador.campos });
-    setPaso(borrador.paso > 1 ? borrador.paso : 1);
+    setPaso(Math.min(Math.max(borrador.paso, 1), total));
     setBorradorDescartado(true);
   }
 
@@ -112,7 +122,14 @@ export function FormularioPublicar({
   const altaValida = validarAlta({ nombre, telefono, zonaId: c.zonaId, terminos, mayorDeEdad });
 
   function siguiente() {
-    const e = paso === 1 ? validarPaso1(c) : paso === 2 ? validarPaso2(c, rubroEsOtros) : validarPaso3(c);
+    const e =
+      actual === "que"
+        ? validarPaso1(c)
+        : actual === "detalles"
+          ? validarPaso2(c, rubroEsOtros)
+          : actual === "donde"
+            ? validarPaso3(c)
+            : {};
     setErrores(e);
     if (Object.keys(e).length === 0) setPaso(paso + 1);
   }
@@ -141,8 +158,7 @@ export function FormularioPublicar({
 
   function alEnviar(e: React.FormEvent<HTMLFormElement>) {
     // El último paso es el único que manda al servidor.
-    const ultimo = tieneCuenta ? 3 : 4;
-    if (paso < ultimo) {
+    if (paso < total) {
       e.preventDefault();
       siguiente();
       return;
@@ -175,7 +191,7 @@ export function FormularioPublicar({
       <input type="hidden" name="zonaOtroTexto" value={c.zonaOtroTexto} />
       <input ref={entradaFoto} type="file" name="foto" accept="image/jpeg,image/webp" hidden />
 
-      <p className="etiqueta">Paso {paso} de {tieneCuenta ? 3 : 4}</p>
+      <p className="etiqueta">Paso {paso} de {total}</p>
 
       {hayBorrador && (
         <div className="aviso flex flex-col gap-3">
@@ -186,7 +202,7 @@ export function FormularioPublicar({
         </div>
       )}
 
-      {paso === 1 && (
+      {actual === "que" && (
         <section className="flex flex-col gap-4">
           <h2 className="titulo">¿Qué querés hacer?</h2>
           <div className={segmento}>
@@ -236,7 +252,7 @@ export function FormularioPublicar({
         </section>
       )}
 
-      {paso === 2 && (
+      {actual === "detalles" && (
         <section className="flex flex-col gap-5">
           <h2 className="titulo">Los detalles</h2>
 
@@ -363,7 +379,7 @@ export function FormularioPublicar({
         </section>
       )}
 
-      {paso === 3 && (
+      {actual === "donde" && (
         <section className="flex flex-col gap-4">
           <h2 className="titulo">¿Dónde?</h2>
           <p className="text-texto-2">
@@ -422,7 +438,7 @@ export function FormularioPublicar({
         </section>
       )}
 
-      {paso === 4 && !tieneCuenta && (
+      {actual === "alta" && (
         <section className="flex flex-col gap-5">
           <h2 className="titulo">Últimos datos</h2>
           <p className="text-texto-2">
@@ -506,7 +522,7 @@ export function FormularioPublicar({
         </section>
       )}
 
-      {paso === (tieneCuenta ? 3 : 4) && <AvisoConfianza />}
+      {paso === total && <AvisoConfianza />}
 
       {estado.mensaje && !estado.erroresAlta && (
         <p className="aviso-error text-error" role="alert">
@@ -516,7 +532,7 @@ export function FormularioPublicar({
 
       <div className="flex flex-col gap-3">
         <button type="submit" className="boton-principal" disabled={enviando || comprimiendo}>
-          {paso < (tieneCuenta ? 3 : 4)
+          {paso < total
             ? "Seguir"
             : enviando
               ? "Publicando…"

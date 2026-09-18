@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { normalizarTelefono } from "@/lib/telefono";
 import type { GrupoZonas } from "@/lib/zonas";
+import { ELEGIR_BARRIO } from "@/lib/zonas-config";
 import { guardarDatos } from "../acciones";
 
 /** Datos de la persona (7.4). El teléfono se cambia con confirmación en pantalla. */
@@ -70,29 +71,33 @@ export function FormularioDatos({
         )}
       </div>
 
-      <div className="flex flex-col gap-2">
-        <label htmlFor="zonaId" className="etiqueta">
-          Mi barrio
-        </label>
-        <select
-          id="zonaId"
-          name="zonaId"
-          className="campo"
-          value={zonaId}
-          onChange={(e) => setZonaId(e.target.value)}
-        >
-          <option value="">Prefiero no decirlo</option>
-          {zonas.map((g) => (
-            <optgroup key={g.localidad} label={g.localidad}>
-              {g.barrios.map((b) => (
-                <option key={b.id} value={b.id}>
-                  {b.nombre}
-                </option>
-              ))}
-            </optgroup>
-          ))}
-        </select>
-      </div>
+      {!ELEGIR_BARRIO ? (
+        <input type="hidden" name="zonaId" value={zonaId} />
+      ) : (
+        <div className="flex flex-col gap-2">
+          <label htmlFor="zonaId" className="etiqueta">
+            Mi barrio
+          </label>
+          <select
+            id="zonaId"
+            name="zonaId"
+            className="campo"
+            value={zonaId}
+            onChange={(e) => setZonaId(e.target.value)}
+          >
+            <option value="">Prefiero no decirlo</option>
+            {zonas.map((g) => (
+              <optgroup key={g.localidad} label={g.localidad}>
+                {g.barrios.map((b) => (
+                  <option key={b.id} value={b.id}>
+                    {b.nombre}
+                  </option>
+                ))}
+              </optgroup>
+            ))}
+          </select>
+        </div>
+      )}
 
       <button type="submit" className="boton-principal" disabled={cambiaTelefono && !nuevo?.ok}>
         Guardar

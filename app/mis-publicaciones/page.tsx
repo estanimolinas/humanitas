@@ -146,7 +146,7 @@ export default async function PaginaMisPublicaciones({ searchParams }: PageProps
       )}
 
       <p className="text-sm text-texto-2">
-        Guardamos lo mínimo: tu nombre, tu celular, tu barrio si lo elegís y lo que publicás.
+        Guardamos lo mínimo: tu nombre, tu celular y lo que publicás.
       </p>
     </main>
   );
