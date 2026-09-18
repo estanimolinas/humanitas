@@ -53,11 +53,11 @@ Fuentes del sistema (`system-ui, -apple-system, "Segoe UI", Roboto, sans-serif`)
 
 ## 3. Componentes
 
-- **Encabezado:** "Humanitas" + subtítulo corto ("Norte de Santa Fe"); flecha de volver en pantallas internas.
-- **Barra inferior:** 3 solapas grandes (60 px): **Inicio**, **Publicar**, **Mis publicaciones**. Sin "Buscar" (ver decisión B).
+- **Encabezado:** "Humanitas" + el lema "Tecnología al servicio de la humanidad". Con sesión, a la derecha, el círculo con las iniciales (borde dorado) que lleva a Mis publicaciones, como en el mockup.
+- **Barra inferior:** 3 solapas grandes (60 px): **Inicio**, **Publicar**, **Mis publicaciones**. Sin "Buscar" (ver decisión B). La solapa activa va en `dorado-oscuro`.
 - **Solapas del listado:** control segmentado de 48 px: **Necesitan** (por defecto) / **Ofrecen**. En Ofrecen, un segundo control: Servicios / Productos / Todos.
 - **Chips de rubro:** fila horizontal, 44 px de alto. Inactivo: borde `borde-campo`, texto `texto-2`. Activo: fondo `dorado-claro`, borde `dorado`, texto `dorado-profundo`.
-- **Selector "Tu barrio":** ordena, nunca filtra (8.1). El texto lo dice: "Primero lo de tu barrio. Lo demás sigue apareciendo."
+- **Selector "Tu barrio":** ordena, nunca filtra (8.1). Va en una tarjeta de aviso con el kicker "Cómo se ordena" (como la tarjeta "Orden de hoy" del mockup) y el texto "Primero lo de tu barrio. Lo demás sigue apareciendo."
 - **Fila de publicación:**
   - Contenido: etiqueta Ofrezco/Necesito · rubro · barrio (si tiene) · antigüedad ("hace 2 días"), título, precio (si tiene) y miniatura de 56 px a la derecha (si tiene).
   - "✓ Verificado en [lugar]" **solo si aplica**. Nunca "Sin verificar".

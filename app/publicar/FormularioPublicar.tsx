@@ -26,10 +26,12 @@ const chip = (activo: boolean) =>
     activo ? "border-dorado bg-dorado-claro text-dorado-profundo" : "border-borde-campo text-texto-2"
   }`;
 
-const grandote = (activo: boolean) =>
-  `flex min-h-16 flex-1 items-center justify-center rounded-[10px] border px-4 text-[17px] font-semibold ${
-    activo ? "border-dorado bg-dorado-claro text-dorado-profundo" : "border-borde-campo"
-  }`;
+// Control segmentado del mockup: una caja con dos mitades, la activa en dorado claro.
+const segmento = "flex overflow-hidden rounded-[10px] border border-borde-campo";
+const mitad = (activo: boolean, segunda = false) =>
+  `flex min-h-16 flex-1 items-center justify-center px-4 text-[17px] font-semibold ${
+    segunda ? "border-l border-borde-campo" : ""
+  } ${activo ? "bg-dorado-claro text-dorado-profundo" : "text-texto-2"}`;
 
 export function FormularioPublicar({
   rubros,
@@ -187,17 +189,19 @@ export function FormularioPublicar({
       {paso === 1 && (
         <section className="flex flex-col gap-4">
           <h2 className="titulo">¿Qué querés hacer?</h2>
-          <div className="flex flex-col gap-3 sm:flex-row">
+          <div className={segmento}>
             <button
               type="button"
-              className={grandote(c.tipo === "ofrezco")}
+              aria-pressed={c.tipo === "ofrezco"}
+              className={mitad(c.tipo === "ofrezco")}
               onClick={() => setC({ ...c, tipo: "ofrezco" })}
             >
               Ofrezco algo
             </button>
             <button
               type="button"
-              className={grandote(c.tipo === "necesito")}
+              aria-pressed={c.tipo === "necesito"}
+              className={mitad(c.tipo === "necesito", true)}
               onClick={() => setC({ ...c, tipo: "necesito", subtipo: "" })}
             >
               Necesito algo
@@ -208,17 +212,19 @@ export function FormularioPublicar({
           {c.tipo === "ofrezco" && (
             <>
               <h3 className="etiqueta">¿Qué ofrecés?</h3>
-              <div className="flex flex-col gap-3 sm:flex-row">
+              <div className={segmento}>
                 <button
                   type="button"
-                  className={grandote(c.subtipo === "servicio")}
+                  aria-pressed={c.subtipo === "servicio"}
+                  className={mitad(c.subtipo === "servicio")}
                   onClick={() => setC({ ...c, subtipo: "servicio", rubroId: "" })}
                 >
                   Un servicio
                 </button>
                 <button
                   type="button"
-                  className={grandote(c.subtipo === "producto")}
+                  aria-pressed={c.subtipo === "producto"}
+                  className={mitad(c.subtipo === "producto", true)}
                   onClick={() => setC({ ...c, subtipo: "producto", rubroId: "" })}
                 >
                   Un producto

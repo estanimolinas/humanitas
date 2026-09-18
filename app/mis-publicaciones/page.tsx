@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { publicacionesPropias, type PublicacionPropia } from "@/lib/mis-publicaciones";
+import { perfilPropio, publicacionesPropias, type PublicacionPropia } from "@/lib/mis-publicaciones";
 import { personaActual } from "@/lib/sesion/actual";
 import { antiguedad } from "@/lib/tiempo";
+import { Iniciales } from "../componentes/Iniciales";
 import { cerrar, reactivar } from "./acciones";
 
 export const metadata: Metadata = { title: "Mis publicaciones · Humanitas" };
@@ -88,16 +89,43 @@ export default async function PaginaMisPublicaciones({ searchParams }: PageProps
   const q = await searchParams;
   const listo = typeof q.listo === "string" ? AVISOS[q.listo] : null;
   const error = typeof q.error === "string" ? q.error : null;
-  const publicaciones = await publicacionesPropias(persona.id);
+  const [publicaciones, perfil] = await Promise.all([
+    publicacionesPropias(persona.id),
+    perfilPropio(persona.id),
+  ]);
+  const desde = new Date(perfil.desde).toLocaleDateString("es-AR", {
+    month: "long",
+    year: "numeric",
+    timeZone: "America/Argentina/Cordoba",
+  });
 
   return (
     <main className="contenedor flex flex-1 flex-col gap-4">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="titulo">Mis publicaciones</h1>
-        <Link href="/mis-publicaciones/datos" className="text-dorado-oscuro underline">
-          Mis datos
-        </Link>
+      <div className="flex items-center gap-4">
+        <Iniciales nombre={persona.nombre} grande />
+        <div className="min-w-0">
+          <h1 className="titulo">{persona.nombre}</h1>
+          <p className="text-sm text-texto-2">
+            {perfil.barrio ? `${perfil.barrio} · ` : ""}desde {desde}
+          </p>
+        </div>
       </div>
+
+      {perfil.verificadoLugar ? (
+        <p className="text-dorado-oscuro">✓ Verificado en {perfil.verificadoLugar}</p>
+      ) : (
+        <div className="aviso">
+          <p className="font-semibold text-dorado-profundo">Verificación presencial</p>
+          <p className="mt-1">
+            Podés verificarte en persona en tu punto de alta. No hay puntajes ni estrellas: la
+            verificación solo dice dónde te conocieron.
+          </p>
+        </div>
+      )}
+
+      <Link href="/mis-publicaciones/datos" className="text-dorado-oscuro underline">
+        Mis datos
+      </Link>
 
       {listo && <p className="aviso">{listo}</p>}
       {error && (
@@ -114,12 +142,19 @@ export default async function PaginaMisPublicaciones({ searchParams }: PageProps
           </Link>
         </div>
       ) : (
-        <div className="border-t divisor">
-          {publicaciones.map((p) => (
-            <Publicacion key={p.id} p={p} />
-          ))}
-        </div>
+        <section className="flex flex-col gap-2">
+          <h2 className="etiqueta">Mis publicaciones</h2>
+          <div className="border-t divisor">
+            {publicaciones.map((p) => (
+              <Publicacion key={p.id} p={p} />
+            ))}
+          </div>
+        </section>
       )}
+
+      <p className="text-sm text-texto-2">
+        Guardamos lo mínimo: tu nombre, tu celular, tu barrio si lo elegís y lo que publicás.
+      </p>
     </main>
   );
 }

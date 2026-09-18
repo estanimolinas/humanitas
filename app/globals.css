@@ -188,6 +188,12 @@ button {
   font-weight: 600;
 }
 
+/* Botón al lado de un campo (ej. "Ordenar"): ocupa solo lo que necesita. */
+.boton-compacto {
+  width: auto;
+  flex: none;
+}
+
 /* Aviso: fondo dorado claro con borde izquierdo dorado */
 .aviso {
   padding: 13px 14px;

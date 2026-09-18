@@ -75,6 +75,19 @@ export async function publicacionesPropias(personaId: string): Promise<Publicaci
   }));
 }
 
+export type PerfilPropio = { barrio: string | null; verificadoLugar: string | null; desde: string };
+
+/** Encabezado del perfil (mockup "Mi perfil"): barrio, verificación y desde cuándo. Sin teléfono (R05). */
+export async function perfilPropio(personaId: string): Promise<PerfilPropio> {
+  const { data, error } = await supabaseServidor()
+    .from("personas")
+    .select("creada_en, verificado_lugar, zonas ( nombre )")
+    .eq("id", personaId)
+    .single<{ creada_en: string; verificado_lugar: string | null; zonas: { nombre: string } | null }>();
+  if (error) throw error;
+  return { barrio: data.zonas?.nombre ?? null, verificadoLugar: data.verificado_lugar, desde: data.creada_en };
+}
+
 export type QuienContacto = { id: string; nombre: string; cuando: string };
 
 /** Personas que pidieron contacto por esta publicación: entre ellas se elige quién lo hizo (7.4). */

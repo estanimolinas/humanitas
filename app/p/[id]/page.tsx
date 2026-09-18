@@ -6,6 +6,7 @@ import { personaActual } from "@/lib/sesion/actual";
 import { antiguedad } from "@/lib/tiempo";
 import { LIMITE_CONTACTOS_POR_DIA } from "@/lib/whatsapp";
 import { AvisoConfianza } from "../../componentes/AvisoConfianza";
+import { EtiquetaTipo } from "../../componentes/EtiquetaTipo";
 import { contactarPorWhatsApp } from "./acciones";
 
 export async function generateMetadata({ params }: PageProps<"/p/[id]">): Promise<Metadata> {
@@ -24,8 +25,6 @@ export default async function PaginaDetalle({ params, searchParams }: PageProps<
   const esOfrezco = p.tipo === "ofrezco";
   const datos = [
     p.precioTexto ? { k: esOfrezco ? "Precio" : "Paga", v: p.precioTexto } : null,
-    p.zona ? { k: "Barrio", v: p.zona } : null,
-    { k: "Publicado", v: antiguedad(p.creadaEn) },
     p.aliasPago ? { k: "Alias para pagar", v: p.aliasPago } : null,
   ].filter((d): d is { k: string; v: string } => d !== null);
 
@@ -36,33 +35,37 @@ export default async function PaginaDetalle({ params, searchParams }: PageProps<
       </Link>
 
       <div className="flex flex-col gap-2">
-        <p className="kicker">
-          {esOfrezco ? "Ofrezco" : "Necesito"} · {p.rubroOtroTexto ?? p.rubro}
-        </p>
+        <div className="flex items-start gap-2">
+          <EtiquetaTipo tipo={p.tipo} />
+          <p className="pt-px text-sm text-texto-2">{p.rubroOtroTexto ?? p.rubro}</p>
+        </div>
         <h1 className="titulo">{p.titulo}</h1>
       </div>
 
-      <div className="flex flex-wrap items-baseline justify-between gap-2 border-y divisor py-3">
-        <div>
+      <div className="flex justify-between gap-3 border-y divisor py-3">
+        <div className="min-w-0">
           <p className="font-semibold">{p.personaNombre}</p>
-          {p.verificadoLugar ? (
+          {/* Solo se muestra cuando está verificada (decisión I del 15/09) */}
+          {p.verificadoLugar && (
             <p className="text-sm text-dorado-oscuro">✓ Verificado en {p.verificadoLugar}</p>
-          ) : (
-            <p className="text-sm text-texto-2">Sin verificación presencial todavía</p>
+          )}
+          {esOfrezco && p.subtipo === "servicio" && p.concretados > 0 && (
+            <p className="text-sm text-texto-2">
+              {p.concretados === 1 ? "1 trabajo concretado" : `${p.concretados} trabajos concretados`}
+            </p>
+          )}
+          {esOfrezco && p.subtipo === "producto" && p.contactosMes > 0 && (
+            <p className="text-sm text-texto-2">
+              {p.contactosMes === 1
+                ? "1 persona pidió contacto este mes"
+                : `${p.contactosMes} personas pidieron contacto este mes`}
+            </p>
           )}
         </div>
-        {esOfrezco && p.subtipo === "servicio" && p.concretados > 0 && (
-          <p className="text-sm text-texto-2">
-            {p.concretados === 1 ? "1 trabajo concretado" : `${p.concretados} trabajos concretados`}
-          </p>
-        )}
-        {esOfrezco && p.subtipo === "producto" && p.contactosMes > 0 && (
-          <p className="text-sm text-texto-2">
-            {p.contactosMes === 1
-              ? "1 persona pidió contacto este mes"
-              : `${p.contactosMes} personas pidieron contacto este mes`}
-          </p>
-        )}
+        <div className="shrink-0 text-right text-sm text-texto-2">
+          {p.zona && <p>{p.zona}</p>}
+          <p>Publicado {antiguedad(p.creadaEn)}</p>
+        </div>
       </div>
 
       {p.fotoUrl && (

@@ -13,18 +13,20 @@ export function SelectorZona({
   zonaElegida: number | null;
 }) {
   return (
-    <form action={elegirZona} className="flex flex-col gap-2">
-      <label htmlFor="zona-orden" className="etiqueta">
+    <form action={elegirZona} className="aviso flex flex-col gap-2">
+      <p className="kicker">Cómo se ordena</p>
+      <p>Primero lo de tu barrio. Lo demás sigue apareciendo.</p>
+      <label htmlFor="zona-orden" className="etiqueta mt-1">
         Tu barrio
       </label>
-      <div className="flex flex-wrap items-center gap-2">
+      <div className="flex items-center gap-2">
         <select
           id="zona-orden"
           name="zonaId"
           defaultValue={zonaElegida ? String(zonaElegida) : ""}
-          className="campo max-w-[18rem]"
+          className="campo min-w-0 flex-1 sm:max-w-[18rem]"
         >
-          <option value="">Todos los barrios</option>
+          <option value="">Sin elegir</option>
           {zonas.map((grupo) => (
             <optgroup key={grupo.localidad} label={grupo.localidad}>
               {grupo.barrios.map((b) => (
@@ -35,13 +37,10 @@ export function SelectorZona({
             </optgroup>
           ))}
         </select>
-        <button type="submit" className="boton-secundario max-w-[10rem]">
+        <button type="submit" className="boton-secundario boton-compacto bg-fondo">
           Ordenar
         </button>
       </div>
-      <p className="text-sm text-texto-2">
-        Primero lo de tu barrio. Lo demás sigue apareciendo.
-      </p>
     </form>
   );
 }
