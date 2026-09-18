@@ -138,6 +138,11 @@ El objetivo de esta etapa es **un MVP funcional para validar la idea con un [int
    - Mientras tanto la app **no pregunta el barrio** en ningún lado: `ELEGIR_BARRIO = false` en `lib/zonas-config.ts` oculta el selector "Cómo se ordena", el barrio del alta, de Mis datos y de Editar, y el paso "¿Dónde?" de Publicar (queda en 2 pasos + alta si hace falta).
    - El esquema, la función de orden por zona (8.1) y sus tests siguen igual. Para volver a los barrios: cargar las zonas y poner el interruptor en `true`.
 
+## Orden de trabajo acordado (18/09/2026)
+1. **Seguridad completa y robusta:** toda la lista del paso 11.5 y una auditoría final. No la versión mínima.
+2. **UI/UX simple, buena y empática.**
+3. **Preparar el deploy.**
+
 ## Paso 11.5 — Endurecimiento antes del deploy (acordado 17/09/2026)
 Va entre la PWA (paso 11) y el checklist de producción (paso 12):
 1. Cabeceras de seguridad (CSP, Referrer-Policy, Permissions-Policy, anti-iframe).
