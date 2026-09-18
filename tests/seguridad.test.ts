@@ -26,13 +26,15 @@ describe("cabeceras de seguridad (11.5, punto 1)", () => {
   it("solo corren los scripts con el nonce del pedido: nada de inline ni eval en producción", () => {
     const csp = politicaCsp({ ...base, desarrollo: false });
     expect(csp).toContain("script-src 'self' 'nonce-abc123' 'strict-dynamic'");
+    expect(csp).toContain("style-src 'self' 'nonce-abc123'");
     expect(csp).not.toContain("unsafe-inline");
     expect(csp).not.toContain("unsafe-eval");
   });
 
-  it("en desarrollo permite eval (lo usa React para mostrar errores) y no fuerza https", () => {
+  it("en desarrollo permite eval y estilos en línea (los usa el overlay de errores) y no fuerza https", () => {
     const csp = politicaCsp({ ...base, desarrollo: true });
     expect(csp).toContain("'unsafe-eval'");
+    expect(csp).toContain("style-src 'self' 'unsafe-inline'");
     expect(csp).not.toContain("upgrade-insecure-requests");
   });
 

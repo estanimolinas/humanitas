@@ -34,7 +34,9 @@ export function politicaCsp(opciones: {
     "default-src 'self'",
     // En desarrollo React usa eval para mostrar mejor los errores; en producción no.
     `script-src 'self' 'nonce-${nonce}' 'strict-dynamic'${desarrollo ? " 'unsafe-eval'" : ""}`,
-    `style-src 'self' 'nonce-${nonce}'`,
+    // En desarrollo, el overlay de errores de Next inyecta estilos sin nonce. Con un nonce en la
+    // directiva el navegador ignora 'unsafe-inline', así que en desarrollo va sin nonce.
+    desarrollo ? "style-src 'self' 'unsafe-inline'" : `style-src 'self' 'nonce-${nonce}'`,
     // blob: es la vista previa de la foto antes de subirla.
     `img-src 'self' blob: data:${origenFotos ? ` ${origenFotos}` : ""}`,
     "font-src 'self'",

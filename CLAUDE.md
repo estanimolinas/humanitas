@@ -144,6 +144,8 @@ El objetivo de esta etapa es **un MVP funcional para validar la idea con un [int
 3. **Preparar el deploy.**
 
 ## Paso 11.5 — Endurecimiento antes del deploy (acordado 17/09/2026)
+**Hecho el 18/09/2026** (los 9 puntos + auditoría independiente): ver [docs/seguridad.md](docs/seguridad.md). **Pendiente de decisión del usuario:** mitigar cuentas con números inventados (sección final de ese documento).
+
 Va entre la PWA (paso 11) y el checklist de producción (paso 12):
 1. Cabeceras de seguridad (CSP, Referrer-Policy, Permissions-Policy, anti-iframe).
 2. Autorización en el servidor de toda pantalla privada (hoy solo Mis publicaciones).
@@ -155,7 +157,7 @@ Va entre la PWA (paso 11) y el checklist de producción (paso 12):
 8. Backups: confirmar qué da el plan Free y dejar script propio.
 9. Baja y anonimización del teléfono (Ley 25.326, 10.6).
 
-**Pendiente de decisión del usuario:** el listado escribe en la base en cada visita (rotación 8.2), lo que permite que un robot genere escrituras. Mitigaciones posibles: no rotar en pedidos repetidos sin sesión desde la misma IP, o rotar como máximo una vez por minuto por publicación. Toca una regla del requerimiento, así que lo decide el usuario.
+**Decidido (18/09/2026):** el listado rota cada publicación como máximo una vez por minuto (8.2 + protección contra robots).
 
 ## Forma de trabajo
 - Un paso por vez, en el orden acordado. Al terminar cada paso, mostrar cómo se verifican los criterios de aceptación (secciones 9 y 15) con tests o pasos manuales concretos.
