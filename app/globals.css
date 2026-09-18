@@ -13,8 +13,11 @@
   --color-dorado-claro: #fff3e4;
   --color-dorado-borde: #facb8d;
   --color-error: #a4262c;
-  /* Fuentes del sistema: cero bytes de descarga (presupuesto R13). */
-  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Lexend (decisión 18/09/2026). Si no cargó todavía, se ve la del sistema. */
+@theme inline {
+  --font-sans: var(--font-lexend), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
 :root {
@@ -27,6 +30,17 @@ body {
   font-family: var(--font-sans);
   font-size: 16px;
   line-height: 1.5;
+  /* Todo en imprenta mayúscula (feedback 18/09/2026): es la letra con la que se
+     alfabetiza primero. Es solo cómo se ve: el texto guardado no cambia. */
+  text-transform: uppercase;
+}
+
+/* Los campos no heredan el estilo por defecto: se ve en mayúscula lo que se escribe. */
+input,
+textarea,
+select,
+button {
+  text-transform: inherit;
 }
 
 /* ── Layout: celular primero, cómodo también en pantalla grande ────────────── */
@@ -135,6 +149,8 @@ body {
   align-items: center;
   justify-content: center;
   gap: 8px;
+  padding: 10px 16px;
+  text-align: center;
   border-radius: 10px;
   background: var(--color-dorado-oscuro);
   color: #fff;
@@ -163,6 +179,8 @@ body {
   min-height: 48px;
   align-items: center;
   justify-content: center;
+  padding: 10px 16px;
+  text-align: center;
   border: 1px solid var(--color-dorado);
   border-radius: 10px;
   color: var(--color-dorado-oscuro);

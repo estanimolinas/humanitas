@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Humanitas",
     short_name: "Humanitas",
-    description: "La app del barrio: quien ofrece trabajo y quien quiere trabajar se encuentran.",
+    description: "Tecnología al servicio de la humanidad",
     lang: "es-AR",
     start_url: "/",
     scope: "/",

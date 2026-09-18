@@ -10,7 +10,9 @@ export function SinConexion() {
   const [sinSenal, setSinSenal] = useState(false);
 
   useEffect(() => {
-    if ("serviceWorker" in navigator) {
+    // Solo en producción: en desarrollo los archivos cambian sin cambiar de nombre y el
+    // cache mostraría versiones viejas.
+    if (process.env.NODE_ENV === "production" && "serviceWorker" in navigator) {
       navigator.serviceWorker.register("/sw.js").catch(() => {
         // Sin service worker la app anda igual: solo se pierde el modo sin conexión.
       });
