@@ -54,9 +54,19 @@ export function camposDesdeFormData(formData: FormData): CamposAlta {
   };
 }
 
-/** Solo rutas internas: evita que un link armado mande a la persona a otro sitio. */
+/**
+ * Solo rutas internas: evita que un link armado mande a la persona a otro sitio. Se interpreta
+ * igual que el navegador (que borra tabs y saltos de línea y lee "\\" como "/"), así que
+ * "/\t/otro.sitio" o "/\\otro.sitio" no pasan (auditoría 18/09/2026).
+ */
 export function volverSeguro(volver: unknown): string {
-  if (typeof volver !== "string") return "/";
-  if (!volver.startsWith("/") || volver.startsWith("//") || volver.startsWith("/\\")) return "/";
-  return volver;
+  if (typeof volver !== "string" || !volver.startsWith("/")) return "/";
+  const base = "https://humanitas.invalid";
+  try {
+    const url = new URL(volver, base);
+    if (url.origin !== base) return "/";
+    return url.pathname + url.search;
+  } catch {
+    return "/";
+  }
 }

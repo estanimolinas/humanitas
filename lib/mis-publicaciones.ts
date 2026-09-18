@@ -176,6 +176,8 @@ export async function editarPublicacion(
     })
     .eq("id", publicacionId)
     .eq("persona_id", personaId)
+    // Solo activas: una publicación en revisión no se retoca antes de que la vea el equipo.
+    .eq("estado", "activa")
     .is("archivado_en", null)
     .select("id");
   if (error) throw error;

@@ -3,6 +3,7 @@
 --   2. el token de sesión se renueva solo cada 30 días;
 --   3. dar de baja borra el teléfono y el nombre (Ley 25.326, 10.6);
 --   4. el listado rota cada publicación como máximo una vez por minuto (8.2, contra robots).
+-- Y correcciones de la auditoría de seguridad del mismo día (sección 5 al final).
 
 -- ── 1. Límites por conexión ──────────────────────────────────────────────────────────
 -- La IP nunca se guarda en claro: la app guarda un SHA-256 de la IP con una sal secreta del
@@ -230,7 +231,8 @@ begin
     per.nombre as persona_nombre,
     per.verificado_lugar,
     (select count(*) from concretados c where c.persona_que_hizo_id = per.id)::integer as concretados,
-    (select count(*) from contactos co
+    -- "N personas pidieron contacto": personas distintas, no toques (auditoría 18/09).
+    (select count(distinct co.persona_solicitante_id) from contactos co
       where co.publicacion_id = p.id
         and co.archivado_en is null
         and co.creada_en >= date_trunc('month', now()))::integer as contactos_mes
@@ -240,6 +242,115 @@ begin
   join personas per on per.id = p.persona_id
   left join zonas z on z.id = p.zona_id
   order by e.orden;
+end;
+$$;
+
+-- ── 5. Correcciones de la auditoría (18/09/2026) ──────────────────────────────────────
+
+-- Denuncias: las ya resueltas no cuentan. Antes, al devolver una publicación al listado, sus
+-- dos denuncias viejas seguían contando y una sola denuncia anónima la volvía a ocultar.
+create or replace function public.registrar_denuncia(
+  p_publicacion_id uuid,
+  p_persona_id uuid,
+  p_motivo text,
+  p_detalle text
+)
+returns table (ok boolean, motivo_rechazo text, quedo_oculta boolean)
+language plpgsql
+set search_path = public
+as $$
+declare
+  v_estado text;
+  v_distintas integer;
+begin
+  select pub.estado into v_estado
+  from publicaciones pub
+  where pub.id = p_publicacion_id and pub.archivado_en is null
+  for update;
+
+  if not found then
+    return query select false, 'no_existe'::text, false;
+    return;
+  end if;
+  if p_motivo not in ('estafa', 'contenido_inapropiado', 'posible_menor', 'otro') then
+    return query select false, 'motivo_invalido'::text, false;
+    return;
+  end if;
+
+  insert into denuncias (publicacion_id, persona_id, motivo, detalle)
+  values (p_publicacion_id, p_persona_id, p_motivo, p_detalle)
+  on conflict (publicacion_id, persona_id) where persona_id is not null do nothing;
+
+  select count(distinct d.persona_id) into v_distintas
+  from denuncias d
+  where d.publicacion_id = p_publicacion_id
+    and d.persona_id is not null
+    and d.archivado_en is null
+    and d.resuelta_en is null;
+
+  if v_distintas >= 2 and v_estado = 'activa' then
+    update publicaciones pub set estado = 'en_revision' where pub.id = p_publicacion_id;
+    return query select true, null::text, true;
+    return;
+  end if;
+
+  return query select true, null::text, false;
+end;
+$$;
+
+-- Contactar: nadie se contacta a sí mismo (inflaba "N personas pidieron contacto"). En ese
+-- caso no se registra nada y no sale ningún teléfono.
+create or replace function public.registrar_contacto(
+  p_publicacion_id uuid,
+  p_persona_id uuid
+)
+returns table (
+  limite_alcanzado boolean,
+  telefono text,
+  titulo text,
+  nombre text
+)
+language plpgsql
+set search_path = public
+as $$
+declare
+  v_hoy integer;
+  v_pub record;
+begin
+  perform pg_advisory_xact_lock(hashtext(p_persona_id::text));
+
+  select count(*) into v_hoy
+  from contactos c
+  where c.persona_solicitante_id = p_persona_id
+    and c.creada_en >= date_trunc('day', now());
+
+  if v_hoy >= 15 then
+    return query select true, null::text, null::text, null::text;
+    return;
+  end if;
+
+  select p.titulo as titulo, p.persona_id as duenio, per.telefono as telefono, per.nombre as nombre
+  into v_pub
+  from publicaciones p
+  join personas per on per.id = p.persona_id
+  where p.id = p_publicacion_id
+    and p.estado = 'activa'
+    and p.archivado_en is null
+    and per.archivado_en is null;
+
+  if not found then
+    raise exception 'Humanitas: la publicación no está disponible' using errcode = 'no_data_found';
+  end if;
+
+  if v_pub.duenio = p_persona_id then
+    return query select false, null::text, v_pub.titulo, null::text;
+    return;
+  end if;
+
+  insert into contactos (publicacion_id, persona_solicitante_id)
+  values (p_publicacion_id, p_persona_id);
+
+  return query select false, v_pub.telefono, v_pub.titulo, v_pub.nombre;
 end;
 $$;
 

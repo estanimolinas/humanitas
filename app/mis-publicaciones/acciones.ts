@@ -113,5 +113,6 @@ export async function cerrarSesion() {
   const p = await personaActual();
   if (p) await invalidarSesion(p.id);
   await borrarSesion();
-  redirect("/");
+  // El service worker ve este parámetro y borra lo guardado para mirar sin conexión.
+  redirect("/?sesion=cerrada");
 }

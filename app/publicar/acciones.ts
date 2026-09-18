@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { camposDesdeFormData as camposAltaDesdeFormData, validarAlta } from "@/lib/alta";
 import { permitirIntento } from "@/lib/limites";
 import { registrarPersona } from "@/lib/personas";
-import { crearPublicacion, subirFoto } from "@/lib/publicar";
+import { crearPublicacion, ponerFoto, subirFoto } from "@/lib/publicar";
 import { personaActual } from "@/lib/sesion/actual";
 import { guardarSesion } from "@/lib/sesion/guardar";
 import {
@@ -63,18 +63,19 @@ export async function publicar(_previo: EstadoPublicar, formData: FormData): Pro
     persona = alta.persona;
   }
 
+  // Primero la publicación (con los límites de 8.5) y después la foto: una publicación rechazada
+  // no deja fotos sueltas en el Storage (auditoría 18/09/2026).
+  const resultado = await crearPublicacion(persona.id, validacion.datos, null);
+  if (!resultado.ok) return { mensaje: MENSAJES[resultado.motivo] };
+
   const foto = formData.get("foto");
-  let fotoUrl: string | null = null;
   if (foto instanceof File && foto.size > 0) {
     try {
-      fotoUrl = await subirFoto(foto);
-    } catch (e) {
-      return { mensaje: e instanceof Error ? e.message : "No se pudo subir la foto." };
+      await ponerFoto(resultado.id, persona.id, await subirFoto(foto));
+    } catch {
+      redirect(`/publicar/listo?id=${resultado.id}&foto=error`);
     }
   }
-
-  const resultado = await crearPublicacion(persona.id, validacion.datos, fotoUrl);
-  if (!resultado.ok) return { mensaje: MENSAJES[resultado.motivo] };
 
   redirect(`/publicar/listo?id=${resultado.id}`);
 }

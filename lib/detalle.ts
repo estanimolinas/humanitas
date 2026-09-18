@@ -61,18 +61,20 @@ export async function obtenerDetalle(id: string): Promise<PublicacionDetalle | n
   if (error) throw error;
   if (!data || !data.personas || !data.rubros) return null;
 
-  const [{ count: concretados }, { count: contactosMes }] = await Promise.all([
+  const [{ count: concretados }, { data: solicitantes }] = await Promise.all([
     supabase
       .from("concretados")
       .select("id", { count: "exact", head: true })
       .eq("persona_que_hizo_id", data.persona_id),
     supabase
       .from("contactos")
-      .select("id", { count: "exact", head: true })
+      .select("persona_solicitante_id")
       .eq("publicacion_id", data.id)
       .is("archivado_en", null)
       .gte("creada_en", new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString()),
   ]);
+  // "N personas pidieron contacto": personas distintas, no toques (auditoría 18/09/2026).
+  const contactosMes = new Set((solicitantes ?? []).map((c) => c.persona_solicitante_id)).size;
 
   return {
     id: data.id,
@@ -90,6 +92,6 @@ export async function obtenerDetalle(id: string): Promise<PublicacionDetalle | n
     personaNombre: data.personas.nombre,
     verificadoLugar: data.personas.verificado_lugar,
     concretados: concretados ?? 0,
-    contactosMes: contactosMes ?? 0,
+    contactosMes,
   };
 }

@@ -36,3 +36,26 @@ La Data API **no se puede cerrar**: la app la usa, desde el servidor y con la se
 - `npm run podar:limites`: una vez por mes.
 - `npm run chequear:dependencias`: antes de cada deploy.
 - `npm run baja -- "<celular>" "<celular de quien opera>"`: cuando alguien pide la baja.
+
+## Auditoría independiente (18/09/2026)
+
+Un revisor aparte leyó todo el código sin conocer estas conclusiones. Lo que encontró y cómo quedó:
+
+| Hallazgo | Estado |
+|---|---|
+| `volver` dejaba pasar `/\t/otro.sitio`, que el navegador lee como `//otro.sitio` (redirección a otro sitio). | Corregido: se interpreta como el navegador (`lib/alta.ts`). |
+| La foto se subía antes de controlar los límites: una publicación rechazada dejaba la foto en el Storage, y con un bucle se llenaba el 1 GB. Además solo se miraba el tipo que declara el navegador. | Corregido: primero la publicación, después la foto; el tipo se reconoce por el contenido. |
+| Al devolver una publicación al listado, sus denuncias viejas seguían contando y una sola denuncia anónima la volvía a ocultar. | Corregido: las denuncias resueltas no cuentan. |
+| Al renovar el token, dos pedidos simultáneos podían cerrar la sesión para siempre. | Corregido: el proxy ya no borra la cookie. |
+| Después de cerrar sesión, el modo sin conexión seguía mostrando las pantallas de la persona anterior. | Corregido: cerrar sesión borra lo guardado. |
+| La propia persona podía contactarse y "N personas pidieron contacto" sumaba toques, no personas. | Corregido: no se puede contactar lo propio y se cuentan personas distintas. |
+| Una publicación en revisión se podía editar antes de que la viera el equipo. | Corregido: solo se editan las activas. |
+| **Cuentas falsas:** el celular no se verifica. Con números inventados se puede ocultar una publicación con dos denuncias, sumarle concretados falsos a alguien o registrar el número de otra persona. | **Pendiente de decisión del usuario** (ver abajo). |
+
+### Pendiente: cuentas con números inventados
+
+La app no verifica que el celular sea de quien se registra (no hay SMS, por decisión de costo y de simpleza). Mitigaciones posibles, sin servicios pagos:
+
+- Que las denuncias y los concretados de cuentas nuevas (por ejemplo, de menos de 7 días o sin publicaciones) no cuenten para ocultar ni para sumar.
+- Contar los concretados por persona distinta que los confirma, no por publicación.
+- Limitar los cambios de celular en Mis datos.

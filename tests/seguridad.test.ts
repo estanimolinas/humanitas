@@ -156,3 +156,33 @@ describe("límites por conexión: la IP (11.5, punto 3)", () => {
     expect(MAXIMOS_POR_DIA.alta).toBeGreaterThanOrEqual(20);
   });
 });
+
+describe("auditoría del 18/09/2026", () => {
+  it("volver: solo rutas internas, leídas como las lee el navegador", async () => {
+    const { volverSeguro } = await import("@/lib/alta");
+    expect(volverSeguro("/p/abc?contactar=1")).toBe("/p/abc?contactar=1");
+    expect(volverSeguro("/mis-publicaciones")).toBe("/mis-publicaciones");
+    for (const malo of [
+      "//otro.sitio",
+      "/\\otro.sitio",
+      "/\t/otro.sitio",
+      "/\n/otro.sitio",
+      "https://otro.sitio",
+      "javascript:alert(1)",
+      "",
+      null,
+    ]) {
+      expect(volverSeguro(malo), JSON.stringify(malo)).toBe("/");
+    }
+  });
+
+  it("la foto se reconoce por su contenido, no por el tipo que declara el navegador", async () => {
+    const { tipoPorContenido } = await import("@/lib/publicar");
+    const bytes = (...b: number[]) => new Uint8Array(b);
+    const texto = (s: string) => new TextEncoder().encode(s);
+    expect(tipoPorContenido(bytes(0xff, 0xd8, 0xff, 0xe0))).toBe("image/jpeg");
+    expect(tipoPorContenido(texto("RIFF\0\0\0\0WEBPVP8 "))).toBe("image/webp");
+    expect(tipoPorContenido(texto("<html><script>"))).toBeNull();
+    expect(tipoPorContenido(texto("GIF89a"))).toBeNull();
+  });
+});

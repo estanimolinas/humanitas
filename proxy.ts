@@ -39,8 +39,10 @@ export async function proxy(request: NextRequest) {
   respuesta.headers.set("Content-Security-Policy", csp);
 
   if (sesion.tipo === "invalida") {
-    respuesta.cookies.delete(COOKIE_SESION);
-    respuesta.cookies.delete(COOKIE_SESION_DESDE);
+    // No se borra la cookie: si dos pedidos llegan juntos al renovar, el segundo ve el token
+    // viejo como inválido y borrarla haría perder el nuevo (auditoría 18/09/2026). Solo se anota
+    // la fecha, para no volver a preguntarle a la base en cada visita.
+    respuesta.cookies.set(COOKIE_SESION_DESDE, String(Date.now()), opcionesCookieSesion());
   } else if (sesion.tipo === "actualizar") {
     if (sesion.token) respuesta.cookies.set(COOKIE_SESION, sesion.token, opcionesCookieSesion());
     respuesta.cookies.set(COOKIE_SESION_DESDE, String(sesion.desde), opcionesCookieSesion());

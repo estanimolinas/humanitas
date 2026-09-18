@@ -11,12 +11,24 @@ export type ResultadoPublicar =
   | { ok: true; id: string }
   | { ok: false; motivo: MotivoRechazo };
 
+/**
+ * ¿Los primeros bytes son de un JPG o un WEBP de verdad? El tipo que declara el navegador se
+ * puede falsear; el contenido no (auditoría 18/09/2026).
+ */
+export function tipoPorContenido(inicio: Uint8Array): "image/jpeg" | "image/webp" | null {
+  if (inicio[0] === 0xff && inicio[1] === 0xd8 && inicio[2] === 0xff) return "image/jpeg";
+  const ascii = (desde: number, hasta: number) => String.fromCharCode(...inicio.slice(desde, hasta));
+  if (ascii(0, 4) === "RIFF" && ascii(8, 12) === "WEBP") return "image/webp";
+  return null;
+}
+
 /** Sube la foto al bucket público. El cliente ya la comprimió; acá se vuelve a controlar (R03). */
 export async function subirFoto(archivo: File): Promise<string> {
   if (archivo.size > MAX_FOTO_BYTES) {
     throw new Error("La foto tiene que pesar menos de 200 KB.");
   }
-  if (archivo.type !== "image/jpeg" && archivo.type !== "image/webp") {
+  const tipo = tipoPorContenido(new Uint8Array(await archivo.slice(0, 12).arrayBuffer()));
+  if (!tipo || tipo !== archivo.type) {
     throw new Error("La foto tiene que ser JPG o WEBP.");
   }
 
@@ -59,4 +71,14 @@ export async function crearPublicacion(
     return { ok: false, motivo: fila?.motivo_rechazo ?? "rubro_invalido" };
   }
   return { ok: true, id: fila.publicacion_id! };
+}
+
+/** La foto se agrega después de crear la publicación: si la base la rechaza, no se sube nada. */
+export async function ponerFoto(publicacionId: string, personaId: string, fotoUrl: string): Promise<void> {
+  const { error } = await supabaseServidor()
+    .from("publicaciones")
+    .update({ foto_url: fotoUrl })
+    .eq("id", publicacionId)
+    .eq("persona_id", personaId);
+  if (error) throw error;
 }

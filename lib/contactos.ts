@@ -11,7 +11,7 @@ type FilaContacto = {
 
 export type ResultadoContacto =
   | { ok: true; link: string }
-  | { ok: false; motivo: "limite_diario" };
+  | { ok: false; motivo: "limite_diario" | "propia" };
 
 /**
  * Registra el contacto (8.3) y devuelve el link de WhatsApp ya armado.
@@ -29,11 +29,13 @@ export async function contactar(
 
   const fila = (data as FilaContacto[])[0];
   if (!fila || fila.limite_alcanzado) return { ok: false, motivo: "limite_diario" };
+  // La propia publicación: la base no registra nada ni devuelve teléfono.
+  if (!fila.telefono) return { ok: false, motivo: "propia" };
 
   return {
     ok: true,
     link: linkContacto({
-      telefono: fila.telefono!,
+      telefono: fila.telefono,
       titulo: fila.titulo!,
       nombreDestinatario: fila.nombre!,
       nombreRemitente: solicitante.nombre,

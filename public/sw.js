@@ -2,7 +2,7 @@
 // Guarda los archivos de la app y la última lista que se vio, para que con mala señal
 // igual se pueda mirar. No guarda nada que dependa de la sesión. Sin push.
 
-const VERSION = "humanitas-v1";
+const VERSION = "humanitas-v2";
 
 // Nunca se guardan: dependen de quién sos o cambian datos.
 const PRIVADAS = ["/api", "/alta", "/publicar", "/mis-publicaciones"];
@@ -46,6 +46,9 @@ self.addEventListener("fetch", (evento) => {
   if (pedido.mode === "navigate") {
     evento.respondWith(
       (async () => {
+        // Al cerrar sesión se borra lo guardado: en un celular compartido, quien lo use después
+        // no ve las pantallas de la persona anterior.
+        if (url.searchParams.get("sesion") === "cerrada") await caches.delete(VERSION);
         try {
           const respuesta = await fetch(pedido);
           if (respuesta.ok) {

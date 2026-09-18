@@ -88,6 +88,8 @@ export default async function PaginaDetalle({ params, searchParams }: PageProps<
         </p>
       )}
 
+      {q.propia && <p className="aviso">Esta publicación es tuya.</p>}
+
       {q.contactar && persona && (
         <p className="aviso">Gracias, {persona.nombre}. Tu cuenta ya está lista para contactar.</p>
       )}

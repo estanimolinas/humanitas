@@ -21,7 +21,7 @@ export async function contactarPorWhatsApp(formData: FormData) {
   if (!persona) redirect(`/alta?volver=${encodeURIComponent(`/p/${id}?contactar=1`)}`);
 
   const resultado = await contactar(id, persona);
-  if (!resultado.ok) redirect(`/p/${id}?limite=1`);
+  if (!resultado.ok) redirect(`/p/${id}?${resultado.motivo === "propia" ? "propia" : "limite"}=1`);
 
   // El teléfono viaja solo acá, en el link de WhatsApp, nunca en una pantalla.
   redirect(resultado.link);
