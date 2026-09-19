@@ -8,7 +8,7 @@ export default function PublicacionNoDisponible() {
       <p className="text-texto-2">
         Puede que la persona ya haya resuelto lo que buscaba. En el inicio hay otras publicaciones.
       </p>
-      <Link href="/" className="boton-principal boton-suelto">
+      <Link href="/" className="boton-principal">
         Ver otras publicaciones
       </Link>
     </main>

@@ -45,8 +45,7 @@ Fuentes del sistema (`system-ui, -apple-system, "Segoe UI", Roboto, sans-serif`)
 
 - **Un solo ancho de página** (`--ancho-pagina: 40rem`) para el encabezado y para todas las pantallas, centrado. Así nada queda desalineado entre la marca y el contenido.
 - **Celular:** una columna al ancho de la pantalla, con 16 px de margen a los costados.
-- **Escritorio (≥ 640 px):** cuerpo de texto en 17 px, títulos en 28 px, más aire arriba y abajo, y los campos y botones de formulario topados en 26 rem para que no se estiren.
-- **Botón suelto** (fuera de un formulario, como "Crear mi cuenta"): en escritorio no cruza toda la columna; queda a la izquierda con un ancho mínimo de 16 rem.
+- **Escritorio (≥ 640 px):** cuerpo de texto en 17 px, títulos en 28 px y más aire arriba y abajo. Todo ocupa el ancho de la columna (40 rem): campos, botones, avisos y tarjetas quedan alineados (19/09/2026; antes los campos se topaban en 26 rem y los bordes quedaban desparejos).
 - **Encabezado fijo** arriba al hacer scroll, con el color del fondo.
 - **Sin scroll horizontal** en ningún ancho: verificado a 390 px y a 1280 px.
 - **Color de la barra del navegador** en el celular: el fondo de la app.

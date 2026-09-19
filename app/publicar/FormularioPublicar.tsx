@@ -434,7 +434,7 @@ export function FormularioPublicar({
               onChange={(e) => elegirFoto(e.target.files?.[0])}
             />
             {!foto && (
-              <label htmlFor="elegir-foto" className="boton-secundario cursor-pointer sm:max-w-[26rem]">
+              <label htmlFor="elegir-foto" className="boton-secundario cursor-pointer">
                 {comprimiendo ? "Preparando la foto…" : "Agregar una foto"}
               </label>
             )}

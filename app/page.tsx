@@ -46,7 +46,7 @@ export default async function Inicio({ searchParams }: PageProps<"/">) {
     <main className="contenedor flex flex-1 flex-col gap-5">
       <Bienvenida />
 
-      <Link href="/publicar" className="boton-principal boton-suelto">
+      <Link href="/publicar" className="boton-principal">
         Publicar lo que ofrecés o necesitás
       </Link>
 
@@ -71,7 +71,7 @@ export default async function Inicio({ searchParams }: PageProps<"/">) {
               : "Todavía no hay publicaciones acá."}{" "}
             Podés ser la primera persona en publicar.
           </p>
-          <Link href="/publicar" className="boton-principal boton-suelto">
+          <Link href="/publicar" className="boton-principal">
             Publicar
           </Link>
         </div>

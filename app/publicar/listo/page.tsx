@@ -23,11 +23,11 @@ export default async function PaginaListo({ searchParams }: PageProps<"/publicar
       </p>
 
       {publicacion && (
-        <Link href={`/p/${publicacion.id}`} className="boton-principal boton-suelto">
+        <Link href={`/p/${publicacion.id}`} className="boton-principal">
           Ver cómo quedó
         </Link>
       )}
-      <Link href="/" className="boton-secundario max-w-[16rem]">
+      <Link href="/" className="boton-secundario">
         Volver al listado
       </Link>
       <Link href="/publicar" className="text-texto-2 underline">

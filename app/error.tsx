@@ -10,7 +10,7 @@ export default function ErrorGeneral({ retry }: { error: Error & { digest?: stri
       <p className="text-texto-2">
         Puede ser la señal o un problema nuestro. Podemos intentarlo de nuevo.
       </p>
-      <button type="button" className="boton-principal boton-suelto" onClick={() => retry()}>
+      <button type="button" className="boton-principal" onClick={() => retry()}>
         Intentar de nuevo
       </button>
       <Link href="/" className="text-dorado-oscuro underline">

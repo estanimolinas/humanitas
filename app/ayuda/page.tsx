@@ -29,7 +29,7 @@ export default function PaginaAyuda() {
       </section>
 
       {link ? (
-        <a href={link} className="boton-principal boton-suelto mt-2">
+        <a href={link} className="boton-principal mt-2">
           Escribir al equipo por WhatsApp
         </a>
       ) : (

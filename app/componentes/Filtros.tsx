@@ -80,7 +80,7 @@ export function Filtros({ estado, rubros }: { estado: Estado; rubros: Rubro[] })
         </nav>
       )}
 
-      <nav aria-label="Rubros" className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:px-0">
+      <nav aria-label="Rubros" className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:px-0">
         <Link
           href={url({ tipo, subtipo, rubroId: null })}
           aria-current={rubroId === null ? "page" : undefined}

@@ -16,7 +16,7 @@ export default async function PaginaAlta({ searchParams }: PageProps<"/alta">) {
     return (
       <main className="contenedor flex flex-1 flex-col gap-4">
         <h1 className="titulo">Ya tenés tu cuenta, {persona.nombre}.</h1>
-        <Link href={volver} className="boton-principal boton-suelto">
+        <Link href={volver} className="boton-principal">
           Seguir
         </Link>
       </main>

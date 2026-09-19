@@ -65,24 +65,25 @@ function Publicacion({ p }: { p: PublicacionPropia }) {
           .join(", ")}
       </p>
 
-      <div className="flex flex-wrap gap-2">
-        <Link href={`/p/${p.id}`} className="boton-secundario max-w-[9rem]">
+      {/* Las acciones en partes iguales: en el celular no quedan en renglones desparejos. */}
+      <div className="grid auto-cols-fr grid-flow-col gap-2">
+        <Link href={`/p/${p.id}`} className="boton-secundario">
           Ver
         </Link>
         {p.estado === "activa" && (
           <>
-            <Link href={`/mis-publicaciones/${p.id}/editar`} className="boton-secundario max-w-[9rem]">
+            <Link href={`/mis-publicaciones/${p.id}/editar`} className="boton-secundario">
               Editar
             </Link>
             {esNecesito ? (
-              <Link href={`/mis-publicaciones/${p.id}/cerrar`} className="boton-secundario max-w-[9rem]">
+              <Link href={`/mis-publicaciones/${p.id}/cerrar`} className="boton-secundario">
                 Cerrar
               </Link>
             ) : (
               <form action={cerrar}>
                 <input type="hidden" name="publicacionId" value={p.id} />
                 <input type="hidden" name="motivo" value="cerrada_por_duenio" />
-                <BotonEnviar enviando="Cerrando…" className="boton-secundario max-w-[9rem]">
+                <BotonEnviar enviando="Cerrando…" className="boton-secundario">
                   Cerrar
                 </BotonEnviar>
               </form>
@@ -92,7 +93,7 @@ function Publicacion({ p }: { p: PublicacionPropia }) {
         {(p.estado === "cerrada" || p.estado === "archivada") && (
           <form action={reactivar}>
             <input type="hidden" name="publicacionId" value={p.id} />
-            <BotonEnviar enviando="Publicando…" className="boton-secundario max-w-[12rem]">
+            <BotonEnviar enviando="Publicando…" className="boton-secundario">
               Volver a publicar
             </BotonEnviar>
           </form>
@@ -151,7 +152,7 @@ export default async function PaginaMisPublicaciones({ searchParams }: PageProps
       {publicaciones.length === 0 ? (
         <div className="flex flex-col gap-3">
           <p className="aviso">Todavía no tenés publicaciones. Cuando publiques algo, lo vas a ver acá.</p>
-          <Link href="/publicar" className="boton-principal boton-suelto">
+          <Link href="/publicar" className="boton-principal">
             Publicar
           </Link>
         </div>

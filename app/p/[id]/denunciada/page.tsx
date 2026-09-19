@@ -14,7 +14,7 @@ export default function PaginaDenunciada() {
       <p className="text-texto-2">
         Si creés que alguien está en peligro, también conviene llamar al 911.
       </p>
-      <Link href="/" className="boton-principal boton-suelto">
+      <Link href="/" className="boton-principal">
         Volver al listado
       </Link>
     </main>
