@@ -4,6 +4,18 @@ import { normalizarTelefono } from "@/lib/telefono";
 
 export const LIMITE_CONTACTOS_POR_DIA = 15; // 8.5
 
+/** El texto que se manda al contactar. Se muestra antes de tocar el botón, tal cual. */
+export function mensajeContacto(opciones: {
+  titulo: string;
+  nombreDestinatario: string;
+  nombreRemitente: string;
+}): string {
+  return (
+    `Hola ${opciones.nombreDestinatario}, te escribo por Humanitas por tu publicación ` +
+    `«${opciones.titulo}». Soy ${opciones.nombreRemitente}.`
+  );
+}
+
 /**
  * Mensaje prearmado que cita la publicación (R04).
  * `telefono` ya viene normalizado (549…) y solo se usa en el servidor.
@@ -14,10 +26,7 @@ export function linkContacto(opciones: {
   nombreDestinatario: string;
   nombreRemitente: string;
 }): string {
-  const texto =
-    `Hola ${opciones.nombreDestinatario}, te escribo por Humanitas por tu publicación ` +
-    `«${opciones.titulo}». Soy ${opciones.nombreRemitente}.`;
-  return `https://wa.me/${opciones.telefono}?text=${encodeURIComponent(texto)}`;
+  return `https://wa.me/${opciones.telefono}?text=${encodeURIComponent(mensajeContacto(opciones))}`;
 }
 
 /**

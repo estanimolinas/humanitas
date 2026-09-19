@@ -120,7 +120,6 @@ export function FormularioAlta({ zonas, volver }: { zonas: GrupoZonas[]; volver:
               type="tel"
               inputMode="tel"
               autoComplete="tel-national"
-              placeholder={EJEMPLO_TELEFONO}
               aria-invalid={!!errores.telefono}
               aria-describedby={errores.telefono ? "ayuda-telefono error-telefono" : "ayuda-telefono"}
             />

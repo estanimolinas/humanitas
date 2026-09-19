@@ -27,12 +27,42 @@ const chip = (activo: boolean) =>
     activo ? "border-dorado bg-dorado-claro text-dorado-profundo" : "border-borde-campo text-texto-2"
   }`;
 
-// Control segmentado del mockup: una caja con dos mitades, la activa en dorado claro.
-const segmento = "flex overflow-hidden rounded-[10px] border border-borde-campo";
-const mitad = (activo: boolean, segunda = false) =>
-  `flex min-h-16 flex-1 items-center justify-center px-4 text-[17px] font-semibold ${
-    segunda ? "border-l border-borde-campo" : ""
-  } ${activo ? "bg-dorado-claro text-dorado-profundo" : "text-texto-2"}`;
+/** Una opción grande, con una línea que explica qué significa (paso 1). */
+function Opcion({
+  activa,
+  titulo,
+  detalle,
+  onClick,
+}: {
+  activa: boolean;
+  titulo: string;
+  detalle: string;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      aria-pressed={activa}
+      onClick={onClick}
+      className={`flex w-full items-start gap-3 rounded-[10px] border px-4 py-3 text-left ${
+        activa ? "border-dorado bg-dorado-claro" : "border-borde-campo"
+      }`}
+    >
+      <span
+        aria-hidden
+        className={`mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full border-2 ${
+          activa ? "border-dorado-oscuro bg-dorado-oscuro text-white" : "border-borde-campo"
+        }`}
+      >
+        {activa ? "✓" : ""}
+      </span>
+      <span className="flex flex-col gap-0.5">
+        <span className={`text-[17px] font-semibold ${activa ? "text-dorado-profundo" : ""}`}>{titulo}</span>
+        <span className="text-texto-2">{detalle}</span>
+      </span>
+    </button>
+  );
+}
 
 export function FormularioPublicar({
   rubros,
@@ -73,6 +103,7 @@ export function FormularioPublicar({
   const [fotoError, setFotoError] = useState<string | null>(null);
   const [comprimiendo, setComprimiendo] = useState(false);
   const entradaFoto = useRef<HTMLInputElement>(null);
+  const elegirFotoRef = useRef<HTMLInputElement>(null);
 
   // Si la persona recarga o se le cierra el navegador, lo escrito sigue guardado en el celular.
   useEffect(() => {
@@ -109,8 +140,15 @@ export function FormularioPublicar({
 
   const rubroElegido = rubros.find((r) => String(r.id) === c.rubroId);
   const rubroEsOtros = rubroElegido?.nombre === "Otros";
-  const rubrosVisibles =
-    c.tipo === "ofrezco" && c.subtipo ? rubros.filter((r) => r.familia === c.subtipo) : rubros;
+  // En "Ofrezco" se ven los rubros de lo elegido; en "Necesito", todos, separados en dos grupos
+  // (así "Otros" no aparece dos veces sin explicación).
+  const gruposRubros =
+    c.tipo === "ofrezco" && c.subtipo
+      ? [{ titulo: null, rubros: rubros.filter((r) => r.familia === c.subtipo) }]
+      : [
+          { titulo: "Servicios", rubros: rubros.filter((r) => r.familia === "servicio") },
+          { titulo: "Productos", rubros: rubros.filter((r) => r.familia === "producto") },
+        ];
 
   const barriosFiltrados = zonas.flatMap((g) =>
     g.barrios
@@ -154,6 +192,14 @@ export function FormularioPublicar({
     } finally {
       setComprimiendo(false);
     }
+  }
+
+  function quitarFoto() {
+    if (foto) URL.revokeObjectURL(foto.url);
+    setFoto(null);
+    setFotoError(null);
+    if (entradaFoto.current) entradaFoto.current.value = "";
+    if (elegirFotoRef.current) elegirFotoRef.current.value = "";
   }
 
   function alEnviar(e: React.FormEvent<HTMLFormElement>) {
@@ -205,46 +251,38 @@ export function FormularioPublicar({
       {actual === "que" && (
         <section className="flex flex-col gap-4">
           <h2 className="titulo">¿Qué querés hacer?</h2>
-          <div className={segmento}>
-            <button
-              type="button"
-              aria-pressed={c.tipo === "ofrezco"}
-              className={mitad(c.tipo === "ofrezco")}
+          <div className="flex flex-col gap-3">
+            <Opcion
+              activa={c.tipo === "ofrezco"}
+              titulo="Ofrezco algo"
+              detalle="Un trabajo que sé hacer o algo que vendo."
               onClick={() => setC({ ...c, tipo: "ofrezco" })}
-            >
-              Ofrezco algo
-            </button>
-            <button
-              type="button"
-              aria-pressed={c.tipo === "necesito"}
-              className={mitad(c.tipo === "necesito", true)}
+            />
+            <Opcion
+              activa={c.tipo === "necesito"}
+              titulo="Necesito algo"
+              detalle="Alguien que me haga un trabajo o algo que quiero comprar."
               onClick={() => setC({ ...c, tipo: "necesito", subtipo: "" })}
-            >
-              Necesito algo
-            </button>
+            />
           </div>
           {error("tipo")}
 
           {c.tipo === "ofrezco" && (
             <>
-              <h3 className="etiqueta">¿Qué ofrecés?</h3>
-              <div className={segmento}>
-                <button
-                  type="button"
-                  aria-pressed={c.subtipo === "servicio"}
-                  className={mitad(c.subtipo === "servicio")}
+              <h3 className="etiqueta mt-2">¿Qué ofrecés?</h3>
+              <div className="flex flex-col gap-3">
+                <Opcion
+                  activa={c.subtipo === "servicio"}
+                  titulo="Un servicio"
+                  detalle="Un trabajo: arreglos, limpieza, cuidado, clases…"
                   onClick={() => setC({ ...c, subtipo: "servicio", rubroId: "" })}
-                >
-                  Un servicio
-                </button>
-                <button
-                  type="button"
-                  aria-pressed={c.subtipo === "producto"}
-                  className={mitad(c.subtipo === "producto", true)}
+                />
+                <Opcion
+                  activa={c.subtipo === "producto"}
+                  titulo="Un producto"
+                  detalle="Algo que hacés o vendés: comida, ropa, artesanías…"
                   onClick={() => setC({ ...c, subtipo: "producto", rubroId: "" })}
-                >
-                  Un producto
-                </button>
+                />
               </div>
               {error("subtipo")}
             </>
@@ -258,18 +296,24 @@ export function FormularioPublicar({
 
           <div className="flex flex-col gap-2">
             <span className="etiqueta">Rubro</span>
-            <div className="flex flex-wrap gap-2">
-              {rubrosVisibles.map((r) => (
-                <button
-                  key={r.id}
-                  type="button"
-                  className={chip(c.rubroId === String(r.id))}
-                  onClick={() => setC({ ...c, rubroId: String(r.id) })}
-                >
-                  {r.nombre}
-                </button>
-              ))}
-            </div>
+            {gruposRubros.map((grupo) => (
+              <div key={grupo.titulo ?? "todos"} className="flex flex-col gap-2">
+                {grupo.titulo && <p className="mt-1 text-sm font-semibold text-texto-2">{grupo.titulo}</p>}
+                <div className="flex flex-wrap gap-2">
+                  {grupo.rubros.map((r) => (
+                    <button
+                      key={r.id}
+                      type="button"
+                      aria-pressed={c.rubroId === String(r.id)}
+                      className={chip(c.rubroId === String(r.id))}
+                      onClick={() => setC({ ...c, rubroId: String(r.id) })}
+                    >
+                      {r.nombre}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ))}
             {error("rubroId")}
           </div>
 
@@ -293,15 +337,21 @@ export function FormularioPublicar({
             <label htmlFor="titulo" className="etiqueta">
               Título corto
             </label>
+            {/* El ejemplo va afuera del campo: en mayúscula, adentro parecería ya escrito. */}
+            <p id="ayuda-titulo" className="text-texto-2">
+              Por ejemplo: {c.tipo === "necesito" ? "pintor para dos ambientes" : "arreglo de humedad y revoque"}.
+            </p>
             <input
               id="titulo"
               className="campo"
               value={c.titulo}
               onChange={(e) => pone("titulo")(e.target.value)}
               maxLength={MAX_TITULO}
-              placeholder={c.tipo === "necesito" ? "Ej. Necesito pintor para dos ambientes" : "Ej. Arreglo de humedad y revoque"}
+              aria-describedby="ayuda-titulo quedan-titulo"
             />
-            <p className="text-sm text-texto-2">{MAX_TITULO - c.titulo.length} caracteres</p>
+            <p id="quedan-titulo" className="text-sm text-texto-2">
+              {MAX_TITULO - c.titulo.length === 1 ? "Te queda 1 letra" : `Te quedan ${MAX_TITULO - c.titulo.length} letras`}
+            </p>
             {error("titulo")}
           </div>
 
@@ -309,6 +359,9 @@ export function FormularioPublicar({
             <label htmlFor="descripcion" className="etiqueta">
               Detalle (si querés)
             </label>
+            <p id="ayuda-descripcion" className="text-texto-2">
+              Por ejemplo: qué hacés, cómo cobrás y qué días podés.
+            </p>
             <textarea
               id="descripcion"
               className="campo min-h-28 py-3"
@@ -316,7 +369,7 @@ export function FormularioPublicar({
               onChange={(e) => pone("descripcion")(e.target.value)}
               maxLength={MAX_DESCRIPCION}
               rows={4}
-              placeholder="Por ejemplo: qué hacés, cómo cobrás y qué días podés."
+              aria-describedby="ayuda-descripcion"
             />
             {error("descripcion")}
           </div>
@@ -325,13 +378,14 @@ export function FormularioPublicar({
             <label htmlFor="precioTexto" className="etiqueta">
               Precio (si querés)
             </label>
+            <p id="ayuda-precio" className="text-texto-2">Por ejemplo: a convenir, $1500 la docena o por día.</p>
             <input
               id="precioTexto"
               className="campo"
               value={c.precioTexto}
               onChange={(e) => pone("precioTexto")(e.target.value)}
               maxLength={80}
-              placeholder="A convenir, $1500 la docena, por día…"
+              aria-describedby="ayuda-precio"
             />
             {error("precioTexto")}
           </div>
@@ -355,23 +409,33 @@ export function FormularioPublicar({
             <p className="text-texto-2">
               Se reduce en tu celular antes de subirla, para cuidar tus datos.
             </p>
+            {/* Botón propio: el del navegador dice "Choose file" en inglés. Sin `capture`, el
+                celular ofrece sacar una foto o elegir una de la galería. */}
             <input
+              ref={elegirFotoRef}
+              id="elegir-foto"
               type="file"
               accept="image/*"
-              capture="environment"
-              className="campo py-2"
+              className="sr-only"
               onChange={(e) => elegirFoto(e.target.files?.[0])}
             />
-            {comprimiendo && <p className="text-texto-2">Preparando la foto…</p>}
+            {!foto && (
+              <label htmlFor="elegir-foto" className="boton-secundario cursor-pointer sm:max-w-[26rem]">
+                {comprimiendo ? "Preparando la foto…" : "Agregar una foto"}
+              </label>
+            )}
             {foto && (
               <div className="flex items-center gap-3">
                 {/* eslint-disable-next-line @next/next/no-img-element -- previsualización local */}
-                <img src={foto.url} alt="" className="size-16 rounded object-cover" />
-                <p className="text-sm text-texto-2">
-                  Lista: {foto.kb} KB
-                  <br />
-                  {foto.nombre}
-                </p>
+                <img src={foto.url} alt="La foto elegida" className="size-20 rounded-lg object-cover" />
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="elegir-foto" className="cursor-pointer text-dorado-oscuro underline">
+                    Cambiar la foto
+                  </label>
+                  <button type="button" className="text-left text-texto-2 underline" onClick={quitarFoto}>
+                    Quitar la foto
+                  </button>
+                </div>
               </div>
             )}
             {fotoError && <p className="texto-error">{fotoError}</p>}
@@ -475,7 +539,6 @@ export function FormularioPublicar({
               className="campo"
               value={telefono}
               onChange={(e) => setTelefono(e.target.value)}
-              placeholder={EJEMPLO_TELEFONO}
             />
             {altaValida.ok && <p className="font-semibold">Te van a escribir a: {altaValida.datos.telefonoLegible}</p>}
             {erroresAltaVisibles.telefono && (

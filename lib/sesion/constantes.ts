@@ -9,3 +9,6 @@ export const COOKIE_SESION_DESDE = "humanitas_sesion_desde";
 
 /** Cada cuántos días se renueva solo el token de sesión (11.5, decisión 18/09/2026). */
 export const DIAS_ROTACION_TOKEN = 30;
+
+/** "Ya vio la bienvenida". Sin identificador: no dice quién es, solo que ya la cerró. */
+export const COOKIE_BIENVENIDA = "humanitas_bienvenida";

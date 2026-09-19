@@ -6,6 +6,7 @@ import { personaActual } from "@/lib/sesion/actual";
 import { antiguedad } from "@/lib/tiempo";
 import { Cita } from "../../../componentes/Cita";
 import { cerrar } from "../../acciones";
+import { BotonEnviar } from "../../../componentes/BotonEnviar";
 
 export const metadata: Metadata = { title: "Cerrar publicación · Humanitas" };
 
@@ -54,9 +55,7 @@ export default async function PaginaCerrar({ params, searchParams }: PageProps<"
               </span>
             </label>
           ))}
-          <button type="submit" className="boton-principal">
-            Cerrar y reconocer el trabajo
-          </button>
+          <BotonEnviar enviando="Cerrando…">Cerrar y reconocer el trabajo</BotonEnviar>
         </form>
       )}
 
@@ -70,17 +69,17 @@ export default async function PaginaCerrar({ params, searchParams }: PageProps<"
       <form action={cerrar} className="flex flex-col gap-3 border-t divisor pt-4">
         <input type="hidden" name="publicacionId" value={id} />
         <input type="hidden" name="motivo" value="resuelta_por_otro_lado" />
-        <button type="submit" className="boton-secundario">
+        <BotonEnviar enviando="Cerrando…" className="boton-secundario">
           Sí, lo resolví por otro lado
-        </button>
+        </BotonEnviar>
       </form>
 
       <form action={cerrar} className="flex flex-col gap-3">
         <input type="hidden" name="publicacionId" value={id} />
         <input type="hidden" name="motivo" value="ya_no_la_necesita" />
-        <button type="submit" className="boton-secundario">
+        <BotonEnviar enviando="Cerrando…" className="boton-secundario">
           No, ya no lo necesito
-        </button>
+        </BotonEnviar>
       </form>
 
       <Cita

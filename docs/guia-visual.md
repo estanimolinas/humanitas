@@ -164,3 +164,14 @@ Citas verificadas el 15/09/2026:
 El §63 del mockup se saca: la frase atribuida no está en el texto.
 
 Frase propia (sin comillas) del bloque "Fundamento": *Humanitas no cobra comisión ni intermedia pagos. Se inspira en la encíclica Magnifica Humanitas de León XIV (15 de mayo de 2026).*
+
+## 8. UI/UX empática (18/09/2026)
+
+- **Sin ejemplos adentro de los campos.** En mayúscula, un placeholder parece texto ya escrito. El ejemplo va en una línea de ayuda arriba del campo ("Por ejemplo: …") y no desaparece al escribir.
+- **Opciones con explicación.** En Publicar, cada opción es una tarjeta grande con una línea que dice qué significa ("Ofrezco algo: un trabajo que sé hacer o algo que vendo").
+- **Rubros agrupados** en "Servicios" y "Productos" cuando se ven los dos. En el listado, "Otros servicios" y "Otros productos".
+- **Foto con botón propio** ("Agregar una foto", "Cambiar la foto", "Quitar la foto"). Sin `capture`: el celular ofrece cámara o galería.
+- **Antes de contactar se ve el mensaje** que se va a mandar, tal cual.
+- **Bienvenida** para quien entra por primera vez: qué es y cómo funciona en tres pasos. Se cierra con "Entendido" (cookie sin identificador).
+- **Siempre se ve que algo está pasando:** "Cargando…" entre pantallas y botones que dicen "Guardando…", "Enviando…", "Abriendo WhatsApp…" y no se pueden tocar dos veces.
+- **Pantallas de error y "no encontrada" en castellano**, sin culpas y con un botón para seguir.

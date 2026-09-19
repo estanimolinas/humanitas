@@ -4,8 +4,9 @@ import { notFound } from "next/navigation";
 import { obtenerDetalle } from "@/lib/detalle";
 import { personaActual } from "@/lib/sesion/actual";
 import { antiguedad } from "@/lib/tiempo";
-import { LIMITE_CONTACTOS_POR_DIA } from "@/lib/whatsapp";
+import { LIMITE_CONTACTOS_POR_DIA, mensajeContacto } from "@/lib/whatsapp";
 import { AvisoConfianza } from "../../componentes/AvisoConfianza";
+import { BotonEnviar } from "../../componentes/BotonEnviar";
 import { EtiquetaTipo } from "../../componentes/EtiquetaTipo";
 import { contactarPorWhatsApp } from "./acciones";
 
@@ -94,18 +95,27 @@ export default async function PaginaDetalle({ params, searchParams }: PageProps<
         <p className="aviso">Gracias, {persona.nombre}. Tu cuenta ya está lista para contactar.</p>
       )}
 
+      {/* Antes de tocar, se ve exactamente qué se va a mandar: nadie se expone sin saberlo. */}
+      <div className="flex flex-col gap-2">
+        <p className="etiqueta">El mensaje que se envía</p>
+        <p className="rounded-lg border divisor bg-superficie p-3 text-pretty">
+          {mensajeContacto({
+            titulo: p.titulo,
+            nombreDestinatario: p.personaNombre,
+            nombreRemitente: persona?.nombre ?? "[tu nombre]",
+          })}
+        </p>
+        <p className="text-sm text-texto-2">
+          {persona
+            ? "Se abre WhatsApp con este mensaje. Antes de mandarlo, lo podés cambiar."
+            : "Para contactar se pide tu nombre y tu celular, así quien publicó sabe quién le escribe."}
+        </p>
+      </div>
+
       <form action={contactarPorWhatsApp}>
         <input type="hidden" name="publicacionId" value={p.id} />
-        <button type="submit" className="boton-principal">
-          Contactar por WhatsApp
-        </button>
+        <BotonEnviar enviando="Abriendo WhatsApp…">Contactar por WhatsApp</BotonEnviar>
       </form>
-
-      <p className="text-sm text-texto-2">
-        {persona
-          ? "Se abre WhatsApp con un mensaje ya escrito."
-          : "Para contactar se pide tu nombre y tu celular, así quien publicó sabe quién le escribe."}
-      </p>
 
       <AvisoConfianza />
 

@@ -94,7 +94,8 @@ export function Filtros({ estado, rubros }: { estado: Estado; rubros: Rubro[] })
             aria-current={rubroId === r.id ? "page" : undefined}
             className={chip(rubroId === r.id)}
           >
-            {r.nombre}
+            {/* En "Necesitan" se ven las dos familias: se aclara de cuál es cada "Otros". */}
+            {r.nombre === "Otros" && !subtipo ? `Otros ${r.familia === "servicio" ? "servicios" : "productos"}` : r.nombre}
           </Link>
         ))}
       </nav>

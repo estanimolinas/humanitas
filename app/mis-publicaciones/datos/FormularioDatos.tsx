@@ -5,6 +5,7 @@ import { normalizarTelefono } from "@/lib/telefono";
 import type { GrupoZonas } from "@/lib/zonas";
 import { ELEGIR_BARRIO } from "@/lib/zonas-config";
 import { guardarDatos } from "../acciones";
+import { BotonEnviar } from "../../componentes/BotonEnviar";
 
 /** Datos de la persona (7.4). El teléfono se cambia con confirmación en pantalla. */
 export function FormularioDatos({
@@ -47,7 +48,8 @@ export function FormularioDatos({
           Cambiar mi celular
         </label>
         <p className="text-texto-2">
-          Si no querés cambiarlo, puede quedar vacío. Tu número no se muestra en ninguna pantalla.
+          Si no querés cambiarlo, puede quedar vacío. El nuevo va con característica, por ejemplo
+          342 512 3456. Tu número no se muestra en ninguna pantalla.
         </p>
         <input
           id="telefono"
@@ -57,7 +59,6 @@ export function FormularioDatos({
           className="campo"
           value={telefono}
           onChange={(e) => setTelefono(e.target.value)}
-          placeholder="342 512 3456"
         />
         {nuevo?.ok && (
           <p className="aviso">
@@ -99,9 +100,13 @@ export function FormularioDatos({
         </div>
       )}
 
-      <button type="submit" className="boton-principal" disabled={cambiaTelefono && !nuevo?.ok}>
-        Guardar
-      </button>
+      {cambiaTelefono && !nuevo?.ok ? (
+        <button type="submit" className="boton-principal" disabled>
+          Guardar
+        </button>
+      ) : (
+        <BotonEnviar enviando="Guardando…">Guardar</BotonEnviar>
+      )}
     </form>
   );
 }

@@ -6,6 +6,7 @@ import { personaActual } from "@/lib/sesion/actual";
 import { antiguedad } from "@/lib/tiempo";
 import { Iniciales } from "../componentes/Iniciales";
 import { cerrar, cerrarSesion, reactivar } from "./acciones";
+import { BotonEnviar } from "../componentes/BotonEnviar";
 
 export const metadata: Metadata = { title: "Mis publicaciones · Humanitas" };
 
@@ -73,9 +74,9 @@ function Publicacion({ p }: { p: PublicacionPropia }) {
               <form action={cerrar}>
                 <input type="hidden" name="publicacionId" value={p.id} />
                 <input type="hidden" name="motivo" value="cerrada_por_duenio" />
-                <button type="submit" className="boton-secundario max-w-[9rem]">
+                <BotonEnviar enviando="Cerrando…" className="boton-secundario max-w-[9rem]">
                   Cerrar
-                </button>
+                </BotonEnviar>
               </form>
             )}
           </>
@@ -83,9 +84,9 @@ function Publicacion({ p }: { p: PublicacionPropia }) {
         {(p.estado === "cerrada" || p.estado === "archivada") && (
           <form action={reactivar}>
             <input type="hidden" name="publicacionId" value={p.id} />
-            <button type="submit" className="boton-secundario max-w-[12rem]">
+            <BotonEnviar enviando="Publicando…" className="boton-secundario max-w-[12rem]">
               Volver a publicar
-            </button>
+            </BotonEnviar>
           </form>
         )}
       </div>
@@ -141,7 +142,7 @@ export default async function PaginaMisPublicaciones({ searchParams }: PageProps
 
       {publicaciones.length === 0 ? (
         <div className="flex flex-col gap-3">
-          <p className="aviso">Todavía no tenés publicaciones.</p>
+          <p className="aviso">Todavía no tenés publicaciones. Cuando publiques algo, lo vas a ver acá.</p>
           <Link href="/publicar" className="boton-principal boton-suelto">
             Publicar
           </Link>
@@ -162,9 +163,9 @@ export default async function PaginaMisPublicaciones({ searchParams }: PageProps
       </p>
 
       <form action={cerrarSesion} className="border-t divisor pt-4">
-        <button type="submit" className="min-h-11 text-texto-2 underline">
+        <BotonEnviar enviando="Cerrando la sesión…" className="min-h-11 text-texto-2 underline">
           Cerrar sesión en este celular
-        </button>
+        </BotonEnviar>
       </form>
     </main>
   );

@@ -7,6 +7,7 @@ import { zonasParaElegir } from "@/lib/zonas";
 import { ELEGIR_BARRIO } from "@/lib/zonas-config";
 import { MAX_DESCRIPCION, MAX_TITULO } from "@/lib/validar-publicacion";
 import { editar } from "../../acciones";
+import { BotonEnviar } from "../../../componentes/BotonEnviar";
 
 export const metadata: Metadata = { title: "Editar publicación · Humanitas" };
 
@@ -107,9 +108,7 @@ export default async function PaginaEditar({ params, searchParams }: PageProps<"
           </div>
         )}
 
-        <button type="submit" className="boton-principal">
-          Guardar cambios
-        </button>
+        <BotonEnviar enviando="Guardando…">Guardar cambios</BotonEnviar>
       </form>
     </main>
   );

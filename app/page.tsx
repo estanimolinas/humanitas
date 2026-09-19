@@ -7,6 +7,7 @@ import { zonaDelVisitante } from "@/lib/sesion/zona-visitante";
 import { zonasParaElegir } from "@/lib/zonas";
 import { ELEGIR_BARRIO } from "@/lib/zonas-config";
 import { AvisoConfianza } from "./componentes/AvisoConfianza";
+import { Bienvenida } from "./componentes/Bienvenida";
 import { Cita } from "./componentes/Cita";
 import { Filtros } from "./componentes/Filtros";
 import { ListaPublicaciones } from "./componentes/ListaPublicaciones";
@@ -43,6 +44,8 @@ export default async function Inicio({ searchParams }: PageProps<"/">) {
 
   return (
     <main className="contenedor flex flex-1 flex-col gap-5">
+      <Bienvenida />
+
       <Link href="/publicar" className="boton-principal boton-suelto">
         Publicar lo que ofrecés o necesitás
       </Link>

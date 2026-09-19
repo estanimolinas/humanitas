@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { MOTIVOS_DENUNCIA } from "@/lib/denuncias";
 import { obtenerDetalle } from "@/lib/detalle";
 import { denunciarPublicacion } from "../acciones";
+import { BotonEnviar } from "../../../componentes/BotonEnviar";
 
 export const metadata: Metadata = { title: "Denunciar · Humanitas" };
 
@@ -52,9 +53,7 @@ export default async function PaginaDenunciar({ params, searchParams }: PageProp
           <textarea id="detalle" name="detalle" className="campo min-h-24 py-3" maxLength={500} rows={3} />
         </div>
 
-        <button type="submit" className="boton-principal">
-          Enviar la denuncia
-        </button>
+        <BotonEnviar enviando="Enviando…">Enviar la denuncia</BotonEnviar>
         <p className="text-sm text-texto-2">
           La revisa una persona del equipo de Humanitas en menos de 24 horas. Si alguien está en
           peligro, también conviene llamar al 911.
