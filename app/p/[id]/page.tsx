@@ -8,6 +8,7 @@ import { LIMITE_CONTACTOS_POR_DIA, mensajeContacto } from "@/lib/whatsapp";
 import { AvisoConfianza } from "../../componentes/AvisoConfianza";
 import { BotonEnviar } from "../../componentes/BotonEnviar";
 import { EtiquetaTipo } from "../../componentes/EtiquetaTipo";
+import { Oficio } from "../../componentes/Oficio";
 import { contactarPorWhatsApp } from "./acciones";
 
 export async function generateMetadata({ params }: PageProps<"/p/[id]">): Promise<Metadata> {
@@ -35,12 +36,15 @@ export default async function PaginaDetalle({ params, searchParams }: PageProps<
         ‹ Volver
       </Link>
 
-      <div className="flex flex-col gap-2">
-        <div className="flex items-start gap-2">
-          <EtiquetaTipo tipo={p.tipo} />
-          <p className="pt-px text-sm text-texto-2">{p.rubroOtroTexto ?? p.rubro}</p>
+      <div className="flex items-start gap-3">
+        <Oficio rubro={p.rubro} familia={p.subtipo} tamanio="size-14" />
+        <div className="flex min-w-0 flex-col gap-1">
+          <p className="text-sm font-semibold text-dorado-oscuro">{p.rubroOtroTexto ?? p.rubro}</p>
+          <h1 className="titulo">{p.titulo}</h1>
+          <div>
+            <EtiquetaTipo tipo={p.tipo} />
+          </div>
         </div>
-        <h1 className="titulo">{p.titulo}</h1>
       </div>
 
       <div className="flex justify-between gap-3 border-y divisor py-3">

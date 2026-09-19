@@ -18,6 +18,7 @@ import {
   type ErroresPublicacion,
 } from "@/lib/validar-publicacion";
 import { AvisoConfianza } from "../componentes/AvisoConfianza";
+import { DibujoOficio } from "../componentes/Oficio";
 import { publicar, type EstadoPublicar } from "./acciones";
 
 const BORRADOR = "humanitas_borrador_publicar";
@@ -299,18 +300,31 @@ export function FormularioPublicar({
             {gruposRubros.map((grupo) => (
               <div key={grupo.titulo ?? "todos"} className="flex flex-col gap-2">
                 {grupo.titulo && <p className="mt-1 text-sm font-semibold text-texto-2">{grupo.titulo}</p>}
-                <div className="flex flex-wrap gap-2">
-                  {grupo.rubros.map((r) => (
-                    <button
-                      key={r.id}
-                      type="button"
-                      aria-pressed={c.rubroId === String(r.id)}
-                      className={chip(c.rubroId === String(r.id))}
-                      onClick={() => setC({ ...c, rubroId: String(r.id) })}
-                    >
-                      {r.nombre}
-                    </button>
-                  ))}
+                {/* Se toca el dibujo: el oficio se reconoce antes de leer (19/09/2026). */}
+                <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
+                  {grupo.rubros.map((r) => {
+                    const activo = c.rubroId === String(r.id);
+                    return (
+                      <button
+                        key={r.id}
+                        type="button"
+                        aria-pressed={activo}
+                        onClick={() => setC({ ...c, rubroId: String(r.id) })}
+                        className={`flex min-h-24 flex-col items-center justify-start gap-1.5 rounded-xl px-1 py-2.5 text-center text-xs leading-tight ${
+                          activo ? "border-2 border-dorado-oscuro bg-dorado-claro" : "border border-borde-campo bg-white"
+                        }`}
+                      >
+                        <span
+                          className={`flex size-11 items-center justify-center rounded-full ${
+                            activo ? "bg-dorado-oscuro text-white" : "bg-fondo text-dorado-oscuro"
+                          }`}
+                        >
+                          <DibujoOficio rubro={r.nombre} familia={r.familia} className="size-[60%]" />
+                        </span>
+                        <span className="text-pretty">{r.nombre}</span>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             ))}

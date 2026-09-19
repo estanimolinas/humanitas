@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Rubro } from "@/lib/rubros";
 import type { Subtipo, Tipo } from "@/lib/publicaciones-tipos";
+import { DibujoOficio } from "./Oficio";
 
 type Estado = { tipo: Tipo; subtipo?: Subtipo | null; rubroId?: number | null };
 
@@ -19,7 +20,7 @@ const solapa = (activa: boolean) =>
   }`;
 
 const chip = (activo: boolean) =>
-  `flex min-h-11 items-center rounded-full border px-3 text-sm whitespace-nowrap ${
+  `flex min-h-11 items-center gap-1.5 rounded-full border px-3 text-sm whitespace-nowrap ${
     activo
       ? "border-dorado bg-dorado-claro text-dorado-profundo"
       : "border-borde-campo text-texto-2"
@@ -94,6 +95,7 @@ export function Filtros({ estado, rubros }: { estado: Estado; rubros: Rubro[] })
             aria-current={rubroId === r.id ? "page" : undefined}
             className={chip(rubroId === r.id)}
           >
+            <DibujoOficio rubro={r.nombre} familia={r.familia} className="size-[18px] text-dorado-oscuro" />
             {/* En "Necesitan" se ven las dos familias: se aclara de cuál es cada "Otros". */}
             {r.nombre === "Otros" && !subtipo ? `Otros ${r.familia === "servicio" ? "servicios" : "productos"}` : r.nombre}
           </Link>

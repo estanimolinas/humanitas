@@ -5,6 +5,7 @@ import { perfilPropio, publicacionesPropias, type PublicacionPropia } from "@/li
 import { personaActual } from "@/lib/sesion/actual";
 import { antiguedad } from "@/lib/tiempo";
 import { Iniciales } from "../componentes/Iniciales";
+import { Oficio } from "../componentes/Oficio";
 import { cerrar, cerrarSesion, reactivar } from "./acciones";
 import { BotonEnviar } from "../componentes/BotonEnviar";
 
@@ -40,10 +41,11 @@ function Publicacion({ p }: { p: PublicacionPropia }) {
   const esNecesito = p.tipo === "necesito";
   return (
     <article className="flex flex-col gap-2 border-b divisor py-4">
-      <div className="flex flex-wrap items-start justify-between gap-2">
-        <h3 className="text-[17px] font-semibold text-pretty">{p.titulo}</h3>
+      <div className="flex items-start gap-3">
+        <Oficio rubro={p.rubro} familia={p.subtipo} tamanio="size-10" />
+        <h3 className="min-w-0 flex-1 pt-1.5 text-[17px] font-semibold text-pretty">{p.titulo}</h3>
         <span
-          className={`rounded-full border px-3 py-1 text-sm ${
+          className={`shrink-0 rounded-full border px-3 py-1 text-sm ${
             p.estado === "activa" ? "border-dorado text-dorado-oscuro" : "border-borde-campo text-texto-2"
           }`}
         >
@@ -52,9 +54,15 @@ function Publicacion({ p }: { p: PublicacionPropia }) {
       </div>
 
       <p className="text-sm text-texto-2">
-        {esNecesito ? "Necesito" : "Ofrezco"} · {p.rubro}
-        {p.zona ? ` · ${p.zona}` : ""} · {antiguedad(p.creadaEn)} ·{" "}
-        {p.contactos === 1 ? "1 contacto" : `${p.contactos} contactos`}
+        {[
+          esNecesito ? "Necesito" : "Ofrezco",
+          p.rubro,
+          p.zona,
+          antiguedad(p.creadaEn),
+          p.contactos === 1 ? "1 contacto" : `${p.contactos} contactos`,
+        ]
+          .filter(Boolean)
+          .join(", ")}
       </p>
 
       <div className="flex flex-wrap gap-2">

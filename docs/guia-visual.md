@@ -175,3 +175,14 @@ Frase propia (sin comillas) del bloque "Fundamento": *Humanitas no cobra comisi�
 - **Bienvenida** para quien entra por primera vez: qué es y cómo funciona en tres pasos. Se cierra con "Entendido" (cookie sin identificador).
 - **Siempre se ve que algo está pasando:** "Cargando…" entre pantallas y botones que dicen "Guardando…", "Enviando…", "Abriendo WhatsApp…" y no se pueden tocar dos veces.
 - **Pantallas de error y "no encontrada" en castellano**, sin culpas y con un botón para seguir.
+
+## 9. Identidad propia: los oficios dibujados (19/09/2026)
+
+La personalidad de Humanitas está en **un solo lugar**: un dibujo de línea por rubro, dorado, hecho para la app (`app/componentes/Oficio.tsx`). Se reconoce antes de leer, así que también ayuda a quien lee con esfuerzo. Todo lo demás queda tranquilo.
+
+- **Listado:** cada fila arranca con el dibujo del oficio en un círculo dorado claro; el rubro va en dorado arriba del título; abajo, la etiqueta Ofrezco/Necesito y "nombre, hace X" (sin puntos medios).
+- **Detalle y Mis publicaciones:** el mismo dibujo junto al título.
+- **Publicar:** el rubro se elige tocando dibujos en mosaico; el elegido queda relleno en dorado oscuro.
+- **Filtros:** cada chip de rubro lleva su dibujo chico.
+- **Símbolo:** dos círculos que se tocan, el encuentro entre quien ofrece y quien necesita. En el encabezado, el favicon (`app/icon.svg`) y el ícono de la app instalada.
+- Un rubro nuevo sin dibujo propio usa el de "Otros" (caja de herramientas o bolsa) hasta que se le dibuje uno.
