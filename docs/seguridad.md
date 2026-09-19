@@ -21,14 +21,18 @@ Qué protege la app, cómo se verifica y qué queda por hacer al deployar. Es el
 
 La Data API **no se puede cerrar**: la app la usa, desde el servidor y con la service role key. Lo que sí se hace es dejarla inútil para cualquier otra persona:
 
-- [ ] Aplicar las migraciones con `supabase db push`. Traen RLS, los `revoke` y los triggers.
+- [x] Aplicar las migraciones con `supabase db push`. Traen RLS, los `revoke` y los triggers. (19/09/2026: las 9 aplicadas.)
 - [ ] En **API → Exposed schemas**, dejar solo `public`.
 - [ ] En **Database → Extensions**, apagar `pg_graphql` si está prendida (no se usa).
 - [ ] En **Authentication**, apagar el registro de usuarios (no se usa Supabase Auth).
-- [ ] La **service role key** va solo en Vercel (Environment Variables), nunca en el código ni en el chat.
-- [ ] Cargar `SAL_IP` en Vercel con un valor largo al azar (`openssl rand -hex 32`).
+- [x] La **service role key** va solo en Vercel (Environment Variables), nunca en el código ni en el chat. (19/09/2026.)
+- [x] Cargar `SAL_IP` en Vercel con un valor largo al azar (`openssl rand -hex 32`). (19/09/2026.)
 - [ ] Confirmar en el panel qué respaldos da el plan Free. Mientras tanto, correr `npm run respaldar` una vez por semana y guardar el archivo cifrado.
 - [ ] Bucket `fotos`: lectura pública, tamaño máximo 200 KB, solo JPG y WEBP (lo crea la migración; verificar en el panel).
+
+- [x] App y base en la misma región (San Pablo): `vercel.json` fija `gru1`.
+- [ ] Verificar en producción: cabeceras con `curl -I`, alta, publicar con foto, contactar y `/api/health`.
+- [ ] Conectar un pinger gratuito a `/api/health`.
 
 ## Tareas periódicas del equipo
 

@@ -2,7 +2,7 @@
 
 # Humanitas — reglas para trabajar en este repo
 
-Fuente de verdad: `docs/humanitas_requerimiento_mvp.md`. Si algo contradice ese documento, **frenar y preguntar**. No inventar features. Si algo del requerimiento parece mal, decirlo con la razón, pero no cambiarlo por cuenta propia.
+Fuente de verdad: `docs/humanitas_requerimiento_mvp.md`. Documentación del proyecto (producto, requerimientos, arquitectura, seguridad, dependencias, operación): índice en el [README](README.md). Mantenerla al día cuando cambie algo de lo que describe. Si algo contradice ese documento, **frenar y preguntar**. No inventar features. Si algo del requerimiento parece mal, decirlo con la razón, pero no cambiarlo por cuenta propia.
 
 ## Territorio
 El piloto es en la **ciudad de Santa Fe** (norte), provincia de Santa Fe. **No es para Buenos Aires** todavía. Ejemplos, textos, datos de prueba y características telefónicas van con Santa Fe (342). El sistema no pone límites geográficos (zonas por datos, 8.1).

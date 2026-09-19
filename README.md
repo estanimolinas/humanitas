@@ -1,65 +1,89 @@
 # Humanitas
 
-App para vecinos y vecinas del norte de la ciudad de Santa Fe, Argentina: quien ofrece oportunidades de trabajo y quien quiere trabajar se encuentran. Es una PWA: se usa desde el navegador del celular y no hace falta instalar nada.
+*Tecnología al servicio de la humanidad.*
 
-- Requerimiento (fuente de verdad): [docs/humanitas_requerimiento_mvp.md](docs/humanitas_requerimiento_mvp.md)
-- Reglas para desarrollar: [CLAUDE.md](CLAUDE.md)
+Humanitas es una app web para personas, entre personas. Acerca a quien ofrece un trabajo o un producto y a quien lo necesita. Se mira sin cuenta, se contacta por WhatsApp y cada acuerdo queda en manos de las personas: la app no cobra comisiones ni intermedia pagos.
 
-> README inicial. La versión completa (scripts, operación y checklist de pasar a producción) se escribe en el paso 12.
+El piloto funciona en la **zona norte de la ciudad de Santa Fe**, Argentina.
 
-## Requisitos
+Está pensada para celulares de gama baja, con poca señal, y para personas que leen con esfuerzo. Por eso usa letra mayúscula de imprenta y un dibujo para cada oficio, y pesa 189 KB la primera vez. Es una PWA: no hace falta instalar nada.
 
-- **nvm** con **Node 22**. La versión está fijada en `.nvmrc`; no hace falta cambiar el Node global.
-- **Docker Desktop** corriendo, porque Supabase local levanta contenedores.
-- **Supabase CLI**: `brew install supabase/tap/supabase`.
+## Documentación
 
-No hace falta cuenta de Supabase ni de Vercel para desarrollar: todo corre local.
+| Documento | Qué tiene |
+|---|---|
+| [Producto](docs/producto.md) | Qué es, para quién, cómo funciona, pantallas, principios e identidad. |
+| [Requerimientos](docs/requerimientos.md) | Qué está cumplido, dónde y con qué test. Decisiones que cambiaron el requerimiento. Pendientes. |
+| [Arquitectura](docs/arquitectura.md) | Piezas, modelo de datos y diagramas de secuencia de cada flujo. |
+| [Seguridad](docs/seguridad.md) | Qué protege la app, cómo se verifica, auditoría y checklist de producción. |
+| [Dependencias y servicios](docs/dependencias.md) | Qué usa, qué cuesta ($0) y con qué licencia. |
+| [Operación](docs/operacion.md) | Deploy, variables de entorno, tareas del equipo, monitoreo. |
+| [Guía visual](docs/guia-visual.md) | Paleta, tipografía, componentes, tono y citas verificadas. |
+| [Requerimiento original](docs/humanitas_requerimiento_mvp.md) | La fuente de verdad del producto. |
+| [CLAUDE.md](CLAUDE.md) | Reglas para desarrollar y registro de decisiones. |
 
-## Levantar el proyecto en local
+## Stack
+
+- **Next.js 16** (App Router, TypeScript, Tailwind) en **Vercel Hobby**, región San Pablo.
+- **Supabase Free**, solo como Postgres + Storage. Solo el servidor le habla.
+- Autenticación propia: nombre y celular, sin contraseña. Token en una cookie httpOnly y solo su hash en la base.
+- Tests con **Vitest** contra Supabase local.
+
+Costo de infraestructura del piloto: **$0**.
+
+## Empezar
+
+Requisitos: **nvm** con Node 22, **Docker Desktop** abierto y la **Supabase CLI** (`brew install supabase/tap/supabase`).
 
 ```bash
-nvm install          # la primera vez: instala la versión de .nvmrc
-nvm use              # cada vez que abrís una terminal nueva
+nvm use                 # Node 22, fijado en .nvmrc
 npm install
-
-supabase start       # levanta Postgres + Storage locales (la primera vez descarga imágenes)
+supabase start          # Postgres + Storage locales
 ```
 
-Creá `.env.local`. Como Supabase Auth está apagado, `supabase status` no muestra la service role key: se lee del contenedor de Storage.
+Creá `.env.local` a partir de [.env.example](.env.example). En local, la clave de servicio se lee del contenedor de Storage:
 
 ```bash
 KEY=$(docker inspect supabase_storage_humanitas --format '{{range .Config.Env}}{{println .}}{{end}}' | sed -n 's/^SERVICE_KEY=//p')
-printf 'SUPABASE_URL=http://127.0.0.1:54321\nSUPABASE_SERVICE_ROLE_KEY=%s\n' "$KEY" > .env.local
+printf 'SUPABASE_URL=http://127.0.0.1:54321\nSUPABASE_SERVICE_ROLE_KEY=%s\nSAL_IP=%s\n' "$KEY" "$(openssl rand -hex 32)" > .env.local
 ```
 
-Esa key es la de demo que trae Supabase local y no sirve fuera de tu máquina. En producción se usa la del proyecto en la nube (checklist del paso 12).
+Esa clave es la de demostración de Supabase local y no sirve fuera de tu máquina.
 
 ```bash
-npm run dev          # http://localhost:3000
+npm run dev             # http://localhost:3000
+npm test                # 143 tests
+supabase stop           # al terminar; los datos se conservan
 ```
 
-## Detener Supabase local
+`supabase db reset` vuelve la base local a cero, con las migraciones y los datos de ejemplo.
 
-```bash
-supabase stop        # detiene los contenedores y conserva los datos
+## Comandos
+
+| Comando | Qué hace |
+|---|---|
+| `npm run dev` | App en desarrollo. |
+| `npm test` | Tests (necesita Supabase local). |
+| `npm run lint`, `npm run typecheck` | Revisión del código y de los tipos. |
+| `npm run build` | Build de producción. |
+| `npm run chequear:secretos` | Después del build, confirma que ninguna clave llegue al navegador. |
+| `npm run chequear:dependencias` | `npm audit`. |
+| `npm run baja -- "<celular>" "<operador>"` | Da de baja una cuenta y borra sus datos. |
+| `npm run respaldar` | Respaldo de la base de producción. |
+| `npm run podar:limites` | Borra los intentos por conexión de más de 2 días. |
+
+## Estructura
+
+```
+app/                  Pantallas y server actions
+lib/                  Lógica, acceso a datos, sesión y seguridad
+proxy.ts              Cabeceras de seguridad y sesión, antes de cada pantalla
+supabase/migrations/  Esquema, reglas y funciones (iguales en local y en la nube)
+scripts/              Tareas del equipo
+tests/                Tests
+docs/                 Documentación
 ```
 
-Para volver la base a cero, con migraciones y seed aplicados de nuevo: `supabase db reset`.
+## Estado
 
-## Base de datos y tests
-
-- Migraciones: [supabase/migrations](supabase/migrations). Son las mismas en local y en la nube.
-- Seed local (zonas de ejemplo): [supabase/seed.sql](supabase/seed.sql). Los rubros van en una migración porque producción también los necesita.
-
-```bash
-supabase db reset    # aplica migraciones y seed desde cero
-npm test             # tests contra Supabase local
-```
-
-Los tests leen `.env.local`, así que primero tiene que estar creado. Los tests de esquema no dejan datos. Los de alta crean personas de prueba con números `549342999…`, y `supabase db reset` las limpia.
-
-## Qué usamos de Supabase
-
-Solo **Postgres** y **Storage**. Auth, Realtime, Edge Functions, Analytics, SMTP y el resto están apagados en [supabase/config.toml](supabase/config.toml). Todo acceso a la base es desde el servidor de Next.js; el navegador nunca habla con Supabase.
-
-Supabase Studio (la interfaz web para mirar la base) queda disponible en local en http://127.0.0.1:54323.
+MVP para validar con un [interno] y presentar al [interno]. Funciona en producción. Lo que falta antes de abrirlo al público está en [Requerimientos → Pendientes](docs/requerimientos.md#pendientes-antes-de-abrir-al-público).
