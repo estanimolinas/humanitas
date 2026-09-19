@@ -43,7 +43,7 @@ Todo en free tier. **$0 de infraestructura durante el piloto.** Ningún servicio
 | Supabase | Postgres + Storage | Free |
 | WhatsApp (`wa.me`) | Links de contacto y avisos enviados a mano | Gratis, sin API |
 | Pinger de disponibilidad | Consulta `/api/health` | Gratuito, lo configura el usuario |
-| GitHub | Repositorio público | Gratis |
+| GitHub | Repositorio **privado** en la cuenta personal del usuario (19/09/2026). Lo opera el usuario. | Gratis |
 
 **Prohibido sin consulta previa:** Sentry, analytics de terceros, CDN aparte, proveedores de email o SMS, colas, WhatsApp Business API, cualquier cosa paga.
 
