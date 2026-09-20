@@ -1,12 +1,16 @@
-# Humanitas
-
-*Tecnología al servicio de la humanidad.*
+<p align="center">
+  <img src="docs/imagenes/humanitas.png" alt="Humanitas · Tecnología al servicio de la humanidad" width="640">
+</p>
 
 Humanitas es una app web para personas, entre personas. Acerca a quien ofrece un trabajo o un producto y a quien lo necesita. Se mira sin cuenta, se contacta por WhatsApp y cada acuerdo queda en manos de las personas: la app no cobra comisiones ni intermedia pagos.
 
 El piloto funciona en la **zona norte de la ciudad de Santa Fe**, Argentina.
 
 Está pensada para celulares de gama baja, con poca señal, y para personas que leen con esfuerzo. Por eso usa letra mayúscula de imprenta y un dibujo para cada oficio, y pesa 189 KB la primera vez. Es una PWA: no hace falta instalar nada.
+
+## Cómo se ve
+
+<!-- capturas -->
 
 ## Documentación
 
