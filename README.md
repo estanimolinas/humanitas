@@ -2,6 +2,8 @@
   <img src="docs/imagenes/humanitas.png" alt="Humanitas · Tecnología al servicio de la humanidad" width="640">
 </p>
 
+https://humanitas-taupe.vercel.app/
+
 Humanitas es una app web para personas, entre personas. Acerca a quien ofrece un trabajo o un producto y a quien lo necesita. Se mira sin cuenta, se contacta por WhatsApp y cada acuerdo queda en manos de las personas: la app no cobra comisiones ni intermedia pagos.
 
 Está pensada para las personas del **norte de la ciudad de Santa Fe**, Argentina.
