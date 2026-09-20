@@ -84,6 +84,10 @@ tests/                Tests
 docs/                 Documentación
 ```
 
+## Licencia
+
+MIT: ver [LICENSE](LICENSE). Si encontrás una falla de seguridad, mirá [SECURITY.md](SECURITY.md).
+
 ## Estado
 
 MVP para validar con un [interno] y presentar al [interno]. Funciona en producción. Lo que falta antes de abrirlo al público está en [Requerimientos → Pendientes](docs/requerimientos.md#pendientes-antes-de-abrir-al-público).

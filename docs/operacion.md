@@ -7,7 +7,7 @@ Cómo se deploya, qué variables usa y qué tareas hace el equipo. Pensado para 
 | | Local | Producción |
 |---|---|---|
 | App | `npm run dev` → http://localhost:3000 | Vercel, se deploya sola con cada push a `main` |
-| Base | Supabase local (Docker) | Supabase `terwvgvhbdeikkwknerg` (San Pablo) |
+| Base | Supabase local (Docker) | Proyecto de Supabase del equipo (región San Pablo). El identificador está en Vercel y en el vínculo local (`supabase link`). |
 | Datos | `supabase/seed.sql`: una zona y personas de ejemplo | Vacía, solo los rubros |
 | Variables | `.env.local` (nunca va a git) | Vercel → Project Settings → Environment Variables |
 
