@@ -6,7 +6,7 @@
 
 Humanitas es una app web para **personas, entre personas**: acerca a quien ofrece un trabajo o un producto y a quien lo necesita. Quien quiere trabajar publica el oficio que sabe hacer o lo que vende. Quien tiene un trabajo para dar publica lo que necesita. Después se escriben por WhatsApp y acuerdan directamente entre ellas.
 
-El piloto funciona en la **zona norte de la ciudad de Santa Fe**.
+Funciona en el **norte de la ciudad de Santa Fe**.
 
 ## Para quién
 
@@ -74,6 +74,6 @@ Amable antes que correcto. Los errores dicen lo que falta con calidez ("Nos falt
 - No verifica identidades ni hace verificación presencial (decisión del 18/09/2026).
 - No pregunta el barrio mientras haya una sola zona (se activa al cargar los barrios).
 
-## Estado del MVP
+## Estado
 
-El objetivo de esta etapa es validar la idea con un [interno] y presentarla al [interno]. El detalle de qué está cumplido está en [requerimientos.md](requerimientos.md).
+Qué está cumplido y qué falta: [requerimientos.md](requerimientos.md).

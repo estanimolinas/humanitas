@@ -1,6 +1,6 @@
 # Dependencias y servicios
 
-Todo lo que Humanitas necesita para funcionar, qué cuesta y por qué está. La regla del piloto es **$0 de infraestructura**: nada pago sin preguntar antes.
+Todo lo que Humanitas necesita para funcionar, qué cuesta y por qué está. La regla es **$0 de infraestructura**: nada pago sin evaluarlo antes.
 
 ## Servicios externos
 

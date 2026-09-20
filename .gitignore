@@ -34,3 +34,6 @@ docs/Humanitas_ marketplace laboral local/
 
 # Respaldos de la base: tienen datos personales, nunca van a git.
 respaldos/
+
+# Requerimiento interno: no se publica.
+docs/humanitas_requerimiento_mvp.md

@@ -4,7 +4,7 @@
 
 Humanitas es una app web para personas, entre personas. Acerca a quien ofrece un trabajo o un producto y a quien lo necesita. Se mira sin cuenta, se contacta por WhatsApp y cada acuerdo queda en manos de las personas: la app no cobra comisiones ni intermedia pagos.
 
-El piloto funciona en la **zona norte de la ciudad de Santa Fe**, Argentina.
+Está pensada para las personas del **norte de la ciudad de Santa Fe**, Argentina.
 
 Está pensada para celulares de gama baja, con poca señal, y para personas que leen con esfuerzo. Por eso usa letra mayúscula de imprenta y un dibujo para cada oficio, y pesa 189 KB la primera vez. Es una PWA: no hace falta instalar nada.
 
@@ -29,7 +29,6 @@ Está pensada para celulares de gama baja, con poca señal, y para personas que 
 | [Dependencias y servicios](docs/dependencias.md) | Qué usa, qué cuesta ($0) y con qué licencia. |
 | [Operación](docs/operacion.md) | Deploy, variables de entorno, tareas del equipo, monitoreo. |
 | [Guía visual](docs/guia-visual.md) | Paleta, tipografía, componentes, tono y citas verificadas. |
-| [Requerimiento original](docs/humanitas_requerimiento_mvp.md) | La fuente de verdad del producto. |
 | [CLAUDE.md](CLAUDE.md) | Reglas para desarrollar y registro de decisiones. |
 
 ## Stack
@@ -39,7 +38,7 @@ Está pensada para celulares de gama baja, con poca señal, y para personas que 
 - Autenticación propia: nombre y celular, sin contraseña. Token en una cookie httpOnly y solo su hash en la base.
 - Tests con **Vitest** contra Supabase local.
 
-Costo de infraestructura del piloto: **$0**.
+Costo de infraestructura: **$0**.
 
 ## Empezar
 
@@ -100,4 +99,4 @@ MIT: ver [LICENSE](LICENSE). Si encontrás una falla de seguridad, mirá [SECURI
 
 ## Estado
 
-MVP para validar con un [interno] y presentar al [interno]. Funciona en producción. Lo que falta antes de abrirlo al público está en [Requerimientos → Pendientes](docs/requerimientos.md#pendientes-antes-de-abrir-al-público).
+En funcionamiento. Lo que falta está en [Requerimientos → Pendientes](docs/requerimientos.md#pendientes).

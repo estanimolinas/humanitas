@@ -2,13 +2,13 @@
 
 # Humanitas — reglas para trabajar en este repo
 
-Fuente de verdad: `docs/humanitas_requerimiento_mvp.md`. Documentación del proyecto (producto, requerimientos, arquitectura, seguridad, dependencias, operación): índice en el [README](README.md). Mantenerla al día cuando cambie algo de lo que describe. Si algo contradice ese documento, **frenar y preguntar**. No inventar features. Si algo del requerimiento parece mal, decirlo con la razón, pero no cambiarlo por cuenta propia.
+Fuente de verdad: el documento de requerimientos, que es **interno y no se versiona** (queda en `docs/humanitas_requerimiento_mvp.md`, ignorado por git). Documentación del proyecto (producto, requerimientos, arquitectura, seguridad, dependencias, operación): índice en el [README](README.md). Mantenerla al día cuando cambie algo de lo que describe. Si algo contradice ese documento, **frenar y preguntar**. No inventar features. Si algo del requerimiento parece mal, decirlo con la razón, pero no cambiarlo por cuenta propia.
 
 ## Territorio
-El piloto es en la **ciudad de Santa Fe** (norte), provincia de Santa Fe. **No es para Buenos Aires** todavía. Ejemplos, textos, datos de prueba y características telefónicas van con Santa Fe (342). El sistema no pone límites geográficos (zonas por datos, 8.1).
+El territorio es el **norte de la ciudad de Santa Fe**, provincia de Santa Fe. **No es para Buenos Aires** todavía. Ejemplos, textos, datos de prueba y características telefónicas van con Santa Fe (342). El sistema no pone límites geográficos (zonas por datos, 8.1).
 
 ## Restricción de costo
-Todo en free tier. **$0 de infraestructura durante el piloto.** Ningún servicio, librería o plan pago sin preguntar antes (con el costo).
+Todo en free tier. **$0 de infraestructura.** Ningún servicio, librería o plan pago sin preguntar antes (con el costo).
 
 ## Reglas no negociables
 1. **Ningún DELETE** en ninguna tabla. Toda baja es `archivado_en` (R12). **Únicas excepciones:** el script manual de poda borra filas de `eventos` *después* de agregarlas en `eventos_mensuales`, y `scripts/podar-limites.mjs` borra intentos de `limites` de más de 2 días (11.5, 18/09/2026). Ningún otro DELETE, en ningún lado.
@@ -92,7 +92,7 @@ eventos_mensuales mes, tipo, rubro_id?, zona_id?, cantidad
 ## Decisiones de producto cerradas (14/09/2026)
 - **Listado:** 10 por página con botón "Ver más".
 - **Zona del visitante:** selector opcional guardado en una cookie sin identificador. Ordena, nunca filtra (regla 4).
-- **Sin roles en la app (17/09/2026, decisión del usuario que cambia 4.3):** en la app hay **solo vecinos**. No existen las pantallas de operador ni de referente. Las tres funciones sensibles se hacen con **scripts** del equipo del piloto (paso 10):
+- **Sin roles en la app (17/09/2026, decisión del usuario que cambia 4.3):** en la app hay **solo personas**. No existen las pantallas de operador ni de referente. Las tres funciones sensibles se hacen con **scripts** del equipo (paso 10):
   - resolver una denuncia (devolver al listado o archivar);
   - devolver el acceso a quien cambió de celular y lo pidió por el WhatsApp del equipo (10.4), con un link de un solo uso; al usarlo, la sesión vieja se pierde.
   Las funciones SQL (`resolver_revision`, `verificar_persona`), `personas.es_operador` y la tabla `referentes` **siguen en el esquema** y las usan los scripts.
@@ -112,7 +112,7 @@ eventos_mensuales mes, tipo, rubro_id?, zona_id?, cantidad
 - **Node:** 22 LTS fijado en `.nvmrc` (`nvm use`). No tocar el Node global ni el alias default de nvm.
 - **Tests:** Vitest (lógica y funciones SQL contra Supabase local). Sin Playwright.
 
-## Feedback de vecinos (18/09/2026)
+## Feedback recibido (18/09/2026)
 - **Lema de la app:** "Tecnología al servicio de la humanidad". Va debajo del nombre en el encabezado y como descripción de la app instalada. Es una frase propia: sin comillas y sin atribuirla a la encíclica.
 - **Letra mayúscula** en los textos de la app (títulos, botones, etiquetas, avisos, chips): en Argentina se alfabetiza primero con imprenta mayúscula. Se hace con estilo (`text-transform`), no reescribiendo el texto. Aplica a **todo**, también a lo que escriben los vecinos (confirmado 18/09): lo guardado en la base no cambia.
 - **Vocabulario:** simple y pertinente, amable y profesional. Nada chocante, nada de órdenes ("hacé", "no pagues"), nada infantil.
@@ -124,8 +124,8 @@ eventos_mensuales mes, tipo, rubro_id?, zona_id?, cantidad
   - **Sin verificación presencial:** no se muestra "✓ Verificado en…" en ningún lado. `personas.verificado_*` y la tabla `referentes` quedan en el esquema sin usarse.
   - **Ayuda (`/ayuda`):** recuperar el acceso, ver los datos y darse de baja se piden al **WhatsApp del equipo** (`WHATSAPP_EQUIPO` en `.env.local`, solo servidor). El equipo lo resuelve con scripts.
 
-## Alcance del MVP (17/09/2026)
-El objetivo de esta etapa es **un MVP funcional para validar la idea con un [interno] de vecinos y presentarlo al [interno]**. Nada más. Ante la duda: **la app más simple posible**. Lo que se pueda hacer con un script del equipo, no se hace como pantalla.
+## Alcance (17/09/2026)
+Ante la duda: **la app más simple posible**. Lo que se pueda hacer con un script del equipo, no se hace como pantalla.
 
 ## Prioridades que pidió el usuario (17/09/2026, al cerrar el día)
 1. **Más seguridad** antes de exponerla: adelantar el endurecimiento (cabeceras, cerrar sesión, chequeo de secretos) y revisar el resto de la lista de 11.5.
