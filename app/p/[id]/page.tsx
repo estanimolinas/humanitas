@@ -77,7 +77,11 @@ export default async function PaginaDetalle({ params, searchParams }: PageProps<
       {p.descripcion && <p className="text-pretty">{p.descripcion}</p>}
 
       {datos.length > 0 && (
-        <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-[color-mix(in_srgb,#201f1d_16%,transparent)] bg-[color-mix(in_srgb,#201f1d_16%,transparent)]">
+        <dl
+          className={`grid gap-px overflow-hidden rounded-lg border border-[color-mix(in_srgb,#201f1d_16%,transparent)] bg-[color-mix(in_srgb,#201f1d_16%,transparent)] ${
+            datos.length > 1 ? "grid-cols-2" : "grid-cols-1"
+          }`}
+        >
           {datos.map((d) => (
             <div key={d.k} className="bg-fondo p-3">
               <dt className="etiqueta">{d.k}</dt>

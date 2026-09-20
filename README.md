@@ -10,7 +10,13 @@ Está pensada para celulares de gama baja, con poca señal, y para personas que 
 
 ## Cómo se ve
 
-<!-- capturas -->
+| El listado | Una publicación |
+|---|---|
+| ![Listado de publicaciones, cada una con el dibujo de su oficio](docs/imagenes/1-inicio.png) | ![Detalle de una publicación, con el mensaje que se envía por WhatsApp](docs/imagenes/2-detalle.png) |
+
+| Publicar | Mis publicaciones |
+|---|---|
+| ![Elegir el rubro tocando el dibujo del oficio](docs/imagenes/3-publicar.png) | ![Perfil con las publicaciones propias y su estado](docs/imagenes/4-perfil.png) |
 
 ## Documentación
 
